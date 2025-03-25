@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1069609176028",
+    "project_id": "prowise-de1d0",
+    "storage_bucket": "prowise-de1d0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069609176028:android:2981b68c4ae5a7b3695d19",
+        "android_client_info": {
+          "package_name": "com.example.ourpro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWJkKR_MCre49wuKdEKcxmXPUVaqQ6OPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
