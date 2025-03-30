@@ -74,7 +74,13 @@ public class SignUpFragment extends Fragment {
                         HashMap<String, String> userInfo = new HashMap<>();
                         userInfo.put("email", email);
                         userInfo.put("username", username);
-                        userInfo.put("profileImage", "");
+                        userInfo.put("profileImageURL", "");
+                        userInfo.put("gender", "");
+                        userInfo.put("dateOfBirth", "");
+                        userInfo.put("surname", "");
+                        userInfo.put("name", "");
+                        userInfo.put("fathersName", "");
+                        userInfo.put("aboutMyself", "");
                         userInfo.put("chats", "");
 
                         Log.d("FirebaseDatabase", "Пытаюсь сохранить данные пользователя...");

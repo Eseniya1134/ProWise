@@ -56,6 +56,7 @@ public class SignInFragment extends Fragment {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             startActivity(new Intent(getActivity(), MainActivity.class));
+                            requireActivity().finish(); // Закрываем SignInFragment и LoginActivity
                         } else {
                             Toast.makeText(requireContext(), "Ошибка: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }

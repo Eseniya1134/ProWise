@@ -63,8 +63,12 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.firebase:firebase-database:21.0.0")
 
-    implementation ("com.amazonaws:aws-android-sdk-s3:2.72.0")  // AWS SDK для S3
-    implementation ("com.amazonaws:aws-android-sdk-core:2.72.0") // Основная библиотека AWS
+    implementation ("com.squareup.picasso:picasso:2.8")//предназначена для загрузки и отображения изображений в Android-приложениях.
+
+
+
+    implementation ("com.cloudinary:cloudinary-android:2.5.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.12.0") // Для загрузки файлов
 
     implementation ("de.hdodenhof:circleimageview:3.1.0") //библиотека для округления картинок
     implementation ("com.github.bumptech.glide:glide:4.15.1") //библиотека для загрузки гифок, роликов, картинок
