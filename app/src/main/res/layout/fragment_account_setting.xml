@@ -24,17 +24,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/avatar"
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:layout_marginTop="40dp"
                     android:scaleType="centerCrop"
+                    android:id="@+id/avatar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/baseline_face_24"
-                    tools:ignore="ContentDescription" />
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/baseline_face_24"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/surname"
@@ -46,6 +45,7 @@
                     app:layout_constraintTop_toBottomOf="@id/avatar">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/surnameGet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -63,6 +63,7 @@
                     app:layout_constraintTop_toBottomOf="@id/surname">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/nameGet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -80,6 +81,7 @@
                     app:layout_constraintTop_toBottomOf="@id/name">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dads_nameGet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"

@@ -58,6 +58,7 @@ public class AccountSettingFragment extends Fragment {
 
         initConfig(); // Настройка конфигурации Cloudinary
         loadBirthday();
+        loadFullName();
         loadUserImageFromFirebase(); // Загружаем сохранённое изображение
 
 
@@ -80,12 +81,97 @@ public class AccountSettingFragment extends Fragment {
         // Обработка нажатия на кнопку загрузки
         binding.save.setOnClickListener(v -> {
             uploadImage();
+            saveFullName();
             saveBirthday();
         });
     }
 
 
-    //МЕТОДЫ ДАТЫ РОЖДЕНИЯ
+
+    ///МЕТОДЫ ДЛЯ ФИО
+    //метод загрузки фио
+    private void saveFullName(){
+        // Получаем текущего пользователя
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+            DatabaseReference databaseReference = database.getReference("Users");
+
+            String name = binding.nameGet.getText().toString();
+            String surname = binding.surnameGet.getText().toString();
+            String dadsName = binding.dadsNameGet.getText().toString();
+            Map<String, Object> userUpdates = new HashMap<>();
+
+            if (!name.isEmpty() && !surname.isEmpty()){
+                userUpdates.put("surname", surname);
+                userUpdates.put("name", name);
+            }else {
+                Toast.makeText(requireContext(), "Фамилия и имя должны быть заполнены", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!dadsName.isEmpty()){
+                userUpdates.put("fathersName", dadsName);
+            }
+
+            // Обновляем данные в Firebase
+            String userId = user.getUid();
+            databaseReference.child(userId).updateChildren(userUpdates)
+                    .addOnSuccessListener(aVoid -> Log.d(TAG, "ФИО сохранены в Firebase"))
+                    .addOnFailureListener(e -> Log.e(TAG, "Ошибка сохранения в Firebase: " + e.getMessage()));
+        }
+    }
+
+    //метод выгрузки фио
+    private void loadFullName() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e(TAG, "Ошибка: пользователь не найден");
+            return;
+        }
+
+        String userId = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+        // Получаем имя
+        DatabaseReference databaseName = database.getReference("Users").child(userId).child("name");
+        databaseName.get().addOnSuccessListener(nameBase -> {
+            if (nameBase.exists() && nameBase.getValue() != null) {
+                String name = nameBase.getValue(String.class);
+                if (name != null) {
+                    binding.nameGet.setText(name);
+                    Log.d(TAG, "Имя загружено: " + name);
+                }
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки имени: " + e.getMessage()));
+
+        // Получаем фамилию
+        DatabaseReference databaseSurname = database.getReference("Users").child(userId).child("surname");
+        databaseSurname.get().addOnSuccessListener(surnameBase -> {
+            if (surnameBase.exists() && surnameBase.getValue() != null) {
+                String surname = surnameBase.getValue(String.class);
+                if (surname != null) {
+                    binding.surnameGet.setText(surname);
+                    Log.d(TAG, "Фамилия загружена: " + surname);
+                }
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки фамилии: " + e.getMessage()));
+
+        // Получаем отчество
+        DatabaseReference databaseDadsName = database.getReference("Users").child(userId).child("fathersName");
+        databaseDadsName.get().addOnSuccessListener(dadsNameBase -> {
+            if (dadsNameBase.exists() && dadsNameBase.getValue() != null) {
+                String dadsName = dadsNameBase.getValue(String.class);
+                if (dadsName != null) {
+                    binding.dadsNameGet.setText(dadsName);
+                    Log.d(TAG, "Отчество загружено: " + dadsName);
+                }
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки отчества: " + e.getMessage()));
+    }
+
+
+
+    ///МЕТОДЫ ДАТЫ РОЖДЕНИЯ
     //метод загрузки даты рождения
     private void loadBirthday() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -165,7 +251,7 @@ public class AccountSettingFragment extends Fragment {
 
 
 
-    //МЕТОДЫ ВЫГРУЗКИ АВАТАРОК
+    ///МЕТОДЫ ВЫГРУЗКИ АВАТАРОК
     // метод выгрузки в настройках
     private void loadUserImageFromFirebase() {
         // Получаем текущего пользователя
