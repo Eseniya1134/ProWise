@@ -19,11 +19,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
 import com.example.ourpro.R;
+import com.example.ourpro.SignInFragment;
 import com.example.ourpro.databinding.FragmentAccountSettingBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.squareup.picasso.Picasso;
@@ -85,6 +87,12 @@ public class AccountSettingFragment extends Fragment {
             saveFullName();
             saveGender();
             saveBirthday();
+        });
+
+        binding.back.setOnClickListener(v -> {
+            FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+            ft.replace(R.id.menu_fr, new ProfileFragment());
+            ft.commit();
         });
     }
 
