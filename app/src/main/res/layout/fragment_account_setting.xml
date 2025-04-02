@@ -196,6 +196,7 @@
                         android:id="@+id/about_myself_get"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="top"
                         android:hint="О себе"
                         android:imeOptions="actionNext"
                         android:inputType="text" />

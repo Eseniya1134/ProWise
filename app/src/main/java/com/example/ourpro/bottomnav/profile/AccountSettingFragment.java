@@ -25,6 +25,7 @@ import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
 import com.example.ourpro.R;
 import com.example.ourpro.databinding.FragmentAccountSettingBinding;
+import com.google.firebase.database.DataSnapshot;
 import com.squareup.picasso.Picasso;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -88,8 +89,6 @@ public class AccountSettingFragment extends Fragment {
     }
 
 
-
-
     ///МЕТОДЫ ДЛЯ ПОЛА
     //метод сохранения пола
     private void saveGender(){
@@ -141,15 +140,9 @@ public class AccountSettingFragment extends Fragment {
 
 
 
-
-
-
-
-
-    ///МЕТОДЫ ДЛЯ ФИО
-    //метод загрузки фио
+    ///МЕТОДЫ ДЛЯ ФИО и "О себе"
+    //метод загрузки фио и "О себе"
     private void saveFullName(){
-        // Получаем текущего пользователя
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
@@ -158,28 +151,44 @@ public class AccountSettingFragment extends Fragment {
             String name = binding.nameGet.getText().toString();
             String surname = binding.surnameGet.getText().toString();
             String dadsName = binding.dadsNameGet.getText().toString();
-            Map<String, Object> userUpdates = new HashMap<>();
+            //String username = binding.usernameGet.getText().toString();
+            String aboutMyself = binding.aboutMyselfGet.getText().toString();
 
-            if (!name.isEmpty() && !surname.isEmpty()){
-                userUpdates.put("surname", surname);
-                userUpdates.put("name", name);
-            }else {
+            if (name.isEmpty() || surname.isEmpty()) {
                 Toast.makeText(requireContext(), "Фамилия и имя должны быть заполнены", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (!dadsName.isEmpty()){
+
+            Map<String, Object> userUpdates = new HashMap<>();
+            if (!surname.isEmpty() && !name.isEmpty()){
+                userUpdates.put("surname", surname);
+                userUpdates.put("name", name);
+            }else{
+                Toast.makeText(requireContext(), "Фамилия и Имя должны быть заполнены", Toast.LENGTH_SHORT).show();
+            }if (!dadsName.isEmpty()) {
                 userUpdates.put("fathersName", dadsName);
             }
+            userUpdates.put("aboutMyself", aboutMyself);
 
-            // Обновляем данные в Firebase
             String userId = user.getUid();
             databaseReference.child(userId).updateChildren(userUpdates)
-                    .addOnSuccessListener(aVoid -> Log.d(TAG, "ФИО сохранены в Firebase"))
+                    .addOnSuccessListener(aVoid -> Log.d(TAG, "ФИО и username сохранены в Firebase"))
                     .addOnFailureListener(e -> Log.e(TAG, "Ошибка сохранения в Firebase: " + e.getMessage()));
+
+           /* checkUsernameAvailability(username, isAvailable -> {
+                if (isAvailable) {
+                    userUpdates.put("username", username);
+                    databaseReference.child(userId).updateChildren(userUpdates)
+                            .addOnSuccessListener(aVoid -> Log.d(TAG, "ФИО и username сохранены в Firebase"))
+                            .addOnFailureListener(e -> Log.e(TAG, "Ошибка сохранения в Firebase: " + e.getMessage()));
+                } else {
+                    Toast.makeText(requireContext(), "Этот username уже занят", Toast.LENGTH_SHORT).show();
+                }
+            });*/
         }
     }
 
-    //метод выгрузки фио
+    //метод выгрузки фио и "О себе"
     private void loadFullName() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
@@ -225,6 +234,59 @@ public class AccountSettingFragment extends Fragment {
                 }
             }
         }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки отчества: " + e.getMessage()));
+
+        // Получаем ник пользователя
+    /*    DatabaseReference databaseUserName = database.getReference("Users").child(userId).child("username");
+        databaseUserName.get().addOnSuccessListener(UserNameBase -> {
+            if (UserNameBase.exists() && UserNameBase.getValue() != null) {
+                String username = UserNameBase.getValue(String.class);
+                if (username != null) {
+                    binding.usernameGet.setText(username);
+                    Log.d(TAG, "Ник загружено: " + username);
+                }
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки ник: " + e.getMessage())); */
+
+        // Получаем "О себе"
+        DatabaseReference databaseMyself = database.getReference("Users").child(userId).child("aboutMyself");
+        databaseMyself.get().addOnSuccessListener(myselfBase -> {
+            if (myselfBase.exists() && myselfBase.getValue() != null) {
+                String myself = myselfBase.getValue(String.class);
+                if (myself != null) {
+                    binding.aboutMyselfGet.setText(myself);
+                    Log.d(TAG, "О себе загружено: " + myself);
+                }
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки о себе: " + e.getMessage()));
+    }
+
+    private void checkUsernameAvailability(String username, OnUsernameCheckListener listener) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference("Users");
+
+        usersRef.orderByChild("username").equalTo(username).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DataSnapshot snapshot = task.getResult();
+                        boolean isAvailable = true;
+
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            Log.d("Firebase", "Найден пользователь: " + child.getValue());
+                            isAvailable = false;
+                        }
+
+                        listener.onCheck(isAvailable);
+                    } else {
+                        Log.e("Firebase", "Ошибка при проверке username", task.getException());
+                        listener.onCheck(false);
+                    }
+                });
+
+
+    }
+
+    interface OnUsernameCheckListener {
+        void onCheck(boolean isAvailable);
     }
 
 
@@ -439,8 +501,6 @@ public class AccountSettingFragment extends Fragment {
 
 
 
-
-
     // Инициализация конфигурации Cloudinary
     private void initConfig() {
         try {
@@ -475,6 +535,7 @@ public class AccountSettingFragment extends Fragment {
                     }
                 }
             });
+
 
     @Override
     public void onDestroyView() {
