@@ -89,14 +89,24 @@
                         android:hint="Отчество" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Spinner
-                    android:id="@+id/gender"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/gender_layout"
                     android:layout_width="310dp"
                     android:layout_height="64dp"
                     android:layout_marginTop="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/dads_name" />
+                    app:layout_constraintTop_toBottomOf="@id/dads_name"
+                    app:endIconMode="dropdown_menu"> <!-- Добавляет иконку выпадающего списка -->
+
+                    <AutoCompleteTextView
+                        android:id="@+id/gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingStart="16dp"
+                        android:hint="Пол"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
 
 
 
@@ -104,11 +114,11 @@
                     android:id="@+id/birthday_layout"
                     android:layout_width="310dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:hint="Дата рождения"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/gender">
+                    app:layout_constraintTop_toBottomOf="@id/gender_layout">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/birthday_text"

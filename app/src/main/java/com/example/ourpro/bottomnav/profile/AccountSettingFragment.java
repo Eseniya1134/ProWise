@@ -59,17 +59,17 @@ public class AccountSettingFragment extends Fragment {
         initConfig(); // Настройка конфигурации Cloudinary
         loadBirthday();
         loadFullName();
+        loadGender();
         loadUserImageFromFirebase(); // Загружаем сохранённое изображение
 
 
         // Настройка выпадающего списка пола
-        String[] items = {"Выберите пол", "Мужской", "Женский"};
+        String[] items = {"Мужской", "Женский"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 requireContext(),
-                android.R.layout.simple_spinner_dropdown_item,
+                android.R.layout.simple_dropdown_item_1line,
                 items
         );
-
         binding.gender.setAdapter(adapter);
 
         // Выбор дня рождения
@@ -82,9 +82,67 @@ public class AccountSettingFragment extends Fragment {
         binding.save.setOnClickListener(v -> {
             uploadImage();
             saveFullName();
+            saveGender();
             saveBirthday();
         });
     }
+    
+
+
+
+    ///МЕТОДЫ ДЛЯ ПОЛА
+    //метод сохранения пола
+    private void saveGender(){
+        // Получаем текущего пользователя
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+            DatabaseReference databaseReference = database.getReference("Users");
+
+            String gender = binding.gender.getText().toString();
+            Map<String, Object> userUpdates = new HashMap<>();
+
+            if (!gender.isEmpty()){
+                userUpdates.put("gender", gender);
+            }else {
+                Toast.makeText(requireContext(), "Пол должен быть заполнен", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            // Обновляем данные в Firebase
+            String userId = user.getUid();
+            databaseReference.child(userId).updateChildren(userUpdates)
+                    .addOnSuccessListener(aVoid -> Log.d(TAG, "ФИО сохранены в Firebase"))
+                    .addOnFailureListener(e -> Log.e(TAG, "Ошибка сохранения в Firebase: " + e.getMessage()));
+        }
+    }
+
+    //метод выгрузки для пола
+    private void loadGender() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e(TAG, "Ошибка: пользователь не найден");
+            return;
+        }
+
+        String userId = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+        DatabaseReference databaseName = database.getReference("Users").child(userId).child("gender");
+        databaseName.get().addOnSuccessListener(genderBase -> {
+            if (genderBase.exists()) {
+                String gender = genderBase.getValue(String.class);
+                if (gender != null) {
+                    binding.gender.setText(gender, false); // <-- Заменяем setText() на setText(value, false)
+                    Log.d(TAG, "Пол загружен: " + gender);
+                }
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки пола: " + e.getMessage()));
+    }
+
+
+
+
+
 
 
 
@@ -305,73 +363,71 @@ public class AccountSettingFragment extends Fragment {
             Log.d(TAG, "Cloudinary инициализирован заново");
         }
 
-        if (imagePath == null) {
-            Log.e(TAG, "Ошибка: нет выбранного изображения");
-            Toast.makeText(requireContext(), "Ошибка: выберите изображение", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        MediaManager.get().upload(imagePath).callback(new UploadCallback() {
-            @Override
-            public void onStart(String requestId) {
-                Log.d(TAG, "Загрузка началась");
-                Toast.makeText(requireContext(), "Начало загрузки", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onProgress(String requestId, long bytes, long totalBytes) {
-                Log.d(TAG, "Загрузка в процессе...");
-            }
-
-            @Override
-            public void onSuccess(String requestId, Map resultData) {
-                String imageUrl = resultData.get("secure_url").toString();
-                Log.d(TAG, "Загрузка завершена: " + imageUrl);
-
-                // Сохраняем в SharedPreferences (для локального кэширования)
-                sharedPreferences.edit().putString(PREF_IMAGE_URL, imageUrl).apply();
-
-                // Загружаем в ImageView
-                Picasso.get().load(imageUrl).into(binding.avatar);
-
-                // Получаем текущего пользователя
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                // Если пользователь авторизован, сохраняем ссылку в Firebase
-                if (user != null) {
-                    // Получаем URL для подключения к Firebase Database (если у вас есть кастомный URL)
-                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
-
-                    // Получаем ссылку на "Users" в Firebase
-                    DatabaseReference databaseReference = database.getReference("Users");
-
-                    // Создаем мапу с данными для обновления в Firebase
-                    Map<String, Object> userUpdates = new HashMap<>();
-                    userUpdates.put("profileImageURL", imageUrl);  // Сохраняем ссылку на изображение
-
-                    // Обновляем данные в Firebase
-                    String userId = user.getUid();
-                    databaseReference.child(userId).updateChildren(userUpdates)
-                            .addOnSuccessListener(aVoid -> Log.d(TAG, "Ссылка сохранена в Firebase"))
-                            .addOnFailureListener(e -> Log.e(TAG, "Ошибка сохранения в Firebase: " + e.getMessage()));
+        if (imagePath != null) {
+            MediaManager.get().upload(imagePath).callback(new UploadCallback() {
+                @Override
+                public void onStart(String requestId) {
+                    Log.d(TAG, "Загрузка началась");
+                    Toast.makeText(requireContext(), "Начало загрузки", Toast.LENGTH_SHORT).show();
                 }
 
-                // Показать сообщение об успешной загрузке
-                Toast.makeText(requireContext(), "Загрузка завершена", Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onProgress(String requestId, long bytes, long totalBytes) {
+                    Log.d(TAG, "Загрузка в процессе...");
+                }
 
-            @Override
-            public void onError(String requestId, ErrorInfo error) {
-                Log.e(TAG, "Ошибка загрузки: " + error.getDescription());
-                Toast.makeText(requireContext(), "Ошибка загрузки: " + error.getDescription(), Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onSuccess(String requestId, Map resultData) {
+                    String imageUrl = resultData.get("secure_url").toString();
+                    Log.d(TAG, "Загрузка завершена: " + imageUrl);
 
-            @Override
-            public void onReschedule(String requestId, ErrorInfo error) {
-                Log.w(TAG, "Загрузка отложена: " + error.getDescription());
-                Toast.makeText(requireContext(), "Загрузка отложена", Toast.LENGTH_SHORT).show();
-            }
-        }).dispatch();
+                    // Сохраняем в SharedPreferences (для локального кэширования)
+                    sharedPreferences.edit().putString(PREF_IMAGE_URL, imageUrl).apply();
+
+                    // Загружаем в ImageView
+                    Picasso.get().load(imageUrl).into(binding.avatar);
+
+                    // Получаем текущего пользователя
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    // Если пользователь авторизован, сохраняем ссылку в Firebase
+                    if (user != null) {
+                        // Получаем URL для подключения к Firebase Database (если у вас есть кастомный URL)
+                        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+                        // Получаем ссылку на "Users" в Firebase
+                        DatabaseReference databaseReference = database.getReference("Users");
+
+                        // Создаем мапу с данными для обновления в Firebase
+                        Map<String, Object> userUpdates = new HashMap<>();
+                        userUpdates.put("profileImageURL", imageUrl);  // Сохраняем ссылку на изображение
+
+                        // Обновляем данные в Firebase
+                        String userId = user.getUid();
+                        databaseReference.child(userId).updateChildren(userUpdates)
+                                .addOnSuccessListener(aVoid -> Log.d(TAG, "Ссылка сохранена в Firebase"))
+                                .addOnFailureListener(e -> Log.e(TAG, "Ошибка сохранения в Firebase: " + e.getMessage()));
+                    }
+
+                    // Показать сообщение об успешной загрузке
+                    Toast.makeText(requireContext(), "Загрузка завершена", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(String requestId, ErrorInfo error) {
+                    Log.e(TAG, "Ошибка загрузки: " + error.getDescription());
+                    Toast.makeText(requireContext(), "Ошибка загрузки: " + error.getDescription(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onReschedule(String requestId, ErrorInfo error) {
+                    Log.w(TAG, "Загрузка отложена: " + error.getDescription());
+                    Toast.makeText(requireContext(), "Загрузка отложена", Toast.LENGTH_SHORT).show();
+                }
+            }).dispatch();
+        }
+
+
     }
 
     // Метод для выбора изображения из галереи
