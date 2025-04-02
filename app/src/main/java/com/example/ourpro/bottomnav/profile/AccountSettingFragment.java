@@ -86,7 +86,7 @@ public class AccountSettingFragment extends Fragment {
             saveBirthday();
         });
     }
-    
+
 
 
 
@@ -132,7 +132,7 @@ public class AccountSettingFragment extends Fragment {
             if (genderBase.exists()) {
                 String gender = genderBase.getValue(String.class);
                 if (gender != null) {
-                    binding.gender.setText(gender, false); // <-- Заменяем setText() на setText(value, false)
+                    binding.gender.setText(gender, false);
                     Log.d(TAG, "Пол загружен: " + gender);
                 }
             }
