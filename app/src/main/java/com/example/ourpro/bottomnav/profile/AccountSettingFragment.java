@@ -274,7 +274,7 @@ public class AccountSettingFragment extends Fragment {
         }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки о себе: " + e.getMessage()));
     }
 
-    private void checkUsernameAvailability(String username, OnUsernameCheckListener listener) {
+/*    private void checkUsernameAvailability(String username, OnUsernameCheckListener listener) {
         DatabaseReference usersRef = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("Users");
 
@@ -302,7 +302,7 @@ public class AccountSettingFragment extends Fragment {
     interface OnUsernameCheckListener {
         void onCheck(boolean isAvailable);
     }
-
+*/
 
 
     ///МЕТОДЫ ДАТЫ РОЖДЕНИЯ
