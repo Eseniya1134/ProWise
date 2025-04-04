@@ -89,17 +89,12 @@ public class AccountSettingFragment extends Fragment {
             saveBirthday();
         });
 
-        binding.back.setOnClickListener(v -> {
+        binding.profileButton.setOnClickListener(v -> {
             FragmentTransaction ft = getParentFragmentManager().beginTransaction();
             ft.replace(R.id.menu_fr, new ProfileFragment());
             ft.commit();
         });
 
-        binding.safety.setOnClickListener(v -> {
-            FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-            ft.replace(R.id.menu_fr, new SecuritySettingsFragment());
-            ft.commit();
-        });
     }
 
 
