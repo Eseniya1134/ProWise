@@ -245,6 +245,7 @@ public class AccountSettingFragment extends Fragment {
         }
     }
 
+    
     //метод выгрузки фио и "О себе"
     private void loadFullName() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
