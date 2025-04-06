@@ -125,7 +125,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dads_name"
-                    app:endIconMode="dropdown_menu"> <!-- Добавляет иконку выпадающего списка -->
+                    app:endIconMode="dropdown_menu">
 
                     <AutoCompleteTextView
                         android:id="@+id/gender"
@@ -172,6 +172,25 @@
                         android:hint="О себе"
                         android:imeOptions="actionNext"
                         android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/safety_layout"
+                    android:layout_width="310dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/about_myself"
+                    app:endIconMode="dropdown_menu"> <!-- Добавляет иконку выпадающего списка -->
+
+                    <AutoCompleteTextView
+                        android:id="@+id/safety"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingStart="16dp"
+                        android:hint="Безопасность"
+                        android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
