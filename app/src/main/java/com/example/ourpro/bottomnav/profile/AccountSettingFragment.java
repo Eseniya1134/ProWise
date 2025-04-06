@@ -25,9 +25,7 @@ import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
 import com.example.ourpro.R;
-import com.example.ourpro.SignInFragment;
 import com.example.ourpro.databinding.FragmentAccountSettingBinding;
-import com.google.firebase.database.DataSnapshot;
 import com.squareup.picasso.Picasso;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,6 +57,8 @@ public class AccountSettingFragment extends Fragment {
         binding = FragmentAccountSettingBinding.bind(view);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 
+
+
         initConfig(); // Настройка конфигурации Cloudinary
         loadBirthday();
         loadFullName();
@@ -74,6 +74,54 @@ public class AccountSettingFragment extends Fragment {
                 items
         );
         binding.gender.setAdapter(adapter);
+
+        // Настройка элементов
+        String[] items2 = {"Смена пароля", "Смена эл.почты", "Смена имени пользователя"};
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                items2
+        );
+        binding.safety.setAdapter(adapter2);
+
+        // Всегда отображаем "Безопасность"
+        binding.safety.setText("Безопасность", false);
+
+        // Открытие списка при клике на layout
+        binding.safetyLayout.setOnClickListener(v -> {
+            binding.safety.showDropDown(); // открываем дропдаун
+        });
+
+        binding.safety.setOnItemClickListener((parent, view1, position, id) -> {
+            String selectedItem = items2[position];
+            int selectedValue = 0;
+
+            switch (selectedItem) {
+                case "Смена пароля":
+                    selectedValue = 1;
+                    break;
+                case "Смена эл.почты":
+                    selectedValue = 2;
+                    break;
+                case "Смена имени пользователя":
+                    selectedValue = 3;
+                    break;
+            }
+
+            // Создаём Bundle для передачи данных
+            Bundle bundle = new Bundle();
+            bundle.putInt(SecuritySettingsFragment.ARG_SELECTED_VALUE, selectedValue);
+
+            SecuritySettingsFragment settingsFragment = new SecuritySettingsFragment();
+            settingsFragment.setArguments(bundle);
+
+            // Заменяем текущий фрагмент на SecuritySettingsFragment
+            FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+            ft.replace(R.id.menu_fr, new SecuritySettingsFragment()); // menu_fr — ID контейнера для фрагментов
+            ft.addToBackStack(null); // Добавляем в стек возврата
+            ft.commit();
+        });
+
 
         // Выбор дня рождения
         binding.birthdayText.setOnClickListener(v -> selectBirthday());
