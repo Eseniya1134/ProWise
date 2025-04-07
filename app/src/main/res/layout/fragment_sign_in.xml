@@ -105,7 +105,7 @@
             android:backgroundTint="@color/our_blue"
             android:fontFamily="@font/pt_sans_bold"
             android:text="Войти"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/log_password" />
