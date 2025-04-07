@@ -46,6 +46,13 @@ public class SecuritySettingsFragment extends Fragment {
         // Получаем аргументы
         Bundle args = getArguments();
 
+        binding.settingButton.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.menu_fr, new AccountSettingFragment()) // Заменяем текущий фрагмент
+                    .addToBackStack(null) // Добавляем в back stack для возможности возврата
+                    .commit();
+        });
 
         if (args != null && args.containsKey(ARG_SELECTED_VALUE)) {
             int value = args.getInt(ARG_SELECTED_VALUE);
@@ -80,6 +87,8 @@ public class SecuritySettingsFragment extends Fragment {
             Log.e("SecuritySettings", "Аргументы отсутствуют!");
         }
     }
+
+
 
 
 }

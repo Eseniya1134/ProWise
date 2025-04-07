@@ -28,6 +28,10 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentProfileBinding.bind(view);
 
+        binding.settingText.setOnClickListener(v -> {
+            navigateToAccountSettings();
+        });
+
         // Инициализация анимаций
         scaleAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale);
         fadeInAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in);
@@ -38,14 +42,7 @@ public class ProfileFragment extends Fragment {
         // Анимация при открытии
         animateViewsOnCreate();
 
-        // Обработчик кнопки
-        binding.editProfileButton.setOnClickListener(v -> {
-        //    v.startAnimation(scaleAnimation);
-         //   v.postDelayed(this::navigateToAccountSettings, 200);
-            FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-            ft.replace(R.id.menu_fr, new AccountSettingFragment());
-            ft.commit();
-        });
+
     }
 
     private void setupAppBar() {
@@ -56,11 +53,18 @@ public class ProfileFragment extends Fragment {
             // Анимация прозрачности элементов
             binding.profileText.setAlpha(1 - progress);
             binding.exit.setAlpha(1 - progress);
-            binding.settingButton.setAlpha(1 - progress);
+            binding.settingText.setAlpha(1 - progress);
 
             // Показ/скрытие мини-аватарки
+            binding.toolbar.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.profileImageSmall.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.settingsTitleSmall.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
+            binding.settingImg.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
+
+            binding.settingImg.setOnClickListener(v -> {
+                navigateToAccountSettings();
+            });
+
         });
     }
 
@@ -68,22 +72,20 @@ public class ProfileFragment extends Fragment {
         binding.profileImage.startAnimation(fadeInAnimation);
         binding.profileText.startAnimation(fadeInAnimation);
 
+
         binding.editProfileButton.postDelayed(() -> {
             binding.editProfileButton.startAnimation(fadeInAnimation);
         }, 150);
+
+
     }
 
     private void navigateToAccountSettings() {
-        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-        ft.setCustomAnimations(
-                R.anim.slide_in_right,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_right
-        );
-        ft.replace(R.id.menu_fr, new AccountSettingFragment());
-        ft.addToBackStack(null);
-        ft.commit();
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.menu_fr, new AccountSettingFragment()) // Заменяем текущий фрагмент
+                .addToBackStack(null) // Добавляем в back stack для возможности возврата
+                .commit();
     }
 
     @Override
@@ -94,3 +96,9 @@ public class ProfileFragment extends Fragment {
         binding = null;
     }
 }
+
+/*
+
+
+
+ */

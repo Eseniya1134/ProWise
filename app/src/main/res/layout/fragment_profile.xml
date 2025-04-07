@@ -24,6 +24,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:statusBarScrim="@android:color/transparent">
 
+
             <!-- Большая аватарка (фон) -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/setting_button"
+                    android:id="@+id/setting_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -88,14 +89,24 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="80dp"
                 android:background="@android:color/transparent"
+                android:visibility="invisible"
                 app:layout_collapseMode="pin">
 
                 <ImageView
+                    android:id="@+id/setting_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/baseline_format_list_bulleted_24"
+                    android:visibility="invisible" />
+
+                <ImageView
                     android:id="@+id/profileImageSmall"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginStart="16dp"
                     android:background="@drawable/circle_white_border"
                     android:scaleType="centerCrop"
