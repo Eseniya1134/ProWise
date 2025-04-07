@@ -15,18 +15,33 @@
             android:id="@+id/log_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="50dp"
             android:text="Войти"
-            android:textSize="40dp"
+            android:textSize="40sp"
+            android:textColor="#252375"
+            android:fontFamily="@font/pt_sans_bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_in"
-            android:layout_width="310dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="360dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxBackgroundColor="#EAEAEA"
+            app:boxStrokeColor="#767676"
+            app:boxStrokeWidth="1dp"
+            app:hintTextColor="#767676"
+            app:cursorColor="#767676"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/log_title">
@@ -34,17 +49,35 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/log_in_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/pt_sans_regular"
+                android:hint="Электронная почта"
                 android:imeOptions="actionNext"
-                android:hint="Логин" />
+                android:inputType="text"
+                android:textColorHint="#767676"
+                android:textColorLink="#767676"
+                android:textColorHighlight="#767676"
+                android:textColor="#767676"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_password"
-            android:layout_width="310dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="360dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxBackgroundColor="#EAEAEA"
+            app:boxStrokeColor="#767676"
+            app:boxStrokeWidth="1dp"
+            app:hintTextColor="#767676"
+            app:cursorColor="#767676"
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +86,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/log_password_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/pt_sans_regular"
+                android:textSize="16sp"
                 android:inputType="textPassword"
                 android:imeOptions="actionDone"
                 android:hint="Пароль" />
@@ -61,10 +96,16 @@
 
         <Button
             android:id="@+id/log"
-            android:layout_width="309dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="360dp"
+            android:layout_height="55dp"
+            android:layout_margin="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/our_blue"
+            android:fontFamily="@font/pt_sans_bold"
             android:text="Войти"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/log_password" />
@@ -76,11 +117,15 @@
             android:clickable="true"
             android:focusable="true"
             android:text="Зарегистрироваться"
-            android:textColor="#6750A3"
-            android:textSize="20dp"
+            android:textColor="#252375"
+            android:textSize="16sp"
+            android:fontFamily="@font/pt_sans_regular"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/log" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
