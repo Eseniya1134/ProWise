@@ -1,11 +1,15 @@
 package com.example.ourpro.bottomnav.profile;
 
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +17,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ourpro.R;
-
+import com.example.ourpro.databinding.FragmentSecuritySettingsBinding;
 
 
 public class SecuritySettingsFragment extends Fragment {
 
     public static final String ARG_SELECTED_VALUE = "selected_value";
+
+    private FragmentSecuritySettingsBinding binding;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,30 +38,40 @@ public class SecuritySettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Находим TextView в layout
-        TextView textView = view.findViewById(R.id.textView);
+        binding = FragmentSecuritySettingsBinding.bind(view);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 
         // Получаем аргументы
         Bundle args = getArguments();
 
+
         if (args != null && args.containsKey(ARG_SELECTED_VALUE)) {
             int value = args.getInt(ARG_SELECTED_VALUE);
-            textView.setText("Получено значение: " + value);
+            //           textView.setText("Получено значение: " + value);
 
             // Здесь можно добавить логику в зависимости от значения
             switch (value) {
                 case 1:
                     // Действия для смены пароля
+                    binding.infText.setText("Точно ли хотите поменять пароль?");
+
                     break;
                 case 2:
                     // Действия для смены email
+                    binding.infText.setText("Точно ли хотите поменять почту?");
+                    binding.newPasswordGet.setText("Новая почта");
+
                     break;
                 case 3:
+                    binding.infText.setText("Точно ли хотите поменять имя пользователя?");
+                    binding.newPasswordGet.setText("Новое имя пользователя");
+                    binding.newPasswordRep.setVisibility(View.INVISIBLE);
+                    //            binding.newPassword.setEndIconActivated(View.INVISIBLE);
                     // Действия для смены имени пользователя
                     break;
             }
         } else {
-            textView.setText("Значение не передано");
+        //    textView.setText("Значение не передано");
             Log.e("SecuritySettings", "Аргументы отсутствуют!");
         }
     }
