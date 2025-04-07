@@ -27,7 +27,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_in"
             android:layout_width="360dp"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
@@ -49,7 +49,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/log_in_text"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:fontFamily="@font/pt_sans_regular"
                 android:hint="Электронная почта"
                 android:imeOptions="actionNext"
@@ -86,7 +86,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/log_password_text"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:fontFamily="@font/pt_sans_regular"
                 android:textSize="16sp"
                 android:inputType="textPassword"

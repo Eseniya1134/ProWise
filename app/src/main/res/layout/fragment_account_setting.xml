@@ -14,6 +14,7 @@
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:scrollbarThumbVertical="@drawable/scroll_style"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/save"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +30,7 @@
                     android:background="@drawable/rounded_corners"
                     android:clipToOutline="true"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/profile_grad_foreground"
+                    android:src="@mipmap/profile_grad_back"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -77,23 +78,47 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/avatar"
+                    android:id="@+id/circ"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="50dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/baseline_face_24"
                     android:background="@drawable/circle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/setting_text"/>
 
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="60dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/profile_icon"
+                    android:background="@drawable/circle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/setting_text"/>
+
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/surname"
                     android:layout_width="360dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/field_back_white"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="15dp"
+                    app:boxCornerRadiusTopEnd="15dp"
+                    app:boxCornerRadiusBottomStart="15dp"
+                    app:boxCornerRadiusBottomEnd="15dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
+                    app:cursorColor="#767676"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/avatar">
@@ -101,8 +126,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/surnameGet"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@android:color/transparent"
+                        android:layout_height="match_parent"
                         android:fontFamily="@font/pt_sans_regular"
                         android:hint="Фамилия"
                         android:imeOptions="actionNext"
@@ -113,9 +137,20 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/name"
                     android:layout_width="360dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/field_back_white"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="15dp"
+                    app:boxCornerRadiusTopEnd="15dp"
+                    app:boxCornerRadiusBottomStart="15dp"
+                    app:boxCornerRadiusBottomEnd="15dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
+                    app:cursorColor="#767676"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/surname">
@@ -123,21 +158,31 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/nameGet"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:fontFamily="@font/pt_sans_regular"
                         android:textSize="16sp"
                         android:inputType="text"
                         android:imeOptions="actionNext"
-                        android:background="@android:color/transparent"
                         android:hint="Имя" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/dads_name"
                     android:layout_width="360dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/field_back_white"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="15dp"
+                    app:boxCornerRadiusTopEnd="15dp"
+                    app:boxCornerRadiusBottomStart="15dp"
+                    app:boxCornerRadiusBottomEnd="15dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
+                    app:cursorColor="#767676"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/name">
@@ -145,34 +190,43 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/dads_nameGet"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:fontFamily="@font/pt_sans_regular"
                         android:textSize="16sp"
                         android:imeOptions="actionDone"
-                        android:background="@android:color/transparent"
                         android:hint="Отчество" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/gender_layout"
                     android:layout_width="360dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/field_back_white"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="15dp"
+                    app:boxCornerRadiusTopEnd="15dp"
+                    app:boxCornerRadiusBottomStart="15dp"
+                    app:boxCornerRadiusBottomEnd="15dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
+                    app:cursorColor="#767676"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dads_name"
-                    app:endIconMode="dropdown_menu"> <!-- Добавляет иконку выпадающего списка -->
+                    app:endIconMode="dropdown_menu">
 
                     <AutoCompleteTextView
                         android:id="@+id/gender"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:fontFamily="@font/pt_sans_regular"
                         android:textSize="16sp"
                         android:paddingStart="16dp"
                         android:hint="Пол"
-                        android:background="@android:color/transparent"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -180,9 +234,20 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/birthday_layout"
                     android:layout_width="360dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/field_back_white"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="15dp"
+                    app:boxCornerRadiusTopEnd="15dp"
+                    app:boxCornerRadiusBottomStart="15dp"
+                    app:boxCornerRadiusBottomEnd="15dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
+                    app:cursorColor="#767676"
                     android:hint="Дата рождения"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -191,11 +256,10 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/birthday_text"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:fontFamily="@font/pt_sans_regular"
                         android:textSize="16sp"
                         android:clickable="true"
-                        android:background="@android:color/transparent"
                         android:focusable="false" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -204,9 +268,20 @@
                     android:layout_width="360dp"
                     android:layout_height="420dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/field_back_white"
+                    android:layout_marginBottom="20dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="15dp"
+                    app:boxCornerRadiusBottomStart="15dp"
+                    app:boxCornerRadiusTopEnd="15dp"
+                    app:boxCornerRadiusTopStart="15dp"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:cursorColor="#767676"
+                    app:hintTextColor="#767676"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/birthday_layout">
@@ -215,13 +290,12 @@
                         android:id="@+id/about_myself_get"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="top"
                         android:fontFamily="@font/pt_sans_regular"
-                        android:textSize="16sp"
+                        android:gravity="top"
                         android:hint="О себе"
-                        android:background="@android:color/transparent"
                         android:imeOptions="actionNext"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
