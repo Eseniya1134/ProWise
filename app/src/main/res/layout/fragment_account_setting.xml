@@ -10,8 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- ScrollView теперь ограничен кнопкой -->
-
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
@@ -25,49 +23,77 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@drawable/rounded_corners"
+                    android:clipToOutline="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/profile_grad_foreground"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
                 <TextView
-                    android:id="@+id/profile_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="Профиль"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:id="@+id/back"
+                    android:layout_width="50dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Назад"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/pt_sans_regular"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.881"
                     app:layout_constraintStart_toEndOf="@+id/setting_text"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/safety"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Безопасность"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/pt_sans_regular"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/setting_text"
+                    app:layout_constraintHorizontal_bias="0.13"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/setting_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="50dp"
                     android:text="Настройки"
-                    android:textColor="@color/black"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/pt_sans_bold"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/avatar"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="40dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/baseline_face_24"
+                    android:background="@drawable/circle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/setting_text"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/surname"
-                    android:layout_width="310dp"
-                    android:layout_height="64dp"
+                    android:layout_width="360dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="20dp"
+                    android:background="@drawable/field_back_white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/avatar">
@@ -75,17 +101,21 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/surnameGet"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:layout_height="40dp"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:hint="Фамилия"
                         android:imeOptions="actionNext"
-                        android:hint="Фамилия" />
+                        android:inputType="text"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/name"
-                    android:layout_width="310dp"
-                    android:layout_height="64dp"
+                    android:layout_width="360dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="20dp"
+                    android:background="@drawable/field_back_white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/surname">
@@ -93,17 +123,21 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/nameGet"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textSize="16sp"
                         android:inputType="text"
                         android:imeOptions="actionNext"
+                        android:background="@android:color/transparent"
                         android:hint="Имя" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/dads_name"
-                    android:layout_width="310dp"
-                    android:layout_height="64dp"
+                    android:layout_width="360dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="20dp"
+                    android:background="@drawable/field_back_white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/name">
@@ -111,37 +145,44 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/dads_nameGet"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textSize="16sp"
                         android:imeOptions="actionDone"
+                        android:background="@android:color/transparent"
                         android:hint="Отчество" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/gender_layout"
-                    android:layout_width="310dp"
-                    android:layout_height="64dp"
+                    android:layout_width="360dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="20dp"
+                    android:background="@drawable/field_back_white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dads_name"
-                    app:endIconMode="dropdown_menu">
+                    app:endIconMode="dropdown_menu"> <!-- Добавляет иконку выпадающего списка -->
 
                     <AutoCompleteTextView
                         android:id="@+id/gender"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textSize="16sp"
                         android:paddingStart="16dp"
                         android:hint="Пол"
+                        android:background="@android:color/transparent"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/birthday_layout"
-                    android:layout_width="310dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_width="360dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/field_back_white"
                     android:hint="Дата рождения"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -150,16 +191,22 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/birthday_text"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textSize="16sp"
                         android:clickable="true"
+                        android:background="@android:color/transparent"
                         android:focusable="false" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/about_myself"
-                    android:layout_width="310dp"
+                    android:layout_width="360dp"
                     android:layout_height="420dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/field_back_white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/birthday_layout">
@@ -169,37 +216,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="top"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textSize="16sp"
                         android:hint="О себе"
+                        android:background="@android:color/transparent"
                         android:imeOptions="actionNext"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/safety_layout"
-                    android:layout_width="310dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/about_myself"
-                    app:endIconMode="dropdown_menu"> <!-- Добавляет иконку выпадающего списка -->
 
-                    <AutoCompleteTextView
-                        android:id="@+id/safety"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingStart="16dp"
-                        android:hint="Безопасность"
-                        android:inputType="none" />
-                </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </ScrollView>
 
         <Button
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#252375"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"

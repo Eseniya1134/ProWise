@@ -13,16 +13,6 @@
         android:layout_height="match_parent"
         >
 
-        <ImageView
-            android:id="@+id/sign_in_image"
-            android:layout_width="298dp"
-            android:layout_height="207dp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/sign_in_svg"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/to_signin" />
 
         <TextView
             android:id="@+id/log_title"
@@ -42,24 +32,27 @@
             android:id="@+id/log"
             android:layout_width="360dp"
             android:layout_height="55dp"
-            android:layout_marginTop="30dp"
             android:layout_margin="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="#252375"
             android:fontFamily="@font/pt_sans_bold"
             android:text="Создать аккаунт"
-            android:backgroundTint="#252375"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/log_password_rep" />
-
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_up"
             android:layout_width="360dp"
             android:layout_height="50dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
-            android:fontFamily="@font/pt_sans_regular"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/field_back"
+            android:fontFamily="@font/pt_sans_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mail_in"
@@ -71,19 +64,31 @@
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/pt_sans_regular"
-                android:textSize="16sp"
-                android:inputType="text"
+                android:hint="Логин"
                 android:imeOptions="actionNext"
-                android:hint="Логин" />
+                android:inputType="text"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/mail_in"
             android:layout_width="360dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxBackgroundColor="#EAEAEA"
+            app:boxStrokeColor="#767676"
+            app:boxStrokeWidth="1dp"
+            app:hintTextColor="#767676"
+            app:cursorColor="#767676"
             android:fontFamily="@font/pt_sans_regular"
-            android:background="@drawable/field_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/log_title"
@@ -93,8 +98,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mail_in_text"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@android:color/transparent"
+                android:layout_height="50dp"
                 android:fontFamily="@font/pt_sans_regular"
                 android:hint="Электронная почта"
                 android:imeOptions="actionNext"
@@ -106,11 +110,13 @@
             android:id="@+id/log_password"
             android:layout_width="360dp"
             android:layout_height="50dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
-            android:fontFamily="@font/pt_sans_regular"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/field_back"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/pt_sans_regular"
             app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/log_up"
             tools:ignore="MissingConstraints">
@@ -121,21 +127,23 @@
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/pt_sans_regular"
-                android:textSize="16sp"
-                android:inputType="textPassword"
+                android:hint="Пароль"
                 android:imeOptions="actionNext"
-                android:hint="Пароль" />
+                android:inputType="textPassword"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_password_rep"
             android:layout_width="360dp"
             android:layout_height="50dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
-            android:fontFamily="@font/pt_sans_regular"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/field_back"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/pt_sans_regular"
             app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/log_password"
             tools:ignore="MissingConstraints">
@@ -146,10 +154,10 @@
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/pt_sans_regular"
-                android:textSize="16sp"
-                android:inputType="textPassword"
+                android:hint="Введите пароль ещё раз"
                 android:imeOptions="actionDone"
-                android:hint="Введите пароль ещё раз" />
+                android:inputType="textPassword"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
