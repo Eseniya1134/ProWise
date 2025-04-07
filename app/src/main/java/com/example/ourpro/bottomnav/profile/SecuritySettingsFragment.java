@@ -1,5 +1,7 @@
 package com.example.ourpro.bottomnav.profile;
 
+import static com.google.android.material.textfield.TextInputLayout.END_ICON_NONE;
+
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,9 +49,7 @@ public class SecuritySettingsFragment extends Fragment {
 
         if (args != null && args.containsKey(ARG_SELECTED_VALUE)) {
             int value = args.getInt(ARG_SELECTED_VALUE);
-            //           textView.setText("Получено значение: " + value);
 
-            // Здесь можно добавить логику в зависимости от значения
             switch (value) {
                 case 1:
                     // Действия для смены пароля
@@ -59,15 +59,20 @@ public class SecuritySettingsFragment extends Fragment {
                 case 2:
                     // Действия для смены email
                     binding.infText.setText("Точно ли хотите поменять почту?");
-                    binding.newPasswordGet.setText("Новая почта");
+                    binding.newPassword.setHint("Новая почта");
+                    binding.newPasswordRep.setVisibility(View.INVISIBLE);
+                    binding.newPassword.setEndIconMode(END_ICON_NONE);
+                    binding.newPasswordGet.setTransformationMethod(null);
 
                     break;
                 case 3:
-                    binding.infText.setText("Точно ли хотите поменять имя пользователя?");
-                    binding.newPasswordGet.setText("Новое имя пользователя");
-                    binding.newPasswordRep.setVisibility(View.INVISIBLE);
-                    //            binding.newPassword.setEndIconActivated(View.INVISIBLE);
                     // Действия для смены имени пользователя
+                    binding.infText.setText("Точно ли хотите поменять имя пользователя?");
+                    binding.newPassword.setHint("Новое имя пользователя");
+                    binding.newPasswordRep.setVisibility(View.INVISIBLE);
+                    binding.newPassword.setEndIconMode(END_ICON_NONE);
+                    binding.newPasswordGet.setTransformationMethod(null);
+
                     break;
             }
         } else {
@@ -75,6 +80,8 @@ public class SecuritySettingsFragment extends Fragment {
             Log.e("SecuritySettings", "Аргументы отсутствуют!");
         }
     }
+
+
 }
 
 
