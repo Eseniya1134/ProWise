@@ -54,22 +54,23 @@ public class ProfileFragment extends Fragment {
             binding.profileText.setAlpha(1 - progress);
             binding.exit.setAlpha(1 - progress);
             binding.settingText.setAlpha(1 - progress);
+            binding.fullName.setAlpha(1 - progress);
+            binding.username.setAlpha(1 - progress);
+            binding.specialist.setAlpha(1 - progress);
+            binding.moreInfo.setAlpha(1 - progress);
+            binding.profileImage.setAlpha(1 - progress);
 
             // Показ/скрытие мини-аватарки
             binding.toolbar.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.profileImageSmall.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.settingsTitleSmall.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
-            binding.settingImg.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
 
-            binding.settingImg.setOnClickListener(v -> {
-                navigateToAccountSettings();
-            });
 
         });
     }
 
     private void animateViewsOnCreate() {
-        binding.profileImage.startAnimation(fadeInAnimation);
+        //binding.profileImage.startAnimation(fadeInAnimation);
         binding.profileText.startAnimation(fadeInAnimation);
 
 
