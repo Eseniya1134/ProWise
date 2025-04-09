@@ -52,6 +52,14 @@ public class AccountSettingFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (binding != null) {
+            binding.safety.setText("Безопасность", false);
+        }
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentAccountSettingBinding.bind(view);
@@ -74,6 +82,8 @@ public class AccountSettingFragment extends Fragment {
                 items
         );
         binding.gender.setAdapter(adapter);
+
+
 
         // Настройка элементов
         String[] items2 = {"Смена пароля", "Смена эл.почты", "Смена имени пользователя"};
@@ -209,7 +219,6 @@ public class AccountSettingFragment extends Fragment {
             String name = binding.nameGet.getText().toString();
             String surname = binding.surnameGet.getText().toString();
             String dadsName = binding.dadsNameGet.getText().toString();
-            //String username = binding.usernameGet.getText().toString();
             String aboutMyself = binding.aboutMyselfGet.getText().toString();
 
             if (name.isEmpty() || surname.isEmpty()) {
@@ -218,12 +227,13 @@ public class AccountSettingFragment extends Fragment {
             }
 
             Map<String, Object> userUpdates = new HashMap<>();
-            if (!surname.isEmpty() && !name.isEmpty()){
+            if (!surname.isEmpty() && !name.isEmpty()) {
                 userUpdates.put("surname", surname);
                 userUpdates.put("name", name);
-            }else{
+            } else {
                 Toast.makeText(requireContext(), "Фамилия и Имя должны быть заполнены", Toast.LENGTH_SHORT).show();
-            }if (!dadsName.isEmpty()) {
+            }
+            if (!dadsName.isEmpty()) {
                 userUpdates.put("fathersName", dadsName);
             }
             userUpdates.put("aboutMyself", aboutMyself);
@@ -232,17 +242,6 @@ public class AccountSettingFragment extends Fragment {
             databaseReference.child(userId).updateChildren(userUpdates)
                     .addOnSuccessListener(aVoid -> Log.d(TAG, "ФИО и username сохранены в Firebase"))
                     .addOnFailureListener(e -> Log.e(TAG, "Ошибка сохранения в Firebase: " + e.getMessage()));
-
-           /* checkUsernameAvailability(username, isAvailable -> {
-                if (isAvailable) {
-                    userUpdates.put("username", username);
-                    databaseReference.child(userId).updateChildren(userUpdates)
-                            .addOnSuccessListener(aVoid -> Log.d(TAG, "ФИО и username сохранены в Firebase"))
-                            .addOnFailureListener(e -> Log.e(TAG, "Ошибка сохранения в Firebase: " + e.getMessage()));
-                } else {
-                    Toast.makeText(requireContext(), "Этот username уже занят", Toast.LENGTH_SHORT).show();
-                }
-            });*/
         }
     }
 
@@ -293,18 +292,6 @@ public class AccountSettingFragment extends Fragment {
             }
         }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки отчества: " + e.getMessage()));
 
-        // Получаем ник пользователя
-    /*    DatabaseReference databaseUserName = database.getReference("Users").child(userId).child("username");
-        databaseUserName.get().addOnSuccessListener(UserNameBase -> {
-            if (UserNameBase.exists() && UserNameBase.getValue() != null) {
-                String username = UserNameBase.getValue(String.class);
-                if (username != null) {
-                    binding.usernameGet.setText(username);
-                    Log.d(TAG, "Ник загружено: " + username);
-                }
-            }
-        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки ник: " + e.getMessage())); */
-
         // Получаем "О себе"
         DatabaseReference databaseMyself = database.getReference("Users").child(userId).child("aboutMyself");
         databaseMyself.get().addOnSuccessListener(myselfBase -> {
@@ -318,35 +305,7 @@ public class AccountSettingFragment extends Fragment {
         }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки о себе: " + e.getMessage()));
     }
 
-/*    private void checkUsernameAvailability(String username, OnUsernameCheckListener listener) {
-        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
-                .getReference("Users");
 
-        usersRef.orderByChild("username").equalTo(username).get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DataSnapshot snapshot = task.getResult();
-                        boolean isAvailable = true;
-
-                        for (DataSnapshot child : snapshot.getChildren()) {
-                            Log.d("Firebase", "Найден пользователь: " + child.getValue());
-                            isAvailable = false;
-                        }
-
-                        listener.onCheck(isAvailable);
-                    } else {
-                        Log.e("Firebase", "Ошибка при проверке username", task.getException());
-                        listener.onCheck(false);
-                    }
-                });
-
-
-    }
-
-    interface OnUsernameCheckListener {
-        void onCheck(boolean isAvailable);
-    }
-*/
 
 
     ///МЕТОДЫ ДАТЫ РОЖДЕНИЯ
@@ -361,8 +320,6 @@ public class AccountSettingFragment extends Fragment {
         String userId = user.getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
         DatabaseReference databaseReference = database.getReference("Users").child(userId).child("dateOfBirth");
-
-        //       Log.d(TAG, "Запрос к Firebase по пути: " + databaseReference.getPath());
 
         databaseReference.get().addOnSuccessListener(dataSnapshot -> {
             if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
