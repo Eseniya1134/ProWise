@@ -9,14 +9,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/log_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Войти"
+            android:layout_marginTop="52dp"
+            android:text="Вход в аккаунт"
             android:textSize="40sp"
             android:textColor="#252375"
             android:fontFamily="@font/pt_sans_bold"
@@ -26,17 +27,17 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_in"
-            android:layout_width="360dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusTopStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
             app:boxBackgroundColor="#EAEAEA"
             app:boxStrokeColor="#767676"
             app:boxStrokeWidth="1dp"
@@ -56,18 +57,16 @@
                 android:inputType="text"
                 android:textColorHint="#767676"
                 android:textColorLink="#767676"
-                android:textColorHighlight="#767676"
-                android:textColor="#767676"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_password"
-            android:layout_width="360dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusTopStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
@@ -96,12 +95,12 @@
 
         <Button
             android:id="@+id/log"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="30dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="16dp"
             android:backgroundTint="@color/our_blue"
             android:fontFamily="@font/pt_sans_bold"
             android:text="Войти"

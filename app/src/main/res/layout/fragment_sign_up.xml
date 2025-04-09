@@ -10,6 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent"
         >
 
@@ -18,7 +19,7 @@
             android:id="@+id/log_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="52dp"
             android:text="Регистрация"
             android:textColor="#252375"
             android:textSize="40sp"
@@ -30,12 +31,12 @@
 
         <Button
             android:id="@+id/log"
-            android:layout_width="360dp"
-            android:layout_height="55dp"
-            android:layout_margin="30dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_margin="32dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="12dp"
             android:backgroundTint="#252375"
             android:fontFamily="@font/pt_sans_bold"
             android:text="Создать аккаунт"
@@ -46,17 +47,17 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_up"
-            android:layout_width="360dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
             android:background="@android:color/transparent"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusTopStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
             app:boxBackgroundColor="#EAEAEA"
             app:boxStrokeColor="#767676"
             app:boxStrokeWidth="1dp"
@@ -78,23 +79,22 @@
                 android:textColorHint="#767676"
                 android:textColorLink="#767676"
                 android:textColorHighlight="#767676"
-                android:textColor="#767676"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/mail_in"
-            android:layout_width="360dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="32dp"
             android:background="@android:color/transparent"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusTopStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
             app:boxBackgroundColor="#EAEAEA"
             app:boxStrokeColor="#767676"
             app:boxStrokeWidth="1dp"
@@ -116,24 +116,22 @@
                 android:inputType="text"
                 android:textColorHint="#767676"
                 android:textColorLink="#767676"
-                android:textColorHighlight="#767676"
-                android:textColor="#767676"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_password"
-            android:layout_width="360dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
             android:background="@android:color/transparent"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusTopStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
             app:boxBackgroundColor="#EAEAEA"
             app:boxStrokeColor="#767676"
             app:boxStrokeWidth="1dp"
@@ -142,6 +140,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/log_up"
+            app:endIconMode="password_toggle"
             tools:ignore="MissingConstraints">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -151,27 +150,24 @@
                 android:fontFamily="@font/pt_sans_regular"
                 android:hint="Пароль"
                 android:imeOptions="actionNext"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:textColorHint="#767676"
-                android:textColorLink="#767676"
-                android:textColorHighlight="#767676"
-                android:textColor="#767676"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_password_rep"
-            android:layout_width="360dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
             android:background="@android:color/transparent"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusTopStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
             app:boxBackgroundColor="#EAEAEA"
             app:boxStrokeColor="#767676"
             app:boxStrokeWidth="1dp"
@@ -180,6 +176,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/log_password"
+            app:endIconMode="password_toggle"
             tools:ignore="MissingConstraints">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -189,11 +186,9 @@
                 android:fontFamily="@font/pt_sans_regular"
                 android:hint="Введите пароль ещё раз"
                 android:imeOptions="actionNext"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:textColorHint="#767676"
                 android:textColorLink="#767676"
-                android:textColorHighlight="#767676"
-                android:textColor="#767676"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 

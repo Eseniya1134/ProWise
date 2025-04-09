@@ -10,64 +10,104 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- ScrollView теперь ограничен кнопкой -->
 
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="#FFFFFF"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/save"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="-40dp"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/profile_gradient" />
+                </androidx.cardview.widget.CardView>
+
+
+                <ImageView
                     android:id="@+id/profile_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="Профиль"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/ic_close"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.881"
                     app:layout_constraintStart_toEndOf="@+id/setting_text"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white" />
 
                 <TextView
                     android:id="@+id/setting_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="44dp"
                     android:text="Настройки"
-                    android:textColor="@color/black"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/pt_sans_bold"
+                    android:textColor="@color/white"
+                    android:textSize="32sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <FrameLayout
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:background="@drawable/circle"
+                    android:clipToOutline="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/setting_text"
+                    android:layout_marginTop="16dp">
+                </FrameLayout>
+
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/avatar"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="26dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/baseline_face_24"
+                    android:src="@drawable/profile_icon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/setting_text"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/surname"
-                    android:layout_width="310dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/avatar">
@@ -76,22 +116,39 @@
                         android:id="@+id/surnameGet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textColor="@color/grey_text"
+                        android:hint="Фамилия"
                         android:imeOptions="actionNext"
-                        android:hint="Фамилия" />
+                        android:inputType="text"
+                        android:textColorLink="#0F0F0F" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/name"
-                    android:layout_width="310dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/surname">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/nameGet"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textColor="@color/grey_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -101,15 +158,29 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/dads_name"
-                    android:layout_width="310dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/name">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/dads_nameGet"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textColor="@color/grey_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -119,9 +190,21 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/gender_layout"
-                    android:layout_width="310dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dads_name"
@@ -129,6 +212,8 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/gender"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textColor="@color/grey_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingStart="16dp"
@@ -139,16 +224,30 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/birthday_layout"
-                    android:layout_width="310dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:hint="Дата рождения"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/gender_layout">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/birthday_text"
+                        android:textColor="@color/grey_text"
+                        android:fontFamily="@font/pt_sans_regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -157,15 +256,29 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/about_myself"
-                    android:layout_width="310dp"
-                    android:layout_height="420dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#767676"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#767676"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/birthday_layout">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/about_myself_get"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textColor="@color/grey_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="top"
@@ -176,23 +289,41 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/safety_layout"
-                    android:layout_width="310dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="16dp"
+                    app:boxBackgroundColor="@color/green_light"
+                    app:boxBackgroundMode="filled"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:endIconMode="dropdown_menu"
+                    app:endIconTint="@color/our_blue"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/about_myself"
-                    app:endIconMode="dropdown_menu"> <!-- Добавляет иконку выпадающего списка -->
+                    app:layout_constraintTop_toBottomOf="@id/about_myself">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/safety"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingStart="16dp"
-                        android:hint="Безопасность"
-                        android:inputType="none" />
+                <AutoCompleteTextView
+                    android:id="@+id/safety"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/pt_sans_bold"
+                    android:text="Безопасность"
+                    android:textColor="@color/our_blue"
+                    android:inputType="none"
+                    android:paddingStart="16dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:focusable="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -200,10 +331,12 @@
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/pt_sans_bold"
             android:text="Сохранить изменения"
+            android:backgroundTint="@color/our_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
