@@ -28,7 +28,8 @@
             <!-- Большая аватарка (фон) -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="477dp"
+                android:background="@drawable/top_background">
 
                 <TextView
                     android:id="@+id/exit"
@@ -73,9 +74,10 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileImage"
-                    android:layout_width="240dp"
-                    android:layout_height="240dp"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
                     android:layout_marginTop="20dp"
+                    android:background="@drawable/circle"
                     android:scaleType="centerCrop"
                     android:src="@drawable/baseline_face_24"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -138,7 +140,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="227dp"
                 android:background="@android:color/transparent"
                 android:visibility="visible"
 
@@ -198,16 +200,15 @@
 
                     <ImageView
                         android:id="@+id/profileImageSmall"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="90dp"
-                        android:background="@drawable/circle_white_border"
+                        android:background="@drawable/circle"
                         android:scaleType="centerCrop"
                         android:src="@drawable/baseline_face_24"
                         android:visibility="invisible"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/setting_text2" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/settingsTitleSmall"

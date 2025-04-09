@@ -9,7 +9,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ourpro.R;
 
-public class OrdersFragment extends Fragment {
+public class
+OrdersFragment extends Fragment {
     public OrdersFragment() {
         super(R.layout.fragment_orders);
     }
