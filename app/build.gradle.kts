@@ -66,6 +66,7 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.8")//предназначена для загрузки и отображения изображений в Android-приложениях.
 
 
+    implementation ("com.google.android.material:material:1.11.0")
 
     implementation ("com.cloudinary:cloudinary-android:2.5.0")
     implementation ("com.squareup.okhttp3:okhttp:4.12.0") // Для загрузки файлов

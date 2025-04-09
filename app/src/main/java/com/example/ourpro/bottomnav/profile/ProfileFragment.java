@@ -63,7 +63,7 @@ public class ProfileFragment extends Fragment {
             // Показ/скрытие мини-аватарки
             binding.toolbar.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.profileImageSmall.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
-            binding.settingsTitleSmall.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
+
 
 
         });

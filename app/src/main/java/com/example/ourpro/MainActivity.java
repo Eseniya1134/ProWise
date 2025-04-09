@@ -12,8 +12,9 @@ import androidx.fragment.app.Fragment;
 import com.example.ourpro.bottomnav.catalog.CatalogFragment;
 import com.example.ourpro.bottomnav.finance.FinanceFragment;
 import com.example.ourpro.bottomnav.orders.OrdersFragment;
-import com.example.ourpro.bottomnav.profile.ProfileFragment;
+
 import com.example.ourpro.bottomnav.dialogs.DialogsFragment;
+import com.example.ourpro.bottomnav.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
