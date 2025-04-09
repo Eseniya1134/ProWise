@@ -28,7 +28,7 @@
             <!-- Большая аватарка (фон) -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="477dp"
+                android:layout_height="486dp"
                 android:background="@drawable/top_background">
 
                 <TextView
@@ -200,9 +200,9 @@
 
                     <ImageView
                         android:id="@+id/profileImageSmall"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_marginStart="20dp"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_marginStart="10dp"
                         android:background="@drawable/circle"
                         android:scaleType="centerCrop"
                         android:src="@drawable/baseline_face_24"
@@ -210,17 +210,6 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
-                    <TextView
-                        android:id="@+id/settingsTitleSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="48dp"
-                        android:text="Профиль"
-                        android:textColor="@android:color/white"
-                        android:textSize="18sp"
-                        android:visibility="invisible"
-                        app:layout_constraintStart_toEndOf="@+id/profileImageSmall"
-                        tools:layout_editor_absoluteY="142dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.appcompat.widget.Toolbar>
