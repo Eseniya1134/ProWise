@@ -69,7 +69,6 @@ public class ProfileFragment extends Fragment {
             float progress = -verticalOffset / (float) scrollRange;
 
             // Анимация прозрачности элементов
-            binding.profileText.setAlpha(1 - progress);
             binding.exit.setAlpha(1 - progress);
             binding.settingText.setAlpha(1 - progress);
             binding.fullName.setAlpha(1 - progress);
@@ -89,7 +88,6 @@ public class ProfileFragment extends Fragment {
 
     private void animateViewsOnCreate() {
         //binding.profileImage.startAnimation(fadeInAnimation);
-        binding.profileText.startAnimation(fadeInAnimation);
 
         binding.editProfileButton.postDelayed(() -> {
             binding.editProfileButton.startAnimation(fadeInAnimation);
