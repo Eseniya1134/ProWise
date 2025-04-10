@@ -28,71 +28,80 @@
             <!-- Большая аватарка (фон) -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="486dp"
+                android:layout_height="500dp"
                 android:background="@drawable/top_background">
 
-                <TextView
+
+                <ImageView
                     android:id="@+id/exit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Выход"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:src="@drawable/ic_close"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.881"
-                    app:layout_constraintStart_toEndOf="@+id/profile_text"
+                    app:layout_constraintStart_toEndOf="@+id/username"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <ImageView
                     android:id="@+id/setting_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="24dp"
-                    android:text="Настройки"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toStartOf="@+id/profile_text"
+                    android:src="@drawable/ic_settings"
+                    app:layout_constraintEnd_toStartOf="@+id/username"
                     app:layout_constraintHorizontal_bias="0.13"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/profile_text"
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:text="Профиль"
-                    android:textColor="@color/black"
+                    android:layout_marginTop="32dp"
+                    android:text="username"
+                    android:textColor="@color/white"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profileImage"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="20dp"
+                <FrameLayout
+                    android:id="@+id/circle"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="40dp"
                     android:background="@drawable/circle"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/baseline_face_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/profile_text" />
+                    app:layout_constraintTop_toBottomOf="@+id/username">
+                </FrameLayout>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="50dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/profile_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/username" />
 
                 <TextView
                     android:id="@+id/full_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Фамилия Имя Отчество"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
+                    android:layout_marginTop="40dp"
+                    android:text="Фамилия Имя\nОтчество"
+                    android:gravity="center"
+                    android:lineHeight="36sp"
+                    android:textColor="@color/white"
+                    android:textSize="36sp"
+                    android:fontFamily="@font/pt_sans_bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/profileImage" />
@@ -101,33 +110,24 @@
                     android:id="@+id/specialist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="16dp"
                     android:text="Специалист"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/username" />
-
-                <TextView
-                    android:id="@+id/username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="имя_пользователя"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:fontFamily="@font/pt_sans_regular"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/full_name" />
+
 
                 <TextView
                     android:id="@+id/more_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="пол, XX лет"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/pt_sans_regular"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/specialist" />
@@ -154,44 +154,38 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <TextView
+                    <ImageView
                         android:id="@+id/exit2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         android:layout_marginEnd="9dp"
-                        android:text="Выход"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:src="@drawable/ic_close"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.881"
-                        app:layout_constraintStart_toEndOf="@+id/profile_text2"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <ImageView
                         android:id="@+id/setting_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
-                        android:text="Настройки"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:src="@drawable/ic_settings"
                         android:visibility="visible"
-                        app:layout_constraintEnd_toStartOf="@+id/profile_text2"
                         app:layout_constraintHorizontal_bias="0.03"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/profile_text2"
+                        android:id="@+id/username1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
-                        android:text="Профиль"
-                        android:textColor="@color/black"
+                        android:layout_marginTop="24dp"
+                        android:text="username"
+                        android:textColor="@color/white"
                         android:textSize="22sp"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/pt_sans_bold"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.470"
@@ -202,53 +196,56 @@
                         android:id="@+id/names_user"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="100dp"
-                        android:layout_marginEnd="10dp"
-                        android:text="Фамилия Имя"
+                        android:layout_marginTop="70dp"
+                        android:layout_marginEnd="60dp"
+                        android:text="Фамилия\nИмя"
                         android:textColor="@color/white"
-                        android:textSize="23dp"
-                        android:textStyle="bold"
+                        android:lineHeight="32dp"
+                        android:gravity="right"
+                        android:textSize="32sp"
+                        android:fontFamily="@font/pt_sans_bold"
                         android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/profileImageSmall"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/specialist1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="60dp"
                         android:text="Специалист"
                         android:textColor="@color/white"
-                        android:textSize="20dp"
+                        android:fontFamily="@font/pt_sans_regular"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/profileImageSmall"
-                        app:layout_constraintTop_toBottomOf="@+id/username1" />
-
-                    <TextView
-                        android:id="@+id/username1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="имя_пользователя"
-                        android:textColor="@color/white"
-                        android:textSize="15dp"
-                        android:visibility="invisible"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/profileImageSmall"
                         app:layout_constraintTop_toBottomOf="@+id/names_user" />
+
+
+                    <FrameLayout
+                        android:id="@+id/circle_small"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_marginTop="70dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginBottom="40dp"
+                        android:background="@drawable/circle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="parent">
+                    </FrameLayout>
+
 
                     <ImageView
                         android:id="@+id/profileImageSmall"
-                        android:layout_width="130dp"
-                        android:layout_height="130dp"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/circle"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="29dp"
+                        android:layout_marginBottom="45dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/baseline_face_24"
+                        android:src="@drawable/profile_icon"
                         android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
