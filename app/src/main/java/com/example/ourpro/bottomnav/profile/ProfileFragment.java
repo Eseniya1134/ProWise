@@ -1,7 +1,10 @@
 package com.example.ourpro.bottomnav.profile;
 
+import static java.lang.String.join;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,7 +18,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.ourpro.R;
 import com.example.ourpro.SignActivity;
 import com.example.ourpro.databinding.FragmentProfileBinding;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ProfileFragment extends Fragment {
 
@@ -30,9 +41,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentProfileBinding.bind(view);
-
-
-
+        loadFullName();
         binding.settingText.setOnClickListener(v -> {
             navigateToAccountSettings();
         });
@@ -52,11 +61,6 @@ public class ProfileFragment extends Fragment {
         // Анимация при открытии
         animateViewsOnCreate();
 
-
-        /// Выгрузка данных в лк
-
-
-
     }
 
     private void setupAppBar() {
@@ -72,7 +76,6 @@ public class ProfileFragment extends Fragment {
             binding.specialist.setAlpha(1 - progress);
             binding.moreInfo.setAlpha(1 - progress);
             binding.profileImage.setAlpha(1 - progress);
-            binding.circle.setAlpha(1 - progress);
 
             // Показ/скрытие мини-аватарки
             binding.toolbar.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
@@ -80,7 +83,6 @@ public class ProfileFragment extends Fragment {
             binding.username1.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.namesUser.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.specialist1.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
-            binding.circleSmall.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
         });
     }
 
@@ -119,5 +121,64 @@ public class ProfileFragment extends Fragment {
         if (scaleAnimation != null) scaleAnimation.cancel();
         if (fadeInAnimation != null) fadeInAnimation.cancel();
         binding = null;
+    }
+
+
+    //метод выгрузки фио и "О себе"
+    private static final String TAG = "Upload ###";
+    private <MutableLiveData> void loadFullName() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e(TAG, "Ошибка: пользователь не найден");
+            return;
+        }
+
+        String userId = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+        //старый код
+        /*// Получаем имя
+        DatabaseReference databaseName = database.getReference("Users").child(userId).child("name");
+        databaseName.get().addOnSuccessListener(nameBase -> {
+            if (nameBase.exists() && nameBase.getValue() != null) {
+                String name = nameBase.getValue(String.class);
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки имени: " + e.getMessage()));
+
+
+        // Получаем фамилию
+        DatabaseReference databaseSurname = database.getReference("Users").child(userId).child("surname");
+        databaseSurname.get().addOnSuccessListener(surnameBase -> {
+            if (surnameBase.exists() && surnameBase.getValue() != null) {
+                String surname = surnameBase.getValue(String.class);
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки фамилии: " + e.getMessage()));
+
+        // Получаем отчество
+        DatabaseReference databaseDadsName = database.getReference("Users").child(userId).child("fathersName");
+        databaseDadsName.get().addOnSuccessListener(dadsNameBase -> {
+            if (dadsNameBase.exists() && dadsNameBase.getValue() != null) {
+                String dadsName = dadsNameBase.getValue(String.class);
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки отчества: " + e.getMessage()));
+        */
+
+        Task<DataSnapshot> nameTask = database.getReference("Users").child(userId).child("name").get();
+        Task<DataSnapshot> surnameTask = database.getReference("Users").child(userId).child("surname").get();
+        Task<DataSnapshot> dadsNameTask = database.getReference("Users").child(userId).child("fathersName").get();
+
+        Tasks.whenAllSuccess(nameTask, surnameTask, dadsNameTask)
+                .addOnSuccessListener(results -> {
+                    String name = ((DataSnapshot) results.get(0)).getValue(String.class);
+                    String surname = ((DataSnapshot) results.get(1)).getValue(String.class);
+                    String dadsName = ((DataSnapshot) results.get(2)).getValue(String.class);
+
+                    String fullName = surname + " " + name + " " + dadsName;
+                    binding.fullName.setText(fullName);
+                    Log.d(TAG, "Полное имя: " + fullName);
+
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки: " + e.getMessage()));
+
     }
 }
