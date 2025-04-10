@@ -25,28 +25,20 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_marginTop="-40dp"
-                    app:cardCornerRadius="30dp"
-                    app:cardElevation="0dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/profile_gradient" />
-                </androidx.cardview.widget.CardView>
+                    android:layout_height="230dp"
+                    android:background="@drawable/top_background2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/setting_text"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white" />
 
 
                 <ImageView
                     android:id="@+id/profile_button"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="32dp"
                     android:src="@drawable/ic_close"
@@ -59,7 +51,7 @@
                     android:id="@+id/setting_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="44dp"
+                    android:layout_marginTop="32dp"
                     android:text="Настройки"
                     android:fontFamily="@font/pt_sans_bold"
                     android:textColor="@color/white"
@@ -72,7 +64,6 @@
                     android:layout_width="180dp"
                     android:layout_height="180dp"
                     android:background="@drawable/circle"
-                    android:clipToOutline="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/setting_text"
