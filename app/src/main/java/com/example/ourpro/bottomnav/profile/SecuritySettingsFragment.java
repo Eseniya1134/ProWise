@@ -85,6 +85,10 @@ public class SecuritySettingsFragment extends Fragment {
                     binding.newPasswordRep.setVisibility(View.INVISIBLE);
                     binding.newPosition.setEndIconMode(END_ICON_NONE);
                     binding.newPositionGet.setTransformationMethod(null);
+                    loadEmail();
+                    binding.saveSafety.setOnClickListener(v ->{
+                        loadEmail();
+                    });
 
                     break;
                 case 3:
@@ -122,6 +126,56 @@ public class SecuritySettingsFragment extends Fragment {
 
     }
 
+
+    ///Смена эл.почты
+    //Выгрузка эл.почты
+    private void loadEmail() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e(TAG, "Ошибка: пользователь не найден");
+            return;
+        }
+
+        String userId = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+        DatabaseReference databaseUserName = database.getReference("Users").child(userId).child("email");
+        databaseUserName.get().addOnSuccessListener(emailBase -> {
+            if (emailBase.exists() && emailBase.getValue() != null) {
+                String email = emailBase.getValue(String.class);
+                if (email != null) {
+                    binding.newPositionGet.setText(email);
+                    Log.d(TAG, "Ник загружено: " + email);
+                }
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки ник: " + e.getMessage()));
+    }
+
+    //Загрузка эл.почты
+    private void saveEmail(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
+                    .getReference("Users");
+
+            String email = binding.newPositionGet.getText().toString();
+            Map<String, Object> userUpdates = new HashMap<>();
+            checkFieldAvailability("email", email, isAvailable -> {
+                if (isAvailable) {
+                    userUpdates.put("email", email);
+                    databaseReference.child(userId).updateChildren(userUpdates)
+                            .addOnSuccessListener(aVoid -> Log.d("TAG", "email сохранен в Firebase"))
+                            .addOnFailureListener(e -> Log.e("TAG", "Ошибка сохранения в Firebase: " + e.getMessage()));
+                } else {
+                    Toast.makeText(requireContext(), "Этот email уже зарегистрирован", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+
+
+
     ///Смена имени пользователя
     //Загрузка имени пользователя
     private void saveUsername() {
@@ -131,21 +185,22 @@ public class SecuritySettingsFragment extends Fragment {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
                     .getReference("Users");
 
-            String username = binding.newPositionGet.getText().toString();
+            String username = binding.newPositionGet.getText().toString().trim();
             Map<String, Object> userUpdates = new HashMap<>();
-            checkUsernameAvailability(username, isAvailable -> {
+
+            // вызываем общий метод, передавая поле "username"
+            checkFieldAvailability("username", username, isAvailable -> {
                 if (isAvailable) {
                     userUpdates.put("username", username);
                     databaseReference.child(userId).updateChildren(userUpdates)
-                            .addOnSuccessListener(aVoid -> Log.d("TAG", "ФИО и username сохранены в Firebase"))
-                            .addOnFailureListener(e -> Log.e("TAG", "Ошибка сохранения в Firebase: " + e.getMessage()));
+                            .addOnSuccessListener(aVoid -> Log.d("TAG", "username сохранён в Firebase"))
+                            .addOnFailureListener(e -> Log.e("TAG", "Ошибка сохранения username: " + e.getMessage()));
                 } else {
                     Toast.makeText(requireContext(), "Этот username уже занят", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
-
 
     //выгрузка имени пользователя
     private void loadUsername() {
@@ -170,26 +225,26 @@ public class SecuritySettingsFragment extends Fragment {
     }
 
 
-    private void checkUsernameAvailability(String username, OnUsernameCheckListener listener) {
-        // Ссылка на узел "Users" в Realtime Database
+
+
+    private void checkFieldAvailability(String fieldName, String value, OnFieldCheckListener listener) {
         DatabaseReference usersRef = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("Users");
 
-        // Проверяем, есть ли пользователь с таким username
-        usersRef.orderByChild("username").equalTo(username).get()
+        usersRef.orderByChild(fieldName).equalTo(value).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        boolean isAvailable = !task.getResult().hasChildren(); // true, если ник свободен
+                        boolean isAvailable = !task.getResult().hasChildren(); // true — свободно
                         listener.onCheck(isAvailable);
                     } else {
-                        // В случае ошибки считаем, что имя занято
-                        listener.onCheck(false);
+                        listener.onCheck(false); // В случае ошибки считаем занятым
                     }
                 });
     }
 
+
     // Callback-интерфейс для обработки результата
-    interface OnUsernameCheckListener {
+    public interface OnFieldCheckListener {
         void onCheck(boolean isAvailable);
     }
 

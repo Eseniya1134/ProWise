@@ -31,6 +31,8 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentProfileBinding.bind(view);
 
+
+
         binding.settingText.setOnClickListener(v -> {
             navigateToAccountSettings();
         });
@@ -49,6 +51,10 @@ public class ProfileFragment extends Fragment {
 
         // Анимация при открытии
         animateViewsOnCreate();
+
+
+        /// Выгрузка данных в лк
+
 
 
     }
