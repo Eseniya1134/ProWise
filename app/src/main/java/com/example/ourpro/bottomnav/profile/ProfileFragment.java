@@ -115,9 +115,3 @@ public class ProfileFragment extends Fragment {
         binding = null;
     }
 }
-
-/*
-
-
-
- */
