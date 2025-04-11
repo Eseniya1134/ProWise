@@ -546,7 +546,10 @@ public class AccountSettingFragment extends Fragment {
                         Log.d(TAG, "Выбранный путь изображения: " + imagePath);
 
                         if (imagePath != null) {
-                            Picasso.get().load(imagePath).into(binding.avatar);
+                            if (binding != null) {
+                                Picasso.get().load(imagePath).into(binding.avatar);
+                            }
+
                         } else {
                             Toast.makeText(requireContext(), "Ошибка выбора изображения", Toast.LENGTH_SHORT).show();
                         }

@@ -33,6 +33,7 @@ public class ProfileFragment extends Fragment {
     public ProfileFragment() {
         super(R.layout.fragment_profile);
     }
+    private static final String TAG = "Upload ###";
 
     private FragmentProfileBinding binding;
     private Animation scaleAnimation, fadeInAnimation;
@@ -117,17 +118,9 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (scaleAnimation != null) scaleAnimation.cancel();
-        if (fadeInAnimation != null) fadeInAnimation.cancel();
-        binding = null;
-    }
-
 
     //метод выгрузки фио и "О себе"
-    private static final String TAG = "Upload ###";
+
     private <MutableLiveData> void loadFullName() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
@@ -183,4 +176,19 @@ public class ProfileFragment extends Fragment {
                 .addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки: " + e.getMessage()));
 
     }
+
+
+
+
+
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (scaleAnimation != null) scaleAnimation.cancel();
+        if (fadeInAnimation != null) fadeInAnimation.cancel();
+        binding = null;
+    }
+
 }
