@@ -76,6 +76,7 @@ public class ProfileFragment extends Fragment {
             binding.specialist.setAlpha(1 - progress);
             binding.moreInfo.setAlpha(1 - progress);
             binding.profileImage.setAlpha(1 - progress);
+            binding.circle.setAlpha(1 - progress);
 
             // Показ/скрытие мини-аватарки
             binding.toolbar.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
@@ -83,6 +84,7 @@ public class ProfileFragment extends Fragment {
             binding.username1.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.namesUser.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.specialist1.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
+            binding.circleSmall.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
         });
     }
 
