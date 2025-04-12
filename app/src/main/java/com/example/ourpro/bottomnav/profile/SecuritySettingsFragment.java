@@ -87,24 +87,8 @@ public class SecuritySettingsFragment extends Fragment {
                     });
 
                     break;
+
                 case 2:
-                    // Действия для смены email
-                    binding.infText.setText("Точно ли хотите поменять почту?");
-                    binding.newPosition.setHint("Новая почта");
-                    //  binding.newPasswordRep.setVisibility(View.INVISIBLE);
-                    binding.newPosition.setEndIconMode(END_ICON_NONE);
-                    binding.newPositionGet.setTransformationMethod(null);
-                    loadEmail();
-
-
-                    binding.saveSafety.setOnClickListener(v ->{
-                        String newEmail = binding.newPositionGet.getText().toString();
-                        saveEmail();
-
-
-                    });
-                    break;
-                case 3:
                     // Действия для смены имени пользователя
                     binding.infText.setText("Точно ли хотите поменять имя пользователя?");
                     binding.newPosition.setHint("Ваше имя пользователя");
@@ -174,97 +158,6 @@ public class SecuritySettingsFragment extends Fragment {
                     Toast.makeText(requireContext(), "Ошибка отправки ссылки для сброса пароля", Toast.LENGTH_SHORT).show();
                 });
     }
-
-
-
-
-    ///Смена эл.почты (осуществляется только с подтверждением на новую эл.почту
-    //Выгрузка эл.почты
-    private void loadEmail() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Log.e(TAG, "Ошибка: пользователь не найден");
-            return;
-        }
-
-        String userId = user.getUid();
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
-        DatabaseReference databaseUserName = database.getReference("Users").child(userId).child("email");
-        databaseUserName.get().addOnSuccessListener(emailBase -> {
-            if (emailBase.exists() && emailBase.getValue() != null) {
-                String email = emailBase.getValue(String.class);
-                if (email != null) {
-                    binding.newPositionGet.setText(email);
-                    Log.d(TAG, "Ник загружено: " + email);
-                }
-            }
-        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки ник: " + e.getMessage()));
-    }
-
-    //Загрузка эл.почты
-
-    // Смена эл.почты с возможной переавторизацией
-    private void saveEmail() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Toast.makeText(requireContext(), "Пользователь не найден", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String newEmail = binding.newPositionGet.getText().toString().trim();
-        String password = binding.newPasswordRepGet.getText().toString().trim();
-
-        if (newEmail.isEmpty()) {
-            Toast.makeText(requireContext(), "Введите новый email", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()) {
-            Toast.makeText(requireContext(), "Неверный формат email", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (password.isEmpty()) {
-            Toast.makeText(requireContext(), "Введите текущий пароль", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        checkFieldAvailability("email", newEmail, isAvailable -> {
-            if (!isAvailable) {
-                Toast.makeText(requireContext(), "Этот email уже используется", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
-
-            user.reauthenticate(credential)
-                    .addOnSuccessListener(task -> {
-                        user.updateEmail(newEmail)
-                                .addOnSuccessListener(aVoid -> {
-                                    user.sendEmailVerification()
-                                            .addOnSuccessListener(aVoid1 -> Toast.makeText(requireContext(), "Email обновлён. Проверьте почту.", Toast.LENGTH_LONG).show())
-                                            .addOnFailureListener(e -> Toast.makeText(requireContext(), "Ошибка отправки письма: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-
-                                    String userId = user.getUid();
-                                    DatabaseReference databaseReference = FirebaseDatabase
-                                            .getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
-                                            .getReference("Users");
-
-                                    Map<String, Object> updates = new HashMap<>();
-                                    updates.put("email", newEmail);
-
-                                    databaseReference.child(userId).updateChildren(updates)
-                                            .addOnSuccessListener(unused -> Log.d(TAG, "Email сохранён в БД"))
-                                            .addOnFailureListener(e -> Log.e(TAG, "Ошибка сохранения email: " + e.getMessage()));
-                                })
-                                .addOnFailureListener(e -> Toast.makeText(requireContext(), "Ошибка обновления email: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(requireContext(), "Ошибка авторизации: " + e.getMessage(), Toast.LENGTH_LONG).show());
-            .addOnFailureListener(e -> Log.e(TAG, "Ошибка авторизации: " + e.getMessage()));
-        });
-    }
-
 
 
 

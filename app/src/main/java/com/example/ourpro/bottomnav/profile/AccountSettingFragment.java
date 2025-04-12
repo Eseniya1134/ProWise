@@ -85,7 +85,7 @@ public class AccountSettingFragment extends Fragment {
 
 
         // Настройка элементов
-        String[] items2 = {"Смена пароля", "Смена эл.почты", "Смена имени пользователя"};
+        String[] items2 = {"Смена пароля", "Смена имени пользователя"};
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(
                 requireContext(),
                 android.R.layout.simple_dropdown_item_1line,
@@ -109,11 +109,8 @@ public class AccountSettingFragment extends Fragment {
                 case "Смена пароля":
                     selectedValue = 1;
                     break;
-                case "Смена эл.почты":
-                    selectedValue = 2;
-                    break;
                 case "Смена имени пользователя":
-                    selectedValue = 3;
+                    selectedValue = 2;
                     break;
             }
 
