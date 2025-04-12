@@ -64,14 +64,14 @@ dependencies {
     implementation ("com.google.firebase:firebase-database:21.0.0")
 
     implementation ("com.squareup.picasso:picasso:2.8")//предназначена для загрузки и отображения изображений в Android-приложениях.
+    implementation("androidx.viewpager2:viewpager2:1.1.0-beta01") //поддерживает вертикальный свайп, анимации, RTL и RecyclerView внутри.
+    implementation ("com.google.android.material:material:1.10.0") // рисует сами вкладки (TabLayout) и другие красивые элементы.
 
-
-    implementation ("com.google.android.material:material:1.11.0")
 
     implementation ("com.cloudinary:cloudinary-android:2.5.0")
     implementation ("com.squareup.okhttp3:okhttp:4.12.0") // Для загрузки файлов
 
     implementation ("de.hdodenhof:circleimageview:3.1.0") //библиотека для округления картинок
-    implementation ("com.google.android.material:material:1.10.0")
+
     implementation ("com.github.bumptech.glide:glide:4.15.1") //библиотека для загрузки гифок, роликов, картинок
 }
