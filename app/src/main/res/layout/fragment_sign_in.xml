@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/pt_sans_regular"
-                android:hint="Электронная почта"
+                android:hint="Логин (почта или имя пользователя)"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:textColorHint="#767676"
