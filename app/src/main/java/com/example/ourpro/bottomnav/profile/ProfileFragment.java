@@ -92,9 +92,10 @@ public class ProfileFragment extends Fragment {
     private void animateViewsOnCreate() {
         //binding.profileImage.startAnimation(fadeInAnimation);
 
+        /*
         binding.editProfileButton.postDelayed(() -> {
             binding.editProfileButton.startAnimation(fadeInAnimation);
-        }, 150);
+        }, 150);*/
 
 
     }
