@@ -32,13 +32,15 @@
                 android:background="@drawable/top_background">
 
 
-                <ImageView
+                <TextView
                     android:id="@+id/exit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_close"
+                    android:text="Выйти"
+                    android:fontFamily="@font/pt_sans_bold"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.881"
                     app:layout_constraintStart_toEndOf="@+id/username"
@@ -48,7 +50,7 @@
                     android:id="@+id/setting_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="24dp"
                     android:src="@drawable/ic_settings"
                     app:layout_constraintEnd_toStartOf="@+id/username"
@@ -155,13 +157,16 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/exit2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
-                        android:layout_marginEnd="9dp"
-                        android:src="@drawable/ic_close"
+                        android:layout_marginEnd="20dp"
+                        android:text = "Выйти"
+                        android:fontFamily="@font/pt_sans_bold"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.881"
@@ -172,6 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
+                        android:layout_marginStart="12dp"
                         android:src="@drawable/ic_settings"
                         android:visibility="visible"
                         app:layout_constraintHorizontal_bias="0.03"
