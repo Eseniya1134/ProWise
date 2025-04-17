@@ -43,6 +43,8 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentProfileBinding.bind(view);
         loadFullName();
+        loadGenderANDdob();
+        loadUserName();
         binding.settingText.setOnClickListener(v -> {
             navigateToAccountSettings();
         });
@@ -170,7 +172,10 @@ public class ProfileFragment extends Fragment {
                     String dadsName = ((DataSnapshot) results.get(2)).getValue(String.class);
 
                     String fullName = surname + " " + name + " " + dadsName;
+                    String firstANDlast = surname + "\n" + name;
                     binding.fullName.setText(fullName);
+                    binding.namesUser.setText(firstANDlast);
+
                     Log.d(TAG, "Полное имя: " + fullName);
 
                 })
@@ -179,10 +184,64 @@ public class ProfileFragment extends Fragment {
     }
 
 
+    private <MutableLiveData> void loadGenderANDdob() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e(TAG, "Ошибка: пользователь не найден");
+            return;
+        }
+
+        String userId = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
 
 
+        Task<DataSnapshot> genderTask = database.getReference("Users").child(userId).child("gender").get();
+        Task<DataSnapshot> dateOfBirthTask = database.getReference("Users").child(userId).child("dateOfBirth").get();
 
 
+        Tasks.whenAllSuccess(genderTask, dateOfBirthTask)
+                .addOnSuccessListener(results -> {
+                    String gender = ((DataSnapshot) results.get(0)).getValue(String.class);
+                    String dateOfBirth = ((DataSnapshot) results.get(1)).getValue(String.class);
+
+                    String GenderANDdob = gender + ", " + dateOfBirth;
+
+                    binding.moreInfo.setText(GenderANDdob);
+
+                    Log.d(TAG, "Полное имя: " + GenderANDdob);
+
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки: " + e.getMessage()));
+
+    }
+
+
+    private <MutableLiveData> void loadUserName() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e(TAG, "Ошибка: пользователь не найден");
+            return;
+        }
+
+        String userId = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+
+        Task<DataSnapshot> unTask = database.getReference("Users").child(userId).child("username").get();
+
+        Tasks.whenAllSuccess(unTask)
+                .addOnSuccessListener(results -> {
+                    String username = ((DataSnapshot) results.get(0)).getValue(String.class);
+
+                    binding.username.setText(username);
+                    binding.username1.setText(username);
+
+                    Log.d(TAG, "Полное имя: " + username);
+
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки: " + e.getMessage()));
+
+    }
 
     @Override
     public void onDestroyView() {
