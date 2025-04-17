@@ -6,8 +6,8 @@
             <gradient
                 android:type="linear"
                 android:angle="-90"
-                android:startColor="#050085"
-                android:endColor="#05003A"/>
+                android:startColor="#030043"
+                android:endColor="#00003C"/>
             <corners
                 android:bottomLeftRadius="40dp"
                 android:bottomRightRadius="40dp"/>
@@ -23,8 +23,8 @@
                 android:centerX="1.0"
                 android:centerY="0.0"
                 android:endColor="#008BF692"
-                android:centerColor="#D9407CA2"
-                android:startColor="#808BF692"/>
+                android:centerColor="#D9133862"
+                android:startColor="#80B14EC8"/>
             <corners
                 android:bottomLeftRadius="40dp"
                 android:bottomRightRadius="40dp"/>
@@ -38,8 +38,8 @@
                 android:centerX="0.9"
                 android:centerY="0.1"
                 android:endColor="#008BF692"
-                android:centerColor="#8046A3EF"
-                android:startColor="#67ED6F"/>
+                android:centerColor="#801E2C94"
+                android:startColor="#56F26A"/>
             <corners
                 android:bottomLeftRadius="40dp"
                 android:bottomRightRadius="40dp"/>
@@ -54,7 +54,7 @@
                 android:centerX="0.0"
                 android:centerY="1.12"
                 android:endColor="#008BF692"
-                android:startColor="#3188EB"/>
+                android:startColor="#3981D9"/>
             <corners
                 android:bottomLeftRadius="40dp"
                 android:bottomRightRadius="40dp"/>
