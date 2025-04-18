@@ -1,19 +1,20 @@
 package com.example.ourpro;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import com.example.ourpro.databinding.FragmentSignUpBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,10 +35,6 @@ public class SignUpFragment extends Fragment {
         binding = FragmentSignUpBinding.bind(view);
         auth = FirebaseAuth.getInstance();
 
-        //   FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-       // database = FirebaseDatabase.getInstance().getReference().child("Users");
-
-
         binding.toSignin.setOnClickListener(v -> {
             Toast.makeText(requireContext(), "Вход в аккаунт", Toast.LENGTH_SHORT).show();
             FragmentTransaction ft = getParentFragmentManager().beginTransaction();
@@ -47,7 +44,7 @@ public class SignUpFragment extends Fragment {
 
         binding.log.setOnClickListener(v -> {
             String email = binding.mailInText.getText().toString();
-            String username = binding.logUpText.getText().toString();
+            String username = binding.logUpText.getText().toString().trim();
             String password = binding.logPasswordText.getText().toString();
             String confirmPassword = binding.logPasswordRepText.getText().toString();
 
@@ -61,50 +58,57 @@ public class SignUpFragment extends Fragment {
                 return;
             }
 
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                Log.d("FirebaseAuth", "Началась регистрация...");
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app/");
+            DatabaseReference usersRef = database.getReference("Users");
 
+            usersRef.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    FirebaseUser user = auth.getCurrentUser();
+                    boolean usernameExists = false;
 
-                    if (user != null) {
-                        String userId = user.getUid();
-                        Log.d("FirebaseAuth", "Пользователь зарегистрирован: " + userId);
-
-                        HashMap<String, String> userInfo = new HashMap<>();
-                        userInfo.put("email", email);
-                        userInfo.put("username", username);
-                        userInfo.put("profileImageURL", "");
-                        userInfo.put("gender", "");
-                        userInfo.put("dateOfBirth", "");
-                        userInfo.put("surname", "");
-                        userInfo.put("name", "");
-                        userInfo.put("fathersName", "");
-                        userInfo.put("aboutMyself", "");
-                        userInfo.put("chats", "");
-
-                        Log.d("FirebaseDatabase", "Пытаюсь сохранить данные пользователя...");
-
-                        Log.d("FirebaseDatabase", "UID пользователя: " + auth.getCurrentUser().getUid());
-
-                        // Укажите правильный URL базы данных
-                        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
-                        DatabaseReference ref = database.getReference().child("Users");
-                        ref.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .setValue(userInfo);
-
-                        startActivity(new Intent(requireActivity(), MainActivity.class));
-
-                    } else {
-                        Log.e("FirebaseAuth", "Ошибка: `getCurrentUser()` вернул null");
-                        Toast.makeText(requireContext(), "Ошибка: пользователь не найден", Toast.LENGTH_SHORT).show();
+                    for (DataSnapshot userSnapshot : task.getResult().getChildren()) {
+                        String existingUsername = userSnapshot.child("username").getValue(String.class);
+                        if (existingUsername != null && existingUsername.equalsIgnoreCase(username)) {
+                            usernameExists = true;
+                            break;
+                        }
                     }
+
+                    if (usernameExists) {
+                        Toast.makeText(requireContext(), "Пользователь с таким именем уже существует", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Продолжить регистрацию
+                        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(authTask -> {
+                            if (authTask.isSuccessful()) {
+                                FirebaseUser user = auth.getCurrentUser();
+                                if (user != null) {
+                                    String userId = user.getUid();
+
+                                    HashMap<String, String> userInfo = new HashMap<>();
+                                    userInfo.put("email", email);
+                                    userInfo.put("username", username);
+                                    userInfo.put("profileImageURL", "");
+                                    userInfo.put("gender", "");
+                                    userInfo.put("dateOfBirth", "");
+                                    userInfo.put("surname", "");
+                                    userInfo.put("name", "");
+                                    userInfo.put("fathersName", "");
+                                    userInfo.put("aboutMyself", "");
+                                    userInfo.put("chats", "");
+
+                                    usersRef.child(userId).setValue(userInfo);
+
+                                    startActivity(new Intent(requireActivity(), MainActivity.class));
+                                }
+                            } else {
+                                Toast.makeText(requireContext(), "Ошибка регистрации: " + authTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
                 } else {
-                    Log.e("FirebaseAuth", "Ошибка регистрации: " + task.getException().getMessage());
-                    Toast.makeText(requireContext(), "Ошибка регистрации: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Ошибка при проверке имени: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         });
     }
-
 }

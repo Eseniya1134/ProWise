@@ -366,7 +366,6 @@ public class AccountSettingFragment extends Fragment {
 
     // метод выборки даты рождения
     private void selectBirthday(){
-
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -375,7 +374,7 @@ public class AccountSettingFragment extends Fragment {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 requireContext(),
                 (DatePicker view1, int selectedYear, int selectedMonth, int selectedDay) -> {
-                    selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                    selectedDate = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear);
                     binding.birthdayText.setText(selectedDate);
                 },
                 year, month, day
