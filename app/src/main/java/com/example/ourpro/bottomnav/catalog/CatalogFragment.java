@@ -45,7 +45,7 @@ public class CatalogFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void setupAutoComplete() {
+    private void setupAutoComplete() {  //автоподсказки в поисковой строке
         adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, userNamesList);
         binding.autoCompleteSearch.setAdapter(adapter);
         binding.autoCompleteSearch.setThreshold(1); // с какого символа начинать показывать подсказки
@@ -69,13 +69,13 @@ public class CatalogFragment extends Fragment {
         });
     }
 
-    private void setupRecyclerView() {
+    private void setupRecyclerView() { //список результатов.
         userAdapter = new UserAdapter(users);
         binding.recyclerResults.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerResults.setAdapter(userAdapter);
     }
 
-    private void setupSearchButton() {
+    private void setupSearchButton() {  //действие при нажатии на кнопку поиска.
         binding.btnSearch.setOnClickListener(v -> {
             String query = binding.autoCompleteSearch.getText().toString().trim();
             if (!query.isEmpty()) {
@@ -85,6 +85,7 @@ public class CatalogFragment extends Fragment {
     }
 
     private void searchUsers(String query) {
+        // поиск по началу имени: startAt + endAt + \uf8ff
         usersRef.orderByChild("username")
                 .startAt(query)
                 .endAt(query + "\uf8ff")// Для поиска с префиксом
