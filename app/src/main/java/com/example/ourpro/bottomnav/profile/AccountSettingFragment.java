@@ -25,6 +25,7 @@ import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
 import com.example.ourpro.R;
+import com.example.ourpro.SignActivity;
 import com.example.ourpro.databinding.FragmentAccountSettingBinding;
 import com.squareup.picasso.Picasso;
 
@@ -65,6 +66,7 @@ public class AccountSettingFragment extends Fragment {
         binding = FragmentAccountSettingBinding.bind(view);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 
+        binding.exit2.setOnClickListener(v -> logout());
 
 
         initConfig(); // Настройка конфигурации Cloudinary
@@ -154,6 +156,16 @@ public class AccountSettingFragment extends Fragment {
         // Выгрузка ФИО
         loadFullName();
 
+    }
+
+    private void logout() {
+        FirebaseAuth.getInstance().signOut(); // выйти из аккаунта
+
+        Toast.makeText(requireContext(), "Вы вышли из аккаунта", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(requireContext(), SignActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Очистка back stack
+        startActivity(intent);
     }
 
 

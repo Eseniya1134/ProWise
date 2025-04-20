@@ -18,7 +18,7 @@
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="@color/our_blue"
             app:expandedTitleMarginBottom="16dp"
             app:expandedTitleMarginStart="16dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -31,31 +31,15 @@
                 android:layout_height="500dp"
                 android:background="@drawable/top_background">
 
-
-                <TextView
-                    android:id="@+id/exit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="Выйти"
-                    android:fontFamily="@font/pt_sans_bold"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.881"
-                    app:layout_constraintStart_toEndOf="@+id/username"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <ImageView
                     android:id="@+id/setting_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="28dp"
+                    android:layout_marginTop="28dp"
                     android:src="@drawable/ic_settings"
-                    app:layout_constraintEnd_toStartOf="@+id/username"
                     app:layout_constraintHorizontal_bias="0.13"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -66,7 +50,7 @@
                     android:text="username"
                     android:textColor="@color/white"
                     android:textSize="22sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/pt_sans_bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -157,31 +141,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <TextView
-                        android:id="@+id/exit2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginEnd="20dp"
-                        android:text = "Выйти"
-                        android:fontFamily="@font/pt_sans_bold"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:visibility="visible"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.881"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/setting_text2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginStart="12dp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="28dp"
+                        android:layout_marginEnd="28dp"
                         android:src="@drawable/ic_settings"
                         android:visibility="visible"
                         app:layout_constraintHorizontal_bias="0.03"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView

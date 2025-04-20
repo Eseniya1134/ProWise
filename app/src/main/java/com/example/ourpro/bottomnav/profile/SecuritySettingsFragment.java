@@ -90,7 +90,7 @@ public class SecuritySettingsFragment extends Fragment {
 
                 case 2:
                     // Действия для смены имени пользователя
-                    binding.infText.setText("Точно ли хотите поменять имя пользователя?");
+                    binding.infText.setText("Точно хотите поменять имя пользователя?");
                     binding.newPosition.setHint("Ваше имя пользователя");
                     binding.newPasswordRep.setVisibility(View.INVISIBLE);
                     binding.newPosition.setEndIconMode(END_ICON_NONE);

@@ -9,21 +9,19 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:backgroundTint="@color/white"
         android:layout_height="match_parent">
 
-        <TextView
+        <ImageView
             android:id="@+id/setting_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="10dp"
-            android:text="Настройки"
-            android:textColor="@color/black"
-            android:textSize="15sp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/ic_close"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.881"
-            app:layout_constraintStart_toEndOf="@+id/safety_text"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/grey_text" />
 
         <TextView
             android:id="@+id/safety_text"
@@ -31,8 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="Безопасность"
-            android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textColor="@color/our_blue"
+            android:fontFamily="@font/pt_sans_bold"
+            android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,8 +41,11 @@
             android:id="@+id/inf_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Точно ли хотите поменять пароль?"
+            android:layout_marginTop="8dp"
+            android:text="Точно хотите поменять пароль?"
+            android:fontFamily="@font/pt_sans_regular"
+            android:textSize="16sp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,10 +54,21 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/new_position"
-            android:layout_width="310dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="20dp"
-            app:endIconMode="password_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="40dp"
+            android:background="@android:color/transparent"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#767676"
+            app:boxStrokeWidth="1dp"
+            app:hintTextColor="#767676"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/inf_text">
@@ -65,35 +78,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Новый пароль"
+                android:fontFamily="@font/pt_sans_regular"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/new_password_rep"
-            android:layout_width="310dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="20dp"
-            app:endIconMode="password_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/transparent"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#767676"
+            app:boxStrokeWidth="1dp"
+            app:hintTextColor="#767676"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:endIconMode="password_toggle"
             app:layout_constraintTop_toBottomOf="@id/new_position">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/new_password_repGet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Проверка нового пароля"
+                android:hint="Введите новый пароль еще раз"
+                android:fontFamily="@font/pt_sans_regular"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/save_safety"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="24dp"
-            android:foreground="@drawable/baseline_done_24"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:text="Подтвердить"
+            android:fontFamily="@font/pt_sans_bold"
+            android:backgroundTint="@color/our_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.870"
             app:layout_constraintStart_toStartOf="parent"

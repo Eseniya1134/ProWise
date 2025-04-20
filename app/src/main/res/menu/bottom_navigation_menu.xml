@@ -3,28 +3,28 @@
     <item
         android:id="@+id/catalog"
         android:title="Каталог"
-        android:icon="@drawable/baseline_dynamic_feed_24" />
+        android:icon="@drawable/catalog_alt" />
 
     <item
         android:id="@+id/finance"
         android:title="Финансы"
-        android:icon="@drawable/baseline_currency_exchange_24"/>
+        android:icon="@drawable/usd_circle"/>
 
     <item
         android:id="@+id/dialogs"
         android:title="Диалоги"
-        android:icon="@drawable/baseline_chat_24"/>
+        android:icon="@drawable/comment_alt"/>
 
     <item
         android:id="@+id/orders"
         android:title="Заказы"
-        android:icon="@drawable/baseline_cases_24"/>
+        android:icon="@drawable/briefcase"/>
 
 
     <item
         android:id="@+id/profile"
         android:title="Профиль"
-        android:icon="@drawable/baseline_manage_accounts_24"/>
+        android:icon="@drawable/user_gear"/>
 
 
 </menu>
