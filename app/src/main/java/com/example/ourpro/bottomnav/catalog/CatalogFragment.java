@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,54 +24,86 @@ import java.util.List;
 public class CatalogFragment extends Fragment {
 
     private FragmentCatalogBinding binding;
-    private UserAdapter userAdapter;
     private DatabaseReference usersRef;
+    private List<String> userNamesList = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
+    private List<User> users = new ArrayList<>();
+    private UserAdapter userAdapter; // твой кастомный адаптер для RecyclerView
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCatalogBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
 
-        userAdapter = new UserAdapter();
-        binding.recyclerViewResults.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.recyclerViewResults.setAdapter(userAdapter);
+        usersRef = FirebaseDatabase
+                .getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("Users");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app/");
-        usersRef = database.getReference("users");
+        setupAutoComplete();
+        setupRecyclerView();
+        setupSearchButton();
 
-        binding.buttonSearch.setOnClickListener(v -> {
-            String searchQuery = binding.editTextNickname.getText().toString().toLowerCase();
-            Log.d("CatalogFragment", "Поиск по запросу: " + searchQuery);
-            fetchUsers(searchQuery);
-        });
-
-        return view;
+        return binding.getRoot();
     }
 
-    private void fetchUsers(String searchQuery) {
+    private void setupAutoComplete() {
+        adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, userNamesList);
+        binding.autoCompleteSearch.setAdapter(adapter);
+        binding.autoCompleteSearch.setThreshold(1); // с какого символа начинать показывать подсказки
+
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<User> result = new ArrayList<>();
+                userNamesList.clear();
                 for (DataSnapshot child : snapshot.getChildren()) {
                     User user = child.getValue(User.class);
                     if (user != null && user.getUsername() != null) {
-                        Log.d("CatalogFragment", "Пользователь найден: " + user.getUsername());
-                        if (user.getUsername().toLowerCase().contains(searchQuery)) {
-                            result.add(user);
-                        }
+                        userNamesList.add(user.getUsername());
                     }
+
                 }
-                Log.d("CatalogFragment", "Результаты поиска: " + result.size());
-                userAdapter.setUserList(result);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("CatalogFragment", "Ошибка при загрузке данных: " + error.getMessage());
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
+
+    private void setupRecyclerView() {
+        userAdapter = new UserAdapter(users);
+        binding.recyclerResults.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.recyclerResults.setAdapter(userAdapter);
+    }
+
+    private void setupSearchButton() {
+        binding.btnSearch.setOnClickListener(v -> {
+            String query = binding.autoCompleteSearch.getText().toString().trim();
+            if (!query.isEmpty()) {
+                searchUsers(query);
             }
         });
+    }
+
+    private void searchUsers(String query) {
+        usersRef.orderByChild("username")
+                .startAt(query)
+                .endAt(query + "\uf8ff")// Для поиска с префиксом
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        users.clear();
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            User user = child.getValue(User.class);
+                            if (user != null) {
+                                users.add(user);
+                            }
+                        }
+                        userAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
     }
 
     @Override
@@ -78,7 +111,4 @@ public class CatalogFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }
-
-
