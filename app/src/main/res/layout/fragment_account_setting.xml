@@ -37,13 +37,12 @@
 
                 <ImageView
                     android:id="@+id/profile_button"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="28dp"
+                    android:layout_marginTop="28dp"
                     android:src="@drawable/ic_close"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/setting_text"
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/white" />
 
@@ -57,6 +56,21 @@
                     android:textColor="@color/white"
                     android:textSize="32sp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/exit2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:text = "Выйти"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/pt_sans_regular"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,7 +102,7 @@
                     android:layout_height="56dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="24dp"
                     android:background="@android:color/transparent"
                     app:boxBackgroundMode="outline"
                     app:boxCornerRadiusTopStart="16dp"
@@ -322,7 +336,6 @@
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
             android:fontFamily="@font/pt_sans_bold"

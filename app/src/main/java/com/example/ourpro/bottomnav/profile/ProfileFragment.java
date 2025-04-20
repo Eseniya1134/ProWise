@@ -51,8 +51,8 @@ public class ProfileFragment extends Fragment {
         binding.settingText2.setOnClickListener(v -> {
             navigateToAccountSettings();
         });
-        binding.exit.setOnClickListener(v -> logout());
-        binding.exit2.setOnClickListener(v -> logout());
+        //binding.exit.setOnClickListener(v -> logout());
+        //binding.exit2.setOnClickListener(v -> logout());
 
         // Инициализация анимаций
         scaleAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale);
@@ -72,7 +72,7 @@ public class ProfileFragment extends Fragment {
             float progress = -verticalOffset / (float) scrollRange;
 
             // Анимация прозрачности элементов
-            binding.exit.setAlpha(1 - progress);
+            //binding.exit.setAlpha(1 - progress);
             binding.settingText.setAlpha(1 - progress);
             binding.fullName.setAlpha(1 - progress);
             binding.username.setAlpha(1 - progress);
