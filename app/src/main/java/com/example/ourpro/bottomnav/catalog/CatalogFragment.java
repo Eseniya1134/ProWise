@@ -1,7 +1,6 @@
 package com.example.ourpro.bottomnav.catalog;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,10 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.ourpro.R;
 import com.example.ourpro.databinding.FragmentCatalogBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +30,7 @@ public class CatalogFragment extends Fragment {
     private List<String> userNamesList = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private List<User> users = new ArrayList<>();
-    private UserAdapter userAdapter; // твой кастомный адаптер для RecyclerView
+    private UserAdapter userAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,25 +41,41 @@ public class CatalogFragment extends Fragment {
                 .getReference("Users");
 
         setupAutoComplete();
-        binding.autoCompleteSearch.setOnEditorActionListener((v, actionId, event) -> {
+        setupRecyclerView();
+
+        binding.search.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                String query = binding.autoCompleteSearch.getText().toString().trim();
+                String query = binding.search.getText().toString().trim();
                 if (!query.isEmpty()) {
-                    searchUsers(query);
+                    toSearchFragment(query);
+                    // searchUsers(query); // <-- временно отключено
                 }
                 return true;
             }
             return false;
         });
-        setupRecyclerView();
 
         return binding.getRoot();
     }
 
-    private void setupAutoComplete() {  //автоподсказки в поисковой строке
+    private void toSearchFragment(String query) {
+        SearchFragment searchFragment = new SearchFragment();
+
+        // Передаём аргумент поиска
+        Bundle args = new Bundle();
+        args.putString("query", query);
+        searchFragment.setArguments(args);
+
+        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+        ft.replace(R.id.menu_fr, searchFragment);
+        ft.addToBackStack(null); // можно вернуться назад
+        ft.commit();
+    }
+
+    private void setupAutoComplete() {
         adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, userNamesList);
-        binding.autoCompleteSearch.setAdapter(adapter);
-        binding.autoCompleteSearch.setThreshold(1); // с какого символа начинать показывать подсказки
+        binding.search.setAdapter(adapter);
+        binding.search.setThreshold(1);
 
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -69,28 +86,27 @@ public class CatalogFragment extends Fragment {
                     if (user != null && user.getUsername() != null) {
                         userNamesList.add(user.getUsername());
                     }
-
                 }
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
 
-    private void setupRecyclerView() { //список результатов.
+    private void setupRecyclerView() {
         userAdapter = new UserAdapter(users);
         binding.recyclerResults.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerResults.setAdapter(userAdapter);
     }
 
-
+    // 🔻 Отключено: используется только внутри этого фрагмента, если нужно
     private void searchUsers(String query) {
-        // поиск по началу имени: startAt + endAt + \uf8ff
         usersRef.orderByChild("username")
                 .startAt(query)
-                .endAt(query + "\uf8ff")// Для поиска с префиксом
+                .endAt(query + "\uf8ff")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -105,7 +121,8 @@ public class CatalogFragment extends Fragment {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
                 });
     }
 

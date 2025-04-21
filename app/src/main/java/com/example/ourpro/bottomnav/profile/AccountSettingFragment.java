@@ -70,6 +70,8 @@ public class AccountSettingFragment extends Fragment {
 
 
         initConfig(); // Настройка конфигурации Cloudinary
+
+        loadFullName();
         loadBirthday();
         loadGender();
         loadUserImageFromFirebase(); // Загружаем сохранённое изображение
@@ -153,8 +155,6 @@ public class AccountSettingFragment extends Fragment {
         });
 
 
-        // Выгрузка ФИО
-        loadFullName();
 
     }
 
