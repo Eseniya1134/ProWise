@@ -6,62 +6,86 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".bottomnav.catalog.CatalogFragment">
 
+    <!-- Верхняя часть — фон + заголовок + поиск -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="160dp"
+        android:background="@drawable/back_catalog">
 
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/pt_sans_bold"
+            android:text="Главная"
+            android:textColor="@color/our_blue"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/searchContainer"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginTop="16dp"
-            app:startIconDrawable="@drawable/ic_search"
-            app:startIconTint="@color/grey_text"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
             app:boxBackgroundColor="#FFFFFF"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
             app:boxStrokeColor="#767676"
             app:boxStrokeWidth="1dp"
             app:hintTextColor="#767676"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/username"
+            app:startIconDrawable="@drawable/ic_search"
+            app:startIconTint="@color/grey_text">
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
+                android:completionThreshold="1"
+                android:dropDownHeight="wrap_content"
+                android:dropDownVerticalOffset="8dp"
                 android:hint="Поиск"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:padding="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey_text"
-                android:textSize="16sp"
-                android:completionThreshold="1"
-                android:dropDownHeight="wrap_content"
-                android:dropDownVerticalOffset="8dp"
-                android:background="@null" />
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerResults"
+    <!-- Список результатов — ниже заголовка, но визуально "над ним" -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerResults"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="160dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:layout_gravity="bottom">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchContainer" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:orientation="vertical" />
+    </ScrollView>
 
 </FrameLayout>
