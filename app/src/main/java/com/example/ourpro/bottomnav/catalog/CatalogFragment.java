@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
@@ -39,8 +40,17 @@ public class CatalogFragment extends Fragment {
                 .getReference("Users");
 
         setupAutoComplete();
+        binding.autoCompleteSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String query = binding.autoCompleteSearch.getText().toString().trim();
+                if (!query.isEmpty()) {
+                    searchUsers(query);
+                }
+                return true;
+            }
+            return false;
+        });
         setupRecyclerView();
-        setupSearchButton();
 
         return binding.getRoot();
     }
@@ -75,14 +85,6 @@ public class CatalogFragment extends Fragment {
         binding.recyclerResults.setAdapter(userAdapter);
     }
 
-    private void setupSearchButton() {  //действие при нажатии на кнопку поиска.
-        binding.btnSearch.setOnClickListener(v -> {
-            String query = binding.autoCompleteSearch.getText().toString().trim();
-            if (!query.isEmpty()) {
-                searchUsers(query);
-            }
-        });
-    }
 
     private void searchUsers(String query) {
         // поиск по началу имени: startAt + endAt + \uf8ff
