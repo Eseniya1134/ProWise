@@ -33,7 +33,6 @@ public class SearchFragment extends Fragment {
 
         setupViewPager();      // <-- добавлено
         setupTabs();
-        setupCancelButton();
     }
 
     private void setupViewPager() {
@@ -59,9 +58,7 @@ public class SearchFragment extends Fragment {
     }
 
 
-    private void setupCancelButton() {
-        binding.cancelButton.setOnClickListener(v -> binding.search.setText(""));
-    }
+
 
     @Override
     public void onDestroyView() {

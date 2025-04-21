@@ -67,7 +67,7 @@ public class CatalogFragment extends Fragment {
         searchFragment.setArguments(args);
 
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-        ft.replace(R.id.menu_fr, searchFragment);
+        ft.replace(R.id.search_fr, searchFragment);
         ft.addToBackStack(null); // можно вернуться назад
         ft.commit();
     }
