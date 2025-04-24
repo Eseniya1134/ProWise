@@ -1,6 +1,7 @@
 package com.example.ourpro.bottomnav.catalog;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class CatalogFragment extends Fragment {
     private ArrayAdapter<String> adapter;
     private List<User> users = new ArrayList<>();
     private UserAdapter userAdapter;
+    private ListOfUsersFragment search_string;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,7 +104,11 @@ public class CatalogFragment extends Fragment {
         binding.recyclerResults.setAdapter(userAdapter);
     }
 
-    // 🔻 Отключено: используется только внутри этого фрагмента, если нужно
+    public void setListOfUsers(ListOfUsersFragment fragment) {
+        this.search_string = fragment;
+    }
+
+
     private void searchUsers(String query) {
         usersRef.orderByChild("username")
                 .startAt(query)

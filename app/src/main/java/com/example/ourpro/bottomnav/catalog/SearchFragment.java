@@ -30,17 +30,28 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        setupViewPager();      // <-- добавлено
-        setupTabs();
+        setupViewPager();
     }
 
     private void setupViewPager() {
-        binding.searchsWindow.setAdapter(new FragmentStateAdapter(this) {
+        String query = getArguments() != null ? getArguments().getString("query", "") : "";
+
+        binding.viewPager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return position == 0 ? new ListOfUsersFragment() : (position == 1 ? new ConsultationsFragment() : new TagsFragment());
+                Bundle args = new Bundle();
+                args.putString("query", query);
+
+                if (position == 0) {
+                    ListOfUsersFragment fragment = new ListOfUsersFragment();
+                    fragment.setArguments(args);
+                    return fragment;
+                } else if (position == 1) {
+                    return new ConsultationsFragment(); // Здесь можно добавить фрагмент для консультаций
+                } else {
+                    return new TagsFragment(); // И для тегов
+                }
             }
 
             @Override
@@ -48,17 +59,15 @@ public class SearchFragment extends Fragment {
                 return 3;
             }
         });
+
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager,
+                (tab, position) -> {
+                    if (position == 0) tab.setText("Пользователи");
+                    else if (position == 1) tab.setText("Консультации");
+                    else tab.setText("Теги");
+                }
+        ).attach();
     }
-
-    private void setupTabs() {
-
-        new TabLayoutMediator(binding.tabLayout, binding.searchsWindow, (tab, position) -> {
-            tab.setText(position == 0 ? "Пользователи" : (position ==1 ? "Консультации" : "Теги"));
-        }).attach();
-    }
-
-
-
 
     @Override
     public void onDestroyView() {
