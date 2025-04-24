@@ -69,13 +69,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Список результатов — ниже заголовка, но визуально "над ним" -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerResults"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="160dp"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp" />
 
     <FrameLayout
         android:layout_width="match_parent"

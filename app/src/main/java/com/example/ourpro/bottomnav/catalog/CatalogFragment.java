@@ -43,7 +43,7 @@ public class CatalogFragment extends Fragment {
                 .getReference("Users");
 
         setupAutoComplete();
-        setupRecyclerView();
+
 
         binding.search.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -98,11 +98,6 @@ public class CatalogFragment extends Fragment {
         });
     }
 
-    private void setupRecyclerView() {
-        userAdapter = new UserAdapter(users);
-        binding.recyclerResults.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.recyclerResults.setAdapter(userAdapter);
-    }
 
     public void setListOfUsers(ListOfUsersFragment fragment) {
         this.search_string = fragment;
