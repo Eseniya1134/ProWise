@@ -1,56 +1,46 @@
-package com.example.ourpro.bottomnav.profile;
+package com.example.ourpro.profile;
 
-import static java.lang.String.join;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.ourpro.R;
-import com.example.ourpro.SignActivity;
+import com.example.ourpro.bottomnav.profile.AccountSettingFragment;
 import com.example.ourpro.databinding.FragmentProfileBinding;
+import com.example.ourpro.databinding.FragmentUserProfileBinding;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.concurrent.atomic.AtomicReference;
+public class UserProfileFragment extends Fragment {
 
-public class ProfileFragment extends Fragment {
-
-    public ProfileFragment() {
-        super(R.layout.fragment_profile);
+    public UserProfileFragment() {
+        super(R.layout.fragment_user_profile);
     }
+
     private static final String TAG = "Upload ###";
 
-    private FragmentProfileBinding binding;
+    private FragmentUserProfileBinding binding;
     private Animation scaleAnimation, fadeInAnimation;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding = FragmentProfileBinding.bind(view);
+        binding = FragmentUserProfileBinding.bind(view);
         loadFullName();
         loadGenderANDdob();
         loadUserName();
-        binding.settingText.setOnClickListener(v -> {
-            navigateToAccountSettings();
-        });
-        binding.settingText2.setOnClickListener(v -> {
-            navigateToAccountSettings();
-        });
+
         //binding.exit.setOnClickListener(v -> logout());
         //binding.exit2.setOnClickListener(v -> logout());
 
@@ -73,7 +63,6 @@ public class ProfileFragment extends Fragment {
 
             // Анимация прозрачности элементов
             //binding.exit.setAlpha(1 - progress);
-            binding.settingText.setAlpha(1 - progress);
             binding.fullName.setAlpha(1 - progress);
             binding.username.setAlpha(1 - progress);
             binding.specialist.setAlpha(1 - progress);

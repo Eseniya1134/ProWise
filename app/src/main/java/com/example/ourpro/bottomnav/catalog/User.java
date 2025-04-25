@@ -3,9 +3,12 @@ package com.example.ourpro.bottomnav.catalog;
 public class User {
     private String username;
     private String email;
+    private String uid;
 
     public User() {
-        // Пустой конструктор нужен для Firebase
+        this.uid = uid;
+        this.username = username;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -14,5 +17,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getUid() {
+
+        return uid;
     }
 }
