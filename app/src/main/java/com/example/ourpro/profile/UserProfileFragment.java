@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,10 +34,13 @@ public class UserProfileFragment extends Fragment {
     private FragmentUserProfileBinding binding;
     private Animation scaleAnimation, fadeInAnimation;
 
+    String userId;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentUserProfileBinding.bind(view);
+
         loadFullName();
         loadGenderANDdob();
         loadUserName();
@@ -103,41 +107,16 @@ public class UserProfileFragment extends Fragment {
     //метод выгрузки фио и "О себе"
 
     private <MutableLiveData> void loadFullName() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Log.e(TAG, "Ошибка: пользователь не найден");
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+
+        // Получаем userId из аргументов
+        userId = getArguments() != null ? getArguments().getString("userId") : null;
+        if (userId == null) {
+            Toast.makeText(getContext(), "Пользователь не найден", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String userId = user.getUid();
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
-
-        //старый код
-        /*// Получаем имя
-        DatabaseReference databaseName = database.getReference("Users").child(userId).child("name");
-        databaseName.get().addOnSuccessListener(nameBase -> {
-            if (nameBase.exists() && nameBase.getValue() != null) {
-                String name = nameBase.getValue(String.class);
-            }
-        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки имени: " + e.getMessage()));
-
-
-        // Получаем фамилию
-        DatabaseReference databaseSurname = database.getReference("Users").child(userId).child("surname");
-        databaseSurname.get().addOnSuccessListener(surnameBase -> {
-            if (surnameBase.exists() && surnameBase.getValue() != null) {
-                String surname = surnameBase.getValue(String.class);
-            }
-        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки фамилии: " + e.getMessage()));
-
-        // Получаем отчество
-        DatabaseReference databaseDadsName = database.getReference("Users").child(userId).child("fathersName");
-        databaseDadsName.get().addOnSuccessListener(dadsNameBase -> {
-            if (dadsNameBase.exists() && dadsNameBase.getValue() != null) {
-                String dadsName = dadsNameBase.getValue(String.class);
-            }
-        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки отчества: " + e.getMessage()));
-        */
 
         Task<DataSnapshot> nameTask = database.getReference("Users").child(userId).child("name").get();
         Task<DataSnapshot> surnameTask = database.getReference("Users").child(userId).child("surname").get();
@@ -163,14 +142,17 @@ public class UserProfileFragment extends Fragment {
 
 
     private <MutableLiveData> void loadGenderANDdob() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Log.e(TAG, "Ошибка: пользователь не найден");
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+
+        // Получаем userId из аргументов
+        userId = getArguments() != null ? getArguments().getString("userId") : null;
+        if (userId == null) {
+            Toast.makeText(getContext(), "Пользователь не найден", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String userId = user.getUid();
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
 
 
         Task<DataSnapshot> genderTask = database.getReference("Users").child(userId).child("gender").get();
@@ -195,14 +177,19 @@ public class UserProfileFragment extends Fragment {
 
 
     private <MutableLiveData> void loadUserName() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Log.e(TAG, "Ошибка: пользователь не найден");
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+
+        // Получаем userId из аргументов
+        userId = getArguments() != null ? getArguments().getString("userId") : null;
+        if (userId == null) {
+            Toast.makeText(requireContext(), "Пользователь не найден", Toast.LENGTH_SHORT).show();
             return;
         }
+        Log.d("UserProfileFragment", "Получен userId: " + userId);
 
-        String userId = user.getUid();
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
 
 
         Task<DataSnapshot> unTask = database.getReference("Users").child(userId).child("username").get();

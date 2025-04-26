@@ -5,7 +5,11 @@ public class User {
     private String email;
     private String uid;
 
-    public User() {
+    // Пустой конструктор нужен Firebase
+    public User() {}
+
+    // Конструктор для ручного создания User объектов
+    public User(String uid, String username, String email) {
         this.uid = uid;
         this.username = username;
         this.email = email;
@@ -20,7 +24,6 @@ public class User {
     }
 
     public String getUid() {
-
         return uid;
     }
 }
