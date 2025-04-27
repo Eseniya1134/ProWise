@@ -1,4 +1,4 @@
-package com.example.ourpro.bottomnav.catalog;
+package com.example.ourpro.user;
 
 public class User {
     private String username;
@@ -15,6 +15,7 @@ public class User {
         this.email = email;
     }
 
+
     public String getUsername() {
         return username;
     }
@@ -26,4 +27,6 @@ public class User {
     public String getUid() {
         return uid;
     }
+
+
 }

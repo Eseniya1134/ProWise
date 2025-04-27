@@ -1,4 +1,4 @@
-package com.example.ourpro.bottomnav.catalog;
+package com.example.ourpro.user;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ourpro.R;
-import com.example.ourpro.profile.UserProfileFragment;
 import com.example.ourpro.databinding.ItemUserBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,11 +20,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
+public class UserAdapterForSearch extends RecyclerView.Adapter<UserAdapterForSearch.UserViewHolder> {
 
     private final List<User> userList;
 
-    public UserAdapter(List<User> userList) {
+    public UserAdapterForSearch(List<User> userList) {
         this.userList = userList;
     }
 

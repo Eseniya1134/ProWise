@@ -20,7 +20,7 @@ public class ChatViewHolder extends RecyclerView.ViewHolder{
     public ChatViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        chat_iv = itemView.findViewById(R.id.profile_iv);
+        // chat_iv = itemView.findViewById(R.id.profile_iv);
         chat_name_tv = itemView.findViewById(R.id.username_tv);
     }
 }

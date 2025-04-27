@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ourpro.databinding.FragmentSearchBinding;
+import com.example.ourpro.user.User;
+import com.example.ourpro.user.UserAdapterForSearch;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +27,7 @@ import java.util.List;
 public class ListOfUsersFragment extends Fragment {
 
     private FragmentSearchBinding binding;
-    private UserAdapter userAdapter;
+    private UserAdapterForSearch userAdapterForSearch;
     private List<User> userList = new ArrayList<>();
     private String query = "";
 
@@ -54,8 +56,8 @@ public class ListOfUsersFragment extends Fragment {
 
     private void setupRecyclerView() {
         binding.searchsWindow.setLayoutManager(new LinearLayoutManager(getContext()));
-        userAdapter = new UserAdapter(userList);
-        binding.searchsWindow.setAdapter(userAdapter);
+        userAdapterForSearch = new UserAdapterForSearch(userList);
+        binding.searchsWindow.setAdapter(userAdapterForSearch);
     }
 
     private void searchUsers(String query) {
@@ -87,7 +89,7 @@ public class ListOfUsersFragment extends Fragment {
                             binding.emptyMessage.setVisibility(View.GONE);
                         }
 
-                        userAdapter.notifyDataSetChanged();
+                        userAdapterForSearch.notifyDataSetChanged();
                     }
 
                     @Override

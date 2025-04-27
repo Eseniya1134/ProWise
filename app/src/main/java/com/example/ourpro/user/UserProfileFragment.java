@@ -1,4 +1,6 @@
-package com.example.ourpro.profile;
+package com.example.ourpro.user;
+
+import static com.example.ourpro.utils.ChatUtil.generateChatId;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,16 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.example.ourpro.R;
+import com.example.ourpro.bottomnav.dialogs.ChatsFragment;
 import com.example.ourpro.bottomnav.profile.AccountSettingFragment;
-import com.example.ourpro.databinding.FragmentProfileBinding;
 import com.example.ourpro.databinding.FragmentUserProfileBinding;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class UserProfileFragment extends Fragment {
@@ -52,6 +54,15 @@ public class UserProfileFragment extends Fragment {
         scaleAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale);
         fadeInAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in);
 
+
+        binding.buttonWrite.setOnClickListener(v -> {
+            createNewChat();
+            String chatId = myUserId();
+            String otherUserId = getOtherUserId();
+            openChat(chatId, otherUserId);
+
+        });
+
         // Настройка поведения AppBar
         setupAppBar();
 
@@ -60,6 +71,103 @@ public class UserProfileFragment extends Fragment {
 
     }
 
+    private void createNewChat() {
+
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(getContext(), "Ошибка: пользователь не авторизован", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String currentUserId = currentUser.getUid();
+        String otherUserId = getOtherUserId(); // Тебе нужно знать с кем создаешь чат
+
+        if (otherUserId == null) {
+            Toast.makeText(getContext(), "Ошибка: выберите пользователя для чата", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DatabaseReference db= FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference("Chats");
+
+        String chatId = generateChatId(currentUserId, otherUserId);
+
+        db.child("Chats").child(chatId).child("Users").child(currentUserId).setValue(true);
+        db.child("Chats").child(chatId).child("Users").child(otherUserId).setValue(true);
+
+// + Новое: добавляем чат пользователям
+        db.child("Users").child(currentUserId).child("chats").get().addOnSuccessListener(snapshot -> {
+            String chats = snapshot.getValue(String.class);
+            if (chats == null || chats.isEmpty()) {
+                chats = chatId;
+            } else {
+                chats += "," + chatId;
+            }
+            db.child("Users").child(currentUserId).child("chats").setValue(chats);
+        });
+
+        db.child("Users").child(otherUserId).child("chats").get().addOnSuccessListener(snapshot -> {
+            String chats = snapshot.getValue(String.class);
+            if (chats == null || chats.isEmpty()) {
+                chats = chatId;
+            } else {
+                chats += "," + chatId;
+            }
+            db.child("Users").child(otherUserId).child("chats").setValue(chats);
+        });
+
+        Toast.makeText(getContext(), "Чат создан!", Toast.LENGTH_SHORT).show();
+
+        // Здесь можно открыть экран самого чата (если хочешь)
+        // openChat(chatId);
+    }
+
+    private String generateChatId(String userId1, String userId2) {
+        if (userId1.compareTo(userId2) < 0) {
+            return userId1 + "_" + userId2;
+        } else {
+            return userId2 + "_" + userId1;
+        }
+    }
+
+    private void openChat(String chatId, String otherUserId) {
+        Bundle bundle = new Bundle();
+        bundle.putString("chatId", chatId);
+        bundle.putString("otherUserId", otherUserId);
+
+        ChatsFragment chatFragment = new ChatsFragment();
+        chatFragment.setArguments(bundle);
+
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.menu_fr, chatFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private String myUserId() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e(TAG, "Ошибка: пользователь не найден");
+        }
+
+        String userId = user.getUid();
+        return userId;
+    }
+
+    private String getOtherUserId() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+
+        // Получаем userId из аргументов
+        userId = getArguments() != null ? getArguments().getString("userId") : null;
+        if (userId == null) {
+            Toast.makeText(getContext(), "Пользователь не найден", Toast.LENGTH_SHORT).show();
+
+        }
+        return userId; // сюда временно вручную вставь ID любого пользователя
+    }
     private void setupAppBar() {
         binding.appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
             int scrollRange = appBarLayout.getTotalScrollRange();

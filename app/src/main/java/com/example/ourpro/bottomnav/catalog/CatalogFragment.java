@@ -1,7 +1,6 @@
 package com.example.ourpro.bottomnav.catalog;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,11 @@ import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ourpro.R;
 import com.example.ourpro.databinding.FragmentCatalogBinding;
+import com.example.ourpro.user.User;
+import com.example.ourpro.user.UserAdapterForSearch;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +31,7 @@ public class CatalogFragment extends Fragment {
     private List<String> userNamesList = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private List<User> users = new ArrayList<>();
-    private UserAdapter userAdapter;
+    private UserAdapterForSearch userAdapterForSearch;
     private ListOfUsersFragment search_string;
 
     @Override
@@ -43,6 +43,19 @@ public class CatalogFragment extends Fragment {
                 .getReference("Users");
 
         setupAutoComplete();
+
+       /* binding..setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String query = binding.search.getText().toString().trim();
+                if (!query.isEmpty()) {
+                    toSearchFragment(query);
+                    // searchUsers(query); // <-- временно отключено
+                }
+                return true;
+            }
+            return false;
+        });*/
+
 
 
         binding.search.setOnEditorActionListener((v, actionId, event) -> {
@@ -118,7 +131,7 @@ public class CatalogFragment extends Fragment {
                                 users.add(user);
                             }
                         }
-                        userAdapter.notifyDataSetChanged();
+                        userAdapterForSearch.notifyDataSetChanged();
                     }
 
                     @Override

@@ -52,10 +52,11 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder>{
             userId = chats.get(position).getUserId2();
         }
 
-        FirebaseDatabase.getInstance().getReference()
+        FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference()
                 .child("Users")
                 .child(userId)
-                .child("profileImage")
+                //.child("profileImage")
                 .get()
                 .addOnSuccessListener(dataSnapshot -> {
                     if (dataSnapshot.exists()) {
@@ -65,7 +66,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder>{
                             Picasso.get()
                                     .load(imageUrl)
                                     .placeholder(R.drawable.profile_icon) // опционально: пока загружается
-                                    .error(R.drawable.profile_icon)         // опционально: если ошибка
+                                   // .error(R.drawable.profile_icon)         // опционально: если ошибка
                                     .into(holder.chat_iv);
                         }
                     }
