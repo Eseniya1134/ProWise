@@ -12,11 +12,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ourpro.R;
 import com.example.ourpro.bottomnav.dialogs.ChatsFragment;
 import com.example.ourpro.bottomnav.profile.AccountSettingFragment;
 import com.example.ourpro.databinding.FragmentUserProfileBinding;
+import com.example.ourpro.utils.ChatUtil;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +36,7 @@ public class UserProfileFragment extends Fragment {
 
     private static final String TAG = "Upload ###";
 
+    private User selectedUser;
     private FragmentUserProfileBinding binding;
     private Animation scaleAnimation, fadeInAnimation;
 
@@ -42,13 +46,10 @@ public class UserProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentUserProfileBinding.bind(view);
-
+        loadUser();
         loadFullName();
         loadGenderANDdob();
         loadUserName();
-
-        //binding.exit.setOnClickListener(v -> logout());
-        //binding.exit2.setOnClickListener(v -> logout());
 
         // Инициализация анимаций
         scaleAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale);
@@ -56,12 +57,18 @@ public class UserProfileFragment extends Fragment {
 
 
         binding.buttonWrite.setOnClickListener(v -> {
-            createNewChat();
-            String chatId = myUserId();
-            String otherUserId = getOtherUserId();
-            openChat(chatId, otherUserId);
+            if (selectedUser != null) {
+                ChatUtil.createChat(selectedUser);
+                Toast.makeText(getContext(), "Чат создан!", Toast.LENGTH_SHORT).show();
 
+                String chatId = generateChatId(myUserId(), selectedUser.getUid());
+                openChat(chatId, selectedUser.getUid());
+            } else {
+                Toast.makeText(getContext(), "Пользователь не загружен", Toast.LENGTH_SHORT).show();
+            }
         });
+
+
 
         // Настройка поведения AppBar
         setupAppBar();
@@ -71,63 +78,38 @@ public class UserProfileFragment extends Fragment {
 
     }
 
-    private void createNewChat() {
 
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) {
-            Toast.makeText(getContext(), "Ошибка: пользователь не авторизован", Toast.LENGTH_SHORT).show();
+    private void loadUser() {
+        userId =  getOtherUserId();
+        if (userId == null) {
+            Toast.makeText(getContext(), "Пользователь не найден", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String currentUserId = currentUser.getUid();
-        String otherUserId = getOtherUserId(); // Тебе нужно знать с кем создаешь чат
+        FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference("Users")
+                .child(userId)
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    selectedUser = snapshot.getValue(User.class);
+                    if (selectedUser != null) {
+                        selectedUser.setUid(userId); // ВАЖНО: ставим UID из ключа!
+                        Log.d(TAG, "Пользователь загружен: " + selectedUser.getUsername());
+                    }
+                })
 
-        if (otherUserId == null) {
-            Toast.makeText(getContext(), "Ошибка: выберите пользователя для чата", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        DatabaseReference db= FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
-                .getReference("Chats");
-
-        String chatId = generateChatId(currentUserId, otherUserId);
-
-        db.child("Chats").child(chatId).child("Users").child(currentUserId).setValue(true);
-        db.child("Chats").child(chatId).child("Users").child(otherUserId).setValue(true);
-
-// + Новое: добавляем чат пользователям
-        db.child("Users").child(currentUserId).child("chats").get().addOnSuccessListener(snapshot -> {
-            String chats = snapshot.getValue(String.class);
-            if (chats == null || chats.isEmpty()) {
-                chats = chatId;
-            } else {
-                chats += "," + chatId;
-            }
-            db.child("Users").child(currentUserId).child("chats").setValue(chats);
-        });
-
-        db.child("Users").child(otherUserId).child("chats").get().addOnSuccessListener(snapshot -> {
-            String chats = snapshot.getValue(String.class);
-            if (chats == null || chats.isEmpty()) {
-                chats = chatId;
-            } else {
-                chats += "," + chatId;
-            }
-            db.child("Users").child(otherUserId).child("chats").setValue(chats);
-        });
-
-        Toast.makeText(getContext(), "Чат создан!", Toast.LENGTH_SHORT).show();
-
-        // Здесь можно открыть экран самого чата (если хочешь)
-        // openChat(chatId);
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Ошибка загрузки пользователя", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Ошибка загрузки пользователя: " + e.getMessage());
+                });
     }
+
 
     private String generateChatId(String userId1, String userId2) {
         if (userId1.compareTo(userId2) < 0) {
-            return userId1 + "_" + userId2;
+            return userId1 + userId2;
         } else {
-            return userId2 + "_" + userId1;
+            return userId2 + userId1;
         }
     }
 
