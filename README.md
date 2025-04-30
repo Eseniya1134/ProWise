@@ -25,29 +25,25 @@
 # ProWise — A Platform for Monetizing Expert Knowledge
 
 ## 📌 Brief Description
-**ProWise** is a service that helps specialists (lawyers, marketers, psychologists, tutors, etc.) sell consultations and micro-courses, while allowing clients to find verified experts to solve their tasks.
+**ProWise** is a service that helps specialists (lawyers, marketers, psychologists, tutors, etc.) sell consultations and micro-courses, while allowing clients to create requests and find verified experts to solve their tasks.
 
 ## Project Goal
 To create a convenient and secure platform for quick expert consultations with fair monetization.
 
 ## Key Features
-- 🛒 **Service Catalog** – Find specialists or orders by category.
-- 💰 **Finance** – Deposit and withdraw funds, view transaction history and statistics.
-- 💬 **Communication** – Chats and calls between clients and experts.
-- ⏳ **Order Status** – Track deadlines and manage tasks.
+- 🛒 **Service Catalog** – Search for specialists or requests by category.  
+- 💰 **Finance** – Top up and withdraw funds, view transaction history and statistics.  
+- 💬 **Communication** – Chats and calls between clients and experts.  
+- ⏳ **Order Status** – Track deadlines and manage tasks.  
 - 📌 **Personal Account** – Profile with qualification verification and settings.
 
 ## What Makes ProWise Unique?
-✔ Transparent selection of specialists and orders.  
-✔ Convenient fund withdrawals.  
-✔ Verified experts with official documentation.  
+✔ Transparent selection of specialists and requests.  
+✔ Convenient withdrawals.  
+✔ Verified experts with official documents.
+
 ---
+
 ✨ **Stay tuned for updates and improvements!**
 
 ---
-
-
-
-
-
-
