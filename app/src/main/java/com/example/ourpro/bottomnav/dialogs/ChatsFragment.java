@@ -65,10 +65,19 @@ public class ChatsFragment extends Fragment {
                     chats.add(new Chat(user2, user1, chatName, chatId));
                 }
 
+                if (chats.isEmpty()) {
+                    binding.emptyChatsTv.setVisibility(View.VISIBLE);
+                    binding.chatsRv.setVisibility(View.GONE);
+                } else {
+                    binding.emptyChatsTv.setVisibility(View.GONE);
+                    binding.chatsRv.setVisibility(View.VISIBLE);
+                    binding.chatsRv.setLayoutManager(new LinearLayoutManager(getContext()));
+                    binding.chatsRv.setAdapter(new ChatsAdapter(chats));
+                }
+
                 // Обновляем UI после обработки всех чатов
                 binding.chatsRv.setLayoutManager(new LinearLayoutManager(getContext()));
                 binding.chatsRv.setAdapter(new ChatsAdapter(chats));
-
             }
 
             @Override
@@ -76,6 +85,12 @@ public class ChatsFragment extends Fragment {
                 Toast.makeText(getContext(), "Ошибка загрузки чатов", Toast.LENGTH_SHORT).show();
                 Log.e("ChatsFragment", "Database error: " + error.getMessage());
             }
+
+
         });
+
+
+
+
     }
 }
