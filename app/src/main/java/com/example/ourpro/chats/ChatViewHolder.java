@@ -14,7 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatViewHolder extends RecyclerView.ViewHolder{
 
-    CircleImageView chat_iv;
+   // CircleImageView chat_iv;
     TextView chat_name_tv;
 
     public ChatViewHolder(@NonNull View itemView) {

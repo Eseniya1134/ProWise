@@ -9,6 +9,7 @@ public class Chat {
         this.chat_name = chat_name;
         this.chat_id = chat_id;
     }
+    //Chat chat = new Chat(userId2, userId1, chatName, chatId);
 
     public String getChat_id() {
         return chat_id;

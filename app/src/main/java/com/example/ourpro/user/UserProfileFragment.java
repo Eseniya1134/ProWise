@@ -60,9 +60,6 @@ public class UserProfileFragment extends Fragment {
             if (selectedUser != null) {
                 ChatUtil.createChat(selectedUser);
                 Toast.makeText(getContext(), "Чат создан!", Toast.LENGTH_SHORT).show();
-
-                String chatId = generateChatId(myUserId(), selectedUser.getUid());
-                openChat(chatId, selectedUser.getUid());
             } else {
                 Toast.makeText(getContext(), "Пользователь не загружен", Toast.LENGTH_SHORT).show();
             }
@@ -104,39 +101,6 @@ public class UserProfileFragment extends Fragment {
                 });
     }
 
-
-    private String generateChatId(String userId1, String userId2) {
-        if (userId1.compareTo(userId2) < 0) {
-            return userId1 + userId2;
-        } else {
-            return userId2 + userId1;
-        }
-    }
-
-    private void openChat(String chatId, String otherUserId) {
-        Bundle bundle = new Bundle();
-        bundle.putString("chatId", chatId);
-        bundle.putString("otherUserId", otherUserId);
-
-        ChatsFragment chatFragment = new ChatsFragment();
-        chatFragment.setArguments(bundle);
-
-        requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.menu_fr, chatFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    private String myUserId() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Log.e(TAG, "Ошибка: пользователь не найден");
-        }
-
-        String userId = user.getUid();
-        return userId;
-    }
 
     private String getOtherUserId() {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");

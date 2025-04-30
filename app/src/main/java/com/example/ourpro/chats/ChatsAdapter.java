@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.ourpro.ChatActivity;
 import com.example.ourpro.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -52,11 +53,11 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder>{
             userId = chats.get(position).getUserId2();
         }
 
-        FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
+        /*FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference()
                 .child("Users")
                 .child(userId)
-                //.child("profileImage")
+                .child("username")
                 .get()
                 .addOnSuccessListener(dataSnapshot -> {
                     if (dataSnapshot.exists()) {
@@ -70,17 +71,18 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder>{
                                     .into(holder.chat_iv);
                         }
                     }
+
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(holder.itemView.getContext(), "Ошибка загрузки изображения", Toast.LENGTH_SHORT).show();
-                });
+                });*/
 
-        /*
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(holder.itemView.getContext(), ChatActivity.class);
             intent.putExtra("chatId", chats.get(position).getChat_id());
             holder.itemView.getContext().startActivity(intent);
-        });*/
+        });
     }
 
 
