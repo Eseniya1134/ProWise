@@ -53,6 +53,7 @@ public class ChatActivity extends AppCompatActivity {
         loadMessages();
     }
 
+    // Проверяет, существует ли чат и создает его, если необходимо
     private void ensureChatExists(String chatId, String user1, String user2) {
         rtdb.child("Chats").child(chatId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -71,23 +72,26 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    // Обновляет список чатов пользователя
     private void updateUserChats(String userId, String chatId) {
         DatabaseReference chatsRef = rtdb.child("Users").child(userId).child("chats");
         chatsRef.get().addOnSuccessListener(snapshot -> {
             String currentChats = snapshot.getValue(String.class);
             if (currentChats == null) currentChats = "";
             if (!currentChats.contains(chatId)) {
-                chatsRef.setValue(currentChats + chatId + ",");
+                chatsRef.setValue(currentChats + chatId + ","); // Добавление нового чата в список
             }
         });
     }
 
+    // Настройка RecyclerView для отображения сообщений
     private void setupRecyclerView() {
-        adapter = new MessagesAdapter(messages);
+        adapter = new MessagesAdapter(messages); // Инициализация адаптера для сообщений
         binding.messagesRv.setLayoutManager(new LinearLayoutManager(this));
         binding.messagesRv.setAdapter(adapter);
     }
 
+    // Настройка кнопки отправки сообщения
     private void setupSendButton() {
         binding.sendMessageBtn.setOnClickListener(v -> {
             String text = binding.messageEt.getText().toString().trim();
@@ -103,24 +107,24 @@ public class ChatActivity extends AppCompatActivity {
                         .document(chatId)
                         .collection("messages")
                         .document(message.getId())
-                        .set(message)
+                        .set(message) // Добавление нового сообщения в Firestore
                         .addOnSuccessListener(aVoid -> {
-                            binding.messageEt.setText("");
-                            // сообщение добавится в loadMessages
+                            binding.messageEt.setText(""); // Очищаем поле ввода
                         });
             }
         });
     }
 
+    // Загружает все сообщения из Firestore для текущего чата
     private void loadMessages() {
         firestore.collection("chats")
                 .document(chatId)
                 .collection("messages")
-                .orderBy("date", Query.Direction.ASCENDING)
+                .orderBy("date", Query.Direction.ASCENDING) // Сортировка сообщений по времени
                 .addSnapshotListener((value, error) -> {
                     if (error != null || value == null) return;
 
-                    messages.clear();
+                    messages.clear(); // Очищаем список сообщений перед загрузкой новых
                     for (DocumentSnapshot doc : value.getDocuments()) {
                         try {
                             String id = doc.getString("id");
@@ -131,33 +135,34 @@ public class ChatActivity extends AppCompatActivity {
                             Timestamp date;
 
                             if (dateObj instanceof Timestamp) {
-                                date = (Timestamp) dateObj;
+                                date = (Timestamp) dateObj; // Если дата - это объект Timestamp
                             } else if (dateObj instanceof String) {
                                 try {
                                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
-                                    Date parsedDate = sdf.parse((String) dateObj);
+                                    Date parsedDate = sdf.parse((String) dateObj); // Парсим строку в объект Date
                                     date = parsedDate != null ? new Timestamp(parsedDate) : Timestamp.now();
                                 } catch (ParseException e) {
                                     date = Timestamp.now(); // fallback
                                 }
                             } else {
-                                date = Timestamp.now(); // fallback
+                                date = Timestamp.now(); // fallback, если дата не определена
                             }
 
+                            // Добавляем сообщение в список
                             if (id != null && senderId != null && text != null && date != null) {
                                 messages.add(new Message(id, senderId, text, date));
                             } else {
-                                // Можно добавить лог для отладки
+                                // Логирование пропущенных сообщений с null полями
                                 Log.w("ChatActivity", "Пропущено сообщение с null полями: " + doc.getId());
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace(); // сообщение не добавляется
+                            e.printStackTrace(); // Сообщение не добавляется в случае ошибки
                         }
                     }
 
-                    adapter.notifyDataSetChanged();
-                    binding.messagesRv.scrollToPosition(messages.size() - 1);
+                    adapter.notifyDataSetChanged(); // Уведомляем адаптер о новых данных
+                    binding.messagesRv.scrollToPosition(messages.size() - 1); // Прокручиваем до последнего сообщения
                 });
     }
 
