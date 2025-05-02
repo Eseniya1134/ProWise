@@ -10,26 +10,28 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/message_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/message_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/message_et_shape"
-        android:hint="Type your message..."
         android:fontFamily="@font/pt_sans_regular"
-        android:textColor="@color/grey_text"
+        android:hint="Type your message..."
         android:padding="12dp"
+        android:textColor="@color/grey_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/send_message_btn"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messages_rv" />
 
     <ImageButton
         android:id="@+id/send_message_btn"
