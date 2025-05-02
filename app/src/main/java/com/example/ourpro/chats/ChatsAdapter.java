@@ -2,6 +2,7 @@ package com.example.ourpro.chats;
 
 import static androidx.fragment.app.FragmentManager.TAG;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +45,18 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
+
+        Chat chat = chats.get(position);
+
+        holder.itemView.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra("chatId", chat.getChat_id());
+            intent.putExtra("otherUserId", chat.getUserId1().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    ? chat.getUserId2()
+                    : chat.getUserId1());
+            context.startActivity(intent);
+        });
         holder.chat_name_tv.setText(chats.get(position).getChat_name());
 
         String userId;

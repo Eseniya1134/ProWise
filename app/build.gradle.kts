@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -62,6 +63,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.11.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.firebase:firebase-database:21.0.0")
+    implementation ("com.google.firebase:firebase-firestore:25.1.4")
 
     implementation ("com.squareup.picasso:picasso:2.8")//предназначена для загрузки и отображения изображений в Android-приложениях.
     implementation("androidx.viewpager2:viewpager2:1.1.0-beta01") //поддерживает вертикальный свайп, анимации, RTL и RecyclerView внутри.

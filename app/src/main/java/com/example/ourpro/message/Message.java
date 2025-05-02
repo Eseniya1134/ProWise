@@ -1,12 +1,18 @@
 package com.example.ourpro.message;
 
+import com.google.firebase.Timestamp;
+
 public class Message {
+    private String id;
+    private String senderId;
+    private String text;
+    private Timestamp date;
 
-    private String id, ownerId, text, date;
+    public Message() {} // Обязательно нужен для Firestore
 
-    public Message(String id, String ownerId, String text, String date) {
+    public Message(String id, String senderId, String text, Timestamp date) {
         this.id = id;
-        this.ownerId = ownerId;
+        this.senderId = senderId;
         this.text = text;
         this.date = date;
     }
@@ -15,31 +21,15 @@ public class Message {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public String getSenderId() {
+        return senderId;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getDate() {
+    public Timestamp getDate() {
         return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 }

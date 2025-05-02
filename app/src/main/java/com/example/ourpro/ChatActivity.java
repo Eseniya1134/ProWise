@@ -1,24 +1,25 @@
 package com.example.ourpro;
 
 import android.os.Bundle;
-import androidx.activity.EdgeToEdge;
+import android.text.TextUtils;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ourpro.databinding.ActivityChatBinding;
 import com.example.ourpro.message.Message;
 import com.example.ourpro.message.MessagesAdapter;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.*;
+import com.google.firebase.firestore.*;
+import com.google.firebase.firestore.Query;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -26,22 +27,59 @@ public class ChatActivity extends AppCompatActivity {
     private final List<Message> messages = new ArrayList<>();
     private MessagesAdapter adapter;
 
+    private String currentUserId;
+    private String otherUserId;
+    private String chatId;
+
+    private FirebaseFirestore firestore;
+    private DatabaseReference rtdb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        otherUserId = getIntent().getStringExtra("otherUserId");
+        chatId = getIntent().getStringExtra("chatId");
 
+        firestore = FirebaseFirestore.getInstance();
+        rtdb = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app").getReference();
+
+        ensureChatExists(chatId, currentUserId, otherUserId);
         setupRecyclerView();
         setupSendButton();
+        loadMessages();
+    }
+
+    private void ensureChatExists(String chatId, String user1, String user2) {
+        rtdb.child("Chats").child(chatId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    rtdb.child("Chats").child(chatId).child("user1").setValue(user1);
+                    rtdb.child("Chats").child(chatId).child("user2").setValue(user2);
+
+                    updateUserChats(user1, chatId);
+                    updateUserChats(user2, chatId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
+
+    private void updateUserChats(String userId, String chatId) {
+        DatabaseReference chatsRef = rtdb.child("Users").child(userId).child("chats");
+        chatsRef.get().addOnSuccessListener(snapshot -> {
+            String currentChats = snapshot.getValue(String.class);
+            if (currentChats == null) currentChats = "";
+            if (!currentChats.contains(chatId)) {
+                chatsRef.setValue(currentChats + chatId + ",");
+            }
+        });
     }
 
     private void setupRecyclerView() {
@@ -53,21 +91,74 @@ public class ChatActivity extends AppCompatActivity {
     private void setupSendButton() {
         binding.sendMessageBtn.setOnClickListener(v -> {
             String text = binding.messageEt.getText().toString().trim();
-            if (!text.isEmpty()) {
-                String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                String date = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(new Date());
-
+            if (!TextUtils.isEmpty(text)) {
                 Message message = new Message(
-                        UUID.randomUUID().toString(), // генерируем id
+                        UUID.randomUUID().toString(),
                         currentUserId,
                         text,
-                        date
+                        Timestamp.now()
                 );
-                messages.add(message);
-                adapter.notifyItemInserted(messages.size() - 1);
-                binding.messagesRv.scrollToPosition(messages.size() - 1);
-                binding.messageEt.setText("");
+
+                firestore.collection("chats")
+                        .document(chatId)
+                        .collection("messages")
+                        .document(message.getId())
+                        .set(message)
+                        .addOnSuccessListener(aVoid -> {
+                            binding.messageEt.setText("");
+                            // сообщение добавится в loadMessages
+                        });
             }
         });
     }
+
+    private void loadMessages() {
+        firestore.collection("chats")
+                .document(chatId)
+                .collection("messages")
+                .orderBy("date", Query.Direction.ASCENDING)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null || value == null) return;
+
+                    messages.clear();
+                    for (DocumentSnapshot doc : value.getDocuments()) {
+                        try {
+                            String id = doc.getString("id");
+                            String senderId = doc.getString("senderId");
+                            String text = doc.getString("text");
+
+                            Object dateObj = doc.get("date");
+                            Timestamp date;
+
+                            if (dateObj instanceof Timestamp) {
+                                date = (Timestamp) dateObj;
+                            } else if (dateObj instanceof String) {
+                                try {
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                                    Date parsedDate = sdf.parse((String) dateObj);
+                                    date = parsedDate != null ? new Timestamp(parsedDate) : Timestamp.now();
+                                } catch (ParseException e) {
+                                    date = Timestamp.now(); // fallback
+                                }
+                            } else {
+                                date = Timestamp.now(); // fallback
+                            }
+
+                            if (id != null && senderId != null && text != null && date != null) {
+                                messages.add(new Message(id, senderId, text, date));
+                            } else {
+                                // Можно добавить лог для отладки
+                                Log.w("ChatActivity", "Пропущено сообщение с null полями: " + doc.getId());
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace(); // сообщение не добавляется
+                        }
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    binding.messagesRv.scrollToPosition(messages.size() - 1);
+                });
+    }
+
 }

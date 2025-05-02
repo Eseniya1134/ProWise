@@ -7,9 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ourpro.databinding.MessageFromCurrUserRvItemBinding;
 import com.example.ourpro.databinding.MessageRvItemBinding;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -25,7 +29,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemViewType(int position) {
         String currentUserId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-        return messages.get(position).getOwnerId().equals(currentUserId) ? VIEW_TYPE_MY_MESSAGE : VIEW_TYPE_OTHER_MESSAGE;
+        return messages.get(position).getSenderId().equals(currentUserId)
+                ? VIEW_TYPE_MY_MESSAGE : VIEW_TYPE_OTHER_MESSAGE;
     }
 
     @NonNull
@@ -57,7 +62,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return messages.size();
     }
 
-    static class MyMessageViewHolder extends RecyclerView.ViewHolder {
+    private String formatTimestamp(Timestamp timestamp) {
+        if (timestamp == null) return "";
+        Date date = timestamp.toDate();
+        return new SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.getDefault()).format(date);
+    }
+
+    class MyMessageViewHolder extends RecyclerView.ViewHolder {
         private final MessageFromCurrUserRvItemBinding binding;
 
         public MyMessageViewHolder(@NonNull MessageFromCurrUserRvItemBinding binding) {
@@ -67,11 +78,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public void bind(Message message) {
             binding.messageTv.setText(message.getText());
-            binding.messageDateTv.setText(message.getDate());
+            binding.messageDateTv.setText(formatTimestamp(message.getDate()));
         }
     }
 
-    static class OtherMessageViewHolder extends RecyclerView.ViewHolder {
+    class OtherMessageViewHolder extends RecyclerView.ViewHolder {
         private final MessageRvItemBinding binding;
 
         public OtherMessageViewHolder(@NonNull MessageRvItemBinding binding) {
@@ -81,7 +92,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public void bind(Message message) {
             binding.messageTv.setText(message.getText());
-            binding.messageDateTv.setText(message.getDate());
+            binding.messageDateTv.setText(formatTimestamp(message.getDate()));
         }
     }
 }
