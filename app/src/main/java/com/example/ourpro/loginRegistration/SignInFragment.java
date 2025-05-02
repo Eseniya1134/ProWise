@@ -1,4 +1,4 @@
-package com.example.ourpro;
+package com.example.ourpro.loginRegistration;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.ourpro.MainActivity;
+import com.example.ourpro.R;
 import com.example.ourpro.databinding.FragmentSignInBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

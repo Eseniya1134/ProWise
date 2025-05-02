@@ -1,10 +1,8 @@
 package com.example.ourpro.bottomnav.profile;
 
-import static androidx.fragment.app.FragmentManager.TAG;
 import static com.google.android.material.textfield.TextInputLayout.END_ICON_NONE;
 
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -13,30 +11,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
-import android.renderscript.ScriptGroup;
 
 import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ourpro.R;
-import com.example.ourpro.SignInFragment;
 import com.example.ourpro.databinding.FragmentSecuritySettingsBinding;
-import com.google.firebase.auth.ActionCodeSettings;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
