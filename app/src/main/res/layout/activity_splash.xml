@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/splash_layout"
+    android:layout_height="match_parent"
+    android:background="#FDFDFD">
+
+    <!-- Логотип или изображение, которое будет показываться на экране загрузки -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="223dp"
+        android:layout_height="212dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/logo_icon_foreground" />
+</RelativeLayout>
