@@ -1,42 +1,55 @@
 package com.example.ourpro.message;
 
-
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ourpro.databinding.MessageFromCurrUserRvItemBinding;
+import com.example.ourpro.databinding.MessageRvItemBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 import java.util.Objects;
 
-import com.example.ourpro.R;
+public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>{
+    private final List<Message> messages;
+    private static final int VIEW_TYPE_MY_MESSAGE = 1;
+    private static final int VIEW_TYPE_OTHER_MESSAGE = 2;
 
-    private List<Message> messages;
-
-    public MessagesAdapter (List<Message> messages){
+    public MessagesAdapter(List<Message> messages) {
         this.messages = messages;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        String currentUserId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        return messages.get(position).getOwnerId().equals(currentUserId) ? VIEW_TYPE_MY_MESSAGE : VIEW_TYPE_OTHER_MESSAGE;
     }
 
     @NonNull
     @Override
-    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new MessageViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_MY_MESSAGE) {
+            MessageFromCurrUserRvItemBinding binding = MessageFromCurrUserRvItemBinding.inflate(
+                    LayoutInflater.from(parent.getContext()), parent, false);
+            return new MyMessageViewHolder(binding);
+        } else {
+            MessageRvItemBinding binding = MessageRvItemBinding.inflate(
+                    LayoutInflater.from(parent.getContext()), parent, false);
+            return new OtherMessageViewHolder(binding);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Message message = messages.get(position);
-
-        holder.messageTv.setText(message.getText());
-        holder.dateTv.setText(message.getDate());
+        if (holder instanceof MyMessageViewHolder) {
+            ((MyMessageViewHolder) holder).bind(message);
+        } else {
+            ((OtherMessageViewHolder) holder).bind(message);
+        }
     }
 
     @Override
@@ -44,23 +57,31 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         return messages.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (messages.get(position).getOwnerId().equals(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
-            return R.layout.message_from_curr_user_rv_item;
-        else
-            return R.layout.message_rv_item;
+    static class MyMessageViewHolder extends RecyclerView.ViewHolder {
+        private final MessageFromCurrUserRvItemBinding binding;
+
+        public MyMessageViewHolder(@NonNull MessageFromCurrUserRvItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+
+        public void bind(Message message) {
+            binding.messageTv.setText(message.getText());
+            binding.messageDateTv.setText(message.getDate());
+        }
     }
 
-    static class MessageViewHolder extends RecyclerView.ViewHolder{
+    static class OtherMessageViewHolder extends RecyclerView.ViewHolder {
+        private final MessageRvItemBinding binding;
 
-        TextView messageTv, dateTv;
+        public OtherMessageViewHolder(@NonNull MessageRvItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
 
-        public MessageViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            messageTv = itemView.findViewById(R.id.message_tv);
-            dateTv = itemView.findViewById(R.id.message_date_tv);
+        public void bind(Message message) {
+            binding.messageTv.setText(message.getText());
+            binding.messageDateTv.setText(message.getDate());
         }
     }
 }
