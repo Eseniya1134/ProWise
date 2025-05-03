@@ -144,43 +144,7 @@
                 android:padding="10dp" />
         </LinearLayout>
 
-        <!-- Шаг 3
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:fontFamily="@font/pt_sans_bold"
-                android:gravity="center"
-                android:text="Готов создать\nсвой WiseCash? "
-                android:textColor="@color/our_blue"
-                android:textSize="32sp" />
-
-            <TextView
-                android:layout_width="305dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="76dp"
-                android:fontFamily="@font/pt_sans_regular"
-                android:gravity="center"
-                android:text="Подождите! Мы ищем вас!"
-                android:textColor="#1E1F22"
-                android:textSize="16sp" />
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_marginTop="16dp"
-                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
-                android:indeterminate="true"/>
-
-        </LinearLayout>-->
-
-        <!-- Шаг 4 -->
+        <!-- Шаг 3 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -262,7 +226,7 @@
                 android:padding="10dp" />
         </LinearLayout>
 
-        <!-- Шаг 5 -->
+        <!-- Шаг 4 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -344,7 +308,7 @@
                 android:padding="10dp" />
         </LinearLayout>
 
-        <!-- Шаг 6 -->
+        <!-- Шаг 5 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
