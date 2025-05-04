@@ -15,7 +15,6 @@
         android:outAnimation="@anim/slide_out_left">
 
 
-
         <!-- Шаг 1 -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -171,38 +170,59 @@
                 android:textColor="#1E1F22"
                 android:textSize="16sp" />
 
+            <EditText
+                android:id="@+id/pinEditText"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:autofillHints=""
+                android:background="@android:color/transparent"
+                android:cursorVisible="false"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:textColor="@android:color/transparent"
+                android:visibility="invisible" />
+
+            <!-- Видимые кружочки -->
             <LinearLayout
+                android:id="@+id/pinCirclesLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="0dp"
                 android:gravity="center"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/pin_circle_filled" />
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/pin_circle_filled" />
-
-                <ImageView
+                    android:id="@+id/pinCircle1"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="8dp"
                     android:src="@drawable/pin_circle_empty" />
 
                 <ImageView
+                    android:id="@+id/pinCircle2"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="8dp"
                     android:src="@drawable/pin_circle_empty" />
 
+                <ImageView
+                    android:id="@+id/pinCircle3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/pin_circle_empty" />
+
+                <ImageView
+                    android:id="@+id/pinCircle4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/pin_circle_empty" />
             </LinearLayout>
 
             <ImageView
@@ -253,38 +273,58 @@
                 android:textColor="#1E1F22"
                 android:textSize="16sp" />
 
+            <EditText
+                android:id="@+id/pinEditText2"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/transparent"
+                android:cursorVisible="false"
+                android:importantForAutofill="no"
+                android:autofillHints=""
+                android:imeOptions="actionDone"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:visibility="invisible" />
+
             <LinearLayout
+                android:id="@+id/pinCirclesLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
+                android:layout_marginTop="0dp"
                 android:gravity="center"
                 android:padding="8dp">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/pin_circle_filled" />
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/pin_circle_filled" />
-
-                <ImageView
+                    android:id="@+id/pin2Circle1"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="8dp"
                     android:src="@drawable/pin_circle_empty" />
 
                 <ImageView
+                    android:id="@+id/pin2Circle2"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="8dp"
                     android:src="@drawable/pin_circle_empty" />
 
+                <ImageView
+                    android:id="@+id/pin2Circle3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/pin_circle_empty" />
+
+                <ImageView
+                    android:id="@+id/pin2Circle4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/pin_circle_empty" />
             </LinearLayout>
 
             <ImageView
