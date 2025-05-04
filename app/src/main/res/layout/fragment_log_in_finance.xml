@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_sans_regular"
                     android:hint="Имя пользователя"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="text"
                     android:textColor="@color/grey_text"
                     android:textColorLink="#0F0F0F" />
