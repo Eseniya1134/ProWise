@@ -20,8 +20,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ourpro.R;
+import com.example.ourpro.bottomnav.dialogs.DialogsFragment;
 import com.example.ourpro.databinding.FragmentLogInFinanceBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,7 +57,10 @@ public class LogInFinanceFragment extends Fragment {
         // Переход на финальный экран (если вдруг потребуется)
         binding.btnNext.setOnClickListener(v -> {
             if (binding.viewFlipper.getDisplayedChild() == 4) {
-                binding.viewFlipper.showNext();
+                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+                ft.replace(R.id.menu_fr, new FinanceFragment());
+                ft.addToBackStack(null); // Добавляем в back stack
+                ft.commit();
             }
         });
 
