@@ -95,6 +95,7 @@ public class SignUpFragment extends Fragment {
                                     userInfo.put("fathersName", "");
                                     userInfo.put("aboutMyself", "");
                                     userInfo.put("chats", "");
+                                    userInfo.put("WiseCash", "");
 
                                     usersRef.child(userId).setValue(userInfo);
 

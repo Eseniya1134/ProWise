@@ -69,11 +69,11 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.1.0-beta01") //поддерживает вертикальный свайп, анимации, RTL и RecyclerView внутри.
     implementation ("com.google.android.material:material:1.10.0") // рисует сами вкладки (TabLayout) и другие красивые элементы.
 
-
     implementation ("com.cloudinary:cloudinary-android:2.5.0")
     implementation ("com.squareup.okhttp3:okhttp:4.12.0") // Для загрузки файлов
 
     implementation ("de.hdodenhof:circleimageview:3.1.0") //библиотека для округления картинок
+    implementation ("org.mindrot:jbcrypt:0.4") //бд supabase
 
     implementation ("com.github.bumptech.glide:glide:4.15.1") //библиотека для загрузки гифок, роликов, картинок
 }

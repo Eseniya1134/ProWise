@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ourpro.bottomnav.catalog.CatalogFragment;
 import com.example.ourpro.bottomnav.finance.FinanceFragment;
+import com.example.ourpro.bottomnav.finance.LogInFinanceFragment;
 import com.example.ourpro.bottomnav.orders.OrdersFragment;
 
 import com.example.ourpro.bottomnav.dialogs.DialogsFragment;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         Map<Integer, Fragment> fragmentMap = new HashMap<>();
         fragmentMap.put(R.id.catalog, new CatalogFragment());
-        fragmentMap.put(R.id.finance, new FinanceFragment());
+        fragmentMap.put(R.id.finance, new LogInFinanceFragment());
         fragmentMap.put(R.id.orders, new OrdersFragment());
         fragmentMap.put(R.id.profile, new ProfileFragment());
         fragmentMap.put(R.id.dialogs, new DialogsFragment());

@@ -12,12 +12,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ourpro.R;
 import com.example.ourpro.bottomnav.dialogs.ChatsFragment;
+import com.example.ourpro.bottomnav.dialogs.DialogsFragment;
 import com.example.ourpro.bottomnav.profile.AccountSettingFragment;
+import com.example.ourpro.bottomnav.profile.ProfileFragment;
 import com.example.ourpro.databinding.FragmentUserProfileBinding;
 import com.example.ourpro.utils.ChatUtil;
 import com.google.android.gms.tasks.Task;
@@ -60,6 +63,11 @@ public class UserProfileFragment extends Fragment {
             if (selectedUser != null) {
                 ChatUtil.createChat(selectedUser);
                 Toast.makeText(getContext(), "Чат создан!", Toast.LENGTH_SHORT).show();
+
+                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+                ft.replace(R.id.menu_fr, new DialogsFragment());
+                ft.addToBackStack(null); // Добавляем в back stack
+                ft.commit();
             } else {
                 Toast.makeText(getContext(), "Пользователь не загружен", Toast.LENGTH_SHORT).show();
             }
