@@ -387,8 +387,8 @@ public class AccountSettingFragment extends Fragment {
                 requireContext(),
                 (view, selectedYear, selectedMonth, selectedDay) -> {
                     // Формат ДД.ММ.ГГГГ с ведущими нулями
-                    String selectedDate = String.format("%02d.%02d.%04d",
-                            selectedDay, selectedMonth + 1, selectedYear);
+                    AccountSettingFragment.this.selectedDate = String.format("%02d.%02d.%04d", selectedDay, selectedMonth + 1, selectedYear);
+
                     binding.birthdayText.setText(selectedDate);
                 },
                 year, month, day
