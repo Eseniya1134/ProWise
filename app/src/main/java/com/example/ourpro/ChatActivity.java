@@ -6,8 +6,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.ourpro.bottomnav.profile.ProfileFragment;
 import com.example.ourpro.databinding.ActivityChatBinding;
 import com.example.ourpro.message.Message;
 import com.example.ourpro.message.MessagesAdapter;
@@ -138,7 +140,7 @@ public class ChatActivity extends AppCompatActivity {
                                 date = (Timestamp) dateObj; // Если дата - это объект Timestamp
                             } else if (dateObj instanceof String) {
                                 try {
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm MM-dd", Locale.getDefault());
                                     Date parsedDate = sdf.parse((String) dateObj); // Парсим строку в объект Date
                                     date = parsedDate != null ? new Timestamp(parsedDate) : Timestamp.now();
                                 } catch (ParseException e) {

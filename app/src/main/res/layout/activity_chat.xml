@@ -11,8 +11,21 @@
         android:id="@+id/messages_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="52dp"
         app:layout_constraintBottom_toTopOf="@+id/message_et"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="center"
+        android:src="@drawable/ic_backarrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,9 +38,9 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/message_et_shape"
         android:fontFamily="@font/pt_sans_regular"
-        android:hint="Type your message..."
+        android:hint="Введите текст сообщения"
         android:padding="12dp"
-        android:textColor="@color/grey_text"
+        android:textColor="@color/black_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/send_message_btn"
         app:layout_constraintStart_toStartOf="parent"

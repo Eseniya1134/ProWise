@@ -5,6 +5,7 @@
     <color name="our_blue">#252375</color>
     <color name="green_light">#8BF692</color>
     <color name="grey_text">#767676</color>
+    <color name="black_text">#212121</color>
     <color name="your_purple_color">#252375</color> <!-- или любой другой -->
 
 </resources>
