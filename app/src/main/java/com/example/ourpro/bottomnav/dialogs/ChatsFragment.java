@@ -10,8 +10,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.ourpro.R;
+import com.example.ourpro.bottomnav.profile.ProfileFragment;
 import com.example.ourpro.chats.Chat;
 import com.example.ourpro.chats.ChatsAdapter;
 import com.example.ourpro.databinding.FragmentChatsBinding;
@@ -32,6 +35,7 @@ public class ChatsFragment extends Fragment {
         loadChats();
         return binding.getRoot();
     }
+
 
     private void loadChats() {
         ArrayList<Chat> chats = new ArrayList<>();

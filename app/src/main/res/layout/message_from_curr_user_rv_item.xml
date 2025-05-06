@@ -8,10 +8,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
+        android:layout_marginStart="60dp"
         android:padding="16dp"
         android:background="@drawable/message_from_curr_user">
 
@@ -20,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/black"
+            android:textColor="@color/black_text"
             android:fontFamily="@font/pt_sans_regular"
             tools:text="This is message text"/>
 
@@ -28,11 +29,11 @@
             android:id="@+id/message_date_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            tools:text="12.01.2022 13:30"
+            android:layout_gravity="start"
+            tools:text="13:30 12.01"
             android:fontFamily="@font/pt_sans_regular"
             android:textSize="12sp"
-            android:textColor="@color/grey_text"
+            android:textColor="@color/our_blue"
             android:layout_marginTop="4dp"/>
 
     </LinearLayout>
