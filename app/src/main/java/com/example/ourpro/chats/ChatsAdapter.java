@@ -48,15 +48,6 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder>{
 
         Chat chat = chats.get(position);
 
-        holder.itemView.setOnClickListener(v -> {
-            Context context = v.getContext();
-            Intent intent = new Intent(context, ChatActivity.class);
-            intent.putExtra("chatId", chat.getChat_id());
-            intent.putExtra("otherUserId", chat.getUserId1().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    ? chat.getUserId2()
-                    : chat.getUserId1());
-            context.startActivity(intent);
-        });
         holder.chat_name_tv.setText(chats.get(position).getChat_name());
 
         String userId;
@@ -94,7 +85,14 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder>{
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(holder.itemView.getContext(), ChatActivity.class);
             intent.putExtra("chatId", chats.get(position).getChat_id());
+
+            String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String otherUserId = currentUserId.equals(chat.getUserId1()) ? chat.getUserId2() : chat.getUserId1();
+            intent.putExtra("otherUserId", otherUserId);
+
             holder.itemView.getContext().startActivity(intent);
+
+
         });
     }
 

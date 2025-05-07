@@ -1,5 +1,7 @@
 package com.example.ourpro;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,10 +17,13 @@ import com.example.ourpro.message.Message;
 import com.example.ourpro.message.MessagesAdapter;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 import com.google.firebase.firestore.*;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 
+import java.lang.ref.Reference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -42,17 +47,26 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        otherUserId = getIntent().getStringExtra("otherUserId");
-        chatId = getIntent().getStringExtra("chatId");
+
+
 
         firestore = FirebaseFirestore.getInstance();
         rtdb = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app").getReference();
 
+        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        chatId = getIntent().getStringExtra("chatId");
+        otherUserId = getIntent().getStringExtra("otherUserId");
+
+        Log.e("ChatActivity", otherUserId + "  " + chatId + "  " + currentUserId);
+
         ensureChatExists(chatId, currentUserId, otherUserId);
+        loadWindowInfo();
         setupRecyclerView();
         setupSendButton();
         loadMessages();
+
+
+
     }
 
     // Проверяет, существует ли чат и создает его, если необходимо
@@ -167,5 +181,36 @@ public class ChatActivity extends AppCompatActivity {
                     binding.messagesRv.scrollToPosition(messages.size() - 1); // Прокручиваем до последнего сообщения
                 });
     }
+
+
+    //Загрузка информации
+    private void loadWindowInfo() {
+        DatabaseReference userRef = rtdb.child("Users").child(otherUserId);
+
+        userRef.child("name").get().addOnSuccessListener(snapshot -> {
+            if (snapshot.exists()) {
+                String name = snapshot.getValue(String.class);
+                binding.usernameTv.setText(name);
+            } else {
+                binding.usernameTv.setText("Пользователь");
+            }
+        }).addOnFailureListener(e -> {
+            binding.usernameTv.setText("Ошибка");
+        });
+
+        userRef.child("profileImageURL").get()
+                .addOnSuccessListener(dataSnapshot -> {
+                    if (dataSnapshot.exists()) {
+                        String imageUrl = dataSnapshot.getValue(String.class);
+                        if (imageUrl != null && !imageUrl.isEmpty()) {
+                            Picasso.get().load(imageUrl).into(binding.profileIv);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Ошибка загрузки изображения из Firebase: " + e.getMessage());
+                });
+    }
+
 
 }
