@@ -14,13 +14,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatViewHolder extends RecyclerView.ViewHolder{
 
-   // CircleImageView chat_iv;
+    CircleImageView chat_iv;
     TextView chat_name_tv;
 
     public ChatViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        // chat_iv = itemView.findViewById(R.id.profile_iv);
+        chat_iv = itemView.findViewById(R.id.profile_iv);
         chat_name_tv = itemView.findViewById(R.id.username_tv);
     }
 }

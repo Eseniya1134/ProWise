@@ -1,39 +1,32 @@
 package com.example.ourpro.chats;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-
-import android.content.Context;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.ourpro.ChatActivity;
 import com.example.ourpro.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder> {
 
+    private final ArrayList<Chat> chats;
+    private final DatabaseReference rtdb;
 
-public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder>{
-
-    private ArrayList<Chat> chats;
-
-    public ChatsAdapter(ArrayList<Chat> chats){
+    public ChatsAdapter(ArrayList<Chat> chats) {
         this.chats = chats;
+        this.rtdb = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app").getReference();
     }
 
     @NonNull
@@ -45,57 +38,50 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
-
         Chat chat = chats.get(position);
 
-        holder.chat_name_tv.setText(chats.get(position).getChat_name());
+        bindChatName(holder, chat);
+        bindProfileImage(holder, chat);
+        setupClickListener(holder, chat);
+    }
 
-        String userId;
-        if (!chats.get(position).getUserId1().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-            userId = chats.get(position).getUserId1();
-        } else {
-            userId = chats.get(position).getUserId2();
-        }
+    private void bindChatName(@NonNull ChatViewHolder holder, @NonNull Chat chat) {
+        holder.chat_name_tv.setText(chat.getChat_name());
+    }
 
-        /*FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
-                .getReference()
-                .child("Users")
-                .child(userId)
-                .child("username")
-                .get()
-                .addOnSuccessListener(dataSnapshot -> {
-                    if (dataSnapshot.exists()) {
-                        String imageUrl = dataSnapshot.getValue(String.class);
+    private void bindProfileImage(@NonNull ChatViewHolder holder, @NonNull Chat chat) {
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String otherUserId = currentUserId.equals(chat.getUserId1()) ? chat.getUserId2() : chat.getUserId1();
+
+        rtdb.child("Users").child(otherUserId).child("profileImageURL").get()
+                .addOnSuccessListener(snapshot -> {
+                    if (snapshot.exists()) {
+                        String imageUrl = snapshot.getValue(String.class);
                         if (imageUrl != null && !imageUrl.isEmpty()) {
-                            // Загрузка изображения с помощью Picasso
                             Picasso.get()
                                     .load(imageUrl)
-                                    .placeholder(R.drawable.profile_icon) // опционально: пока загружается
-                                   // .error(R.drawable.profile_icon)         // опционально: если ошибка
+                                    .placeholder(R.drawable.profile_icon)
+                                    .error(R.drawable.profile_icon)
                                     .into(holder.chat_iv);
                         }
                     }
-
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(holder.itemView.getContext(), "Ошибка загрузки изображения", Toast.LENGTH_SHORT).show();
-                });*/
-
-
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(holder.itemView.getContext(), ChatActivity.class);
-            intent.putExtra("chatId", chats.get(position).getChat_id());
-
-            String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            String otherUserId = currentUserId.equals(chat.getUserId1()) ? chat.getUserId2() : chat.getUserId1();
-            intent.putExtra("otherUserId", otherUserId);
-
-            holder.itemView.getContext().startActivity(intent);
-
-
-        });
+                .addOnFailureListener(e ->
+                        Log.e(ContentValues.TAG, "Ошибка загрузки изображения: " + e.getMessage())
+                );
     }
 
+    private void setupClickListener(@NonNull ChatViewHolder holder, @NonNull Chat chat) {
+        holder.itemView.setOnClickListener(v -> {
+            String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String otherUserId = currentUserId.equals(chat.getUserId1()) ? chat.getUserId2() : chat.getUserId1();
+
+            Intent intent = new Intent(holder.itemView.getContext(), ChatActivity.class);
+            intent.putExtra("chatId", chat.getChat_id());
+            intent.putExtra("otherUserId", otherUserId);
+            holder.itemView.getContext().startActivity(intent);
+        });
+    }
 
     @Override
     public int getItemCount() {
