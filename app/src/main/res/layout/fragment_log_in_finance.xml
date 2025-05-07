@@ -15,6 +15,8 @@
         android:outAnimation="@anim/slide_out_left">
 
 
+
+
         <!-- Шаг 1 -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -391,6 +393,108 @@
                 app:strokeColor="@color/our_blue"
                 app:strokeWidth="2dp"
                 android:text="ПЕРЕЙТИ В \n КОШЕЛЕК"
+                android:textColor="@color/our_blue"
+                android:padding="10dp" />
+        </LinearLayout>
+
+        <!-- Шаг 6 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/pt_sans_bold"
+                android:gravity="center"
+                android:text="Добро пожаловать \n в WiseCash!"
+                android:textColor="@color/our_blue"
+                android:textSize="32sp" />
+
+            <!-- Поле для отображения кружочков -->
+            <TextView
+                android:layout_width="305dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/pt_sans_regular"
+                android:gravity="center"
+                android:text="Введите ваш PIN-код для входа"
+                android:textColor="#1E1F22"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/pinEditText3"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/transparent"
+                android:cursorVisible="false"
+                android:importantForAutofill="no"
+                android:autofillHints=""
+                android:imeOptions="actionDone"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:id="@+id/pinCirclesLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/pin3Circle1"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/pin_circle_empty" />
+
+                <ImageView
+                    android:id="@+id/pin3Circle2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/pin_circle_empty" />
+
+                <ImageView
+                    android:id="@+id/pin3Circle3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/pin_circle_empty" />
+
+                <ImageView
+                    android:id="@+id/pin3Circle4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/pin_circle_empty" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_wallet" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_signIn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="@android:color/transparent"
+                app:strokeColor="@color/our_blue"
+                app:strokeWidth="2dp"
+                android:text="ВОЙТИ"
                 android:textColor="@color/our_blue"
                 android:padding="10dp" />
         </LinearLayout>
