@@ -11,8 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.ourpro.bottomnav.dialogs.DialogsFragment;
 import com.example.ourpro.bottomnav.profile.ProfileFragment;
 import com.example.ourpro.databinding.ActivityChatBinding;
+import com.example.ourpro.loginRegistration.SignInFragment;
 import com.example.ourpro.message.Message;
 import com.example.ourpro.message.MessagesAdapter;
 import com.google.firebase.Timestamp;
@@ -65,6 +67,10 @@ public class ChatActivity extends AppCompatActivity {
         setupSendButton();
         loadMessages();
 
+
+        binding.backButton.setOnClickListener(v -> {
+            onBackPressed();
+        });
 
 
     }
