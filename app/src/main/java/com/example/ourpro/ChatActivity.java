@@ -2,6 +2,7 @@ package com.example.ourpro;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -193,15 +194,18 @@ public class ChatActivity extends AppCompatActivity {
     private void loadWindowInfo() {
         DatabaseReference userRef = rtdb.child("Users").child(otherUserId);
 
-        userRef.child("name").get().addOnSuccessListener(snapshot -> {
+        userRef.get().addOnSuccessListener(snapshot -> {
             if (snapshot.exists()) {
-                String name = snapshot.getValue(String.class);
-                binding.usernameTv.setText(name);
+                String name = snapshot.child("name").getValue(String.class);
+                String surname = snapshot.child("surname").getValue(String.class);
+                String fullName = (name != null ? name : "") + " " + (surname != null ? surname : "");
+                binding.usernameTv.setText(fullName.trim());
             } else {
-                binding.usernameTv.setText("Пользователь");
+                binding.usernameTv.setText("Неизвестный пользователь");
             }
         }).addOnFailureListener(e -> {
-            binding.usernameTv.setText("Ошибка");
+            Log.e(ContentValues.TAG, "Ошибка загрузки имени пользователя: " + e.getMessage());
+            binding.usernameTv.setText("Ошибка загрузки");
         });
 
         userRef.child("profileImageURL").get()
