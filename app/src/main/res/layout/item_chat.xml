@@ -39,12 +39,13 @@
         android:id="@+id/username_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-4dp"
         android:textSize="16sp"
         android:textColor="@color/grey_text"
         android:fontFamily="@font/pt_sans_regular"
-        app:layout_constraintStart_toEndOf="@+id/name_tv"
-        app:layout_constraintBottom_toBottomOf="@id/name_tv"
+        app:layout_constraintStart_toEndOf="@id/profile_iv"
+        app:layout_constraintTop_toBottomOf="@+id/name_tv"
         app:layout_constraintVertical_bias="0.03"
         tools:text="Username" />
 
