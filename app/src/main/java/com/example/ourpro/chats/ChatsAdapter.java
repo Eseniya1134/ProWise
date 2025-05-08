@@ -46,7 +46,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder> {
     }
 
     private void bindChatName(@NonNull ChatViewHolder holder, @NonNull Chat chat) {
-        holder.chat_name_tv.setText(chat.getChat_name());
+        holder.chat_name_tv.setText("@" + chat.getChat_name());
     }
 
     private void bindProfileImage(@NonNull ChatViewHolder holder, @NonNull Chat chat) {

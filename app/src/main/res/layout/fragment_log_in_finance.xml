@@ -35,13 +35,13 @@
                 android:textSize="32sp" />
 
             <TextView
-                android:layout_width="305dp"
+                android:layout_width="325dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/pt_sans_regular"
                 android:gravity="center"
-                android:text="Начните работу с WiseCash: создайте кошелек и получите доступ к расширенным возможностям приложения."
-                android:textColor="#1E1F22"
+                android:text="Начните работу с WiseCash:\nсоздайте кошелек и получите доступ к расширенным возможностям приложения."
+                android:textColor="@color/our_blue"
                 android:textSize="16sp" />
 
             <ImageView
@@ -59,8 +59,9 @@
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="@android:color/transparent"
                 app:strokeColor="@color/our_blue"
-                app:strokeWidth="2dp"
+                app:strokeWidth="4dp"
                 android:text="СОЗДАТЬ"
+                android:fontFamily="@font/pt_sans_bold"
                 android:textColor="@color/our_blue"
                 android:padding="10dp" />
 
@@ -91,7 +92,7 @@
                 android:fontFamily="@font/pt_sans_regular"
                 android:gravity="center"
                 android:text="Для подтверждения личности \n введите ваше имя пользователя"
-                android:textColor="#1E1F22"
+                android:textColor="@color/our_blue"
                 android:textSize="20sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -120,7 +121,7 @@
                     android:hint="Имя пользователя"
                     android:imeOptions="actionDone"
                     android:inputType="text"
-                    android:textColor="@color/grey_text"
+                    android:textColor="#0F0F0F"
                     android:textColorLink="#0F0F0F" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,7 +140,7 @@
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="@android:color/transparent"
                 app:strokeColor="@color/our_blue"
-                app:strokeWidth="2dp"
+                app:strokeWidth="4dp"
                 android:text="ПОДТВЕРДИТЬ \n ЛИЧНОСТЬ"
                 android:textColor="@color/our_blue"
                 android:padding="10dp" />
@@ -242,7 +243,7 @@
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="@android:color/transparent"
                 app:strokeColor="@color/our_blue"
-                app:strokeWidth="2dp"
+                app:strokeWidth="4dp"
                 android:text="СОХРАНИТЬ"
                 android:textColor="@color/our_blue"
                 android:padding="10dp" />
@@ -373,7 +374,7 @@
                 android:gravity="center"
                 android:layout_marginTop="26dp"
                 android:text="Для входа в финансовый отдел каждый раз будет необходим ввод PIN-кода. \n Добро пожаловать!"
-                android:textColor="#1E1F22"
+                android:textColor="@color/grey_text"
                 android:textSize="20sp" />
 
             <ImageView
@@ -391,7 +392,7 @@
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="@android:color/transparent"
                 app:strokeColor="@color/our_blue"
-                app:strokeWidth="2dp"
+                app:strokeWidth="4dp"
                 android:text="ПЕРЕЙТИ В \n КОШЕЛЕК"
                 android:textColor="@color/our_blue"
                 android:padding="10dp" />
