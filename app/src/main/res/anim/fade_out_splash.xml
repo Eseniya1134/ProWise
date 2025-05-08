@@ -3,15 +3,15 @@
     android:interpolator="@android:anim/accelerate_interpolator"
     android:fillAfter="true">
 
-    <!-- Уменьшение размера -->
-    <scale
-        android:fromXScale="1.0"
-        android:toXScale="0.8"
-        android:fromYScale="1.0"
-        android:toYScale="0.8"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:duration="600" />
+<!--    &lt;!&ndash; Уменьшение размера &ndash;&gt;-->
+<!--    <scale-->
+<!--        android:fromXScale="1.0"-->
+<!--        android:toXScale="0.8"-->
+<!--        android:fromYScale="1.0"-->
+<!--        android:toYScale="0.8"-->
+<!--        android:pivotX="50%"-->
+<!--        android:pivotY="50%"-->
+<!--        android:duration="600" />-->
 
     <!-- Исчезновение -->
     <alpha

@@ -4,14 +4,30 @@
     android:layout_width="match_parent"
     android:id="@+id/splash_layout"
     android:layout_height="match_parent"
-    android:background="#FDFDFD">
+    android:background="@color/our_blue">
 
-    <!-- Логотип или изображение, которое будет показываться на экране загрузки -->
+    <!-- Логотип по центру -->
     <ImageView
         android:id="@+id/logo"
         android:layout_width="223dp"
-        android:layout_height="212dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/logo_icon_foreground"
+        android:layout_height="170dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:src="@drawable/frame"
         tools:visibility="invisible" />
+
+    <!-- Текст, выровненный по левому краю картинки -->
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_alignLeft="@id/logo"
+        android:layout_alignStart="@id/logo"
+        android:text="Добро пожаловать!"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/pt_sans_regular"
+        android:textSize="20sp"
+        tools:visibility="visible" />
+
 </RelativeLayout>
