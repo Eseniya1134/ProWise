@@ -41,9 +41,30 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatViewHolder> {
         Chat chat = chats.get(position);
 
         bindChatName(holder, chat);
+        bindChatFullName(holder, chat);
         bindProfileImage(holder, chat);
         setupClickListener(holder, chat);
     }
+
+    private void bindChatFullName(@NonNull ChatViewHolder holder, @NonNull Chat chat) {
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String otherUserId = currentUserId.equals(chat.getUserId1()) ? chat.getUserId2() : chat.getUserId1();
+
+        rtdb.child("Users").child(otherUserId).get().addOnSuccessListener(snapshot -> {
+            if (snapshot.exists()) {
+                String name = snapshot.child("name").getValue(String.class);
+                String surname = snapshot.child("surname").getValue(String.class);
+                String fullName = (name != null ? name : "") + " " + (surname != null ? surname : "");
+                holder.userchat_tv.setText(fullName.trim());
+            } else {
+                holder.userchat_tv.setText("Неизвестный пользователь");
+            }
+        }).addOnFailureListener(e -> {
+            Log.e(ContentValues.TAG, "Ошибка загрузки имени пользователя: " + e.getMessage());
+            holder.userchat_tv.setText("Ошибка загрузки");
+        });
+    }
+
 
     private void bindChatName(@NonNull ChatViewHolder holder, @NonNull Chat chat) {
         holder.chat_name_tv.setText("@" + chat.getChat_name());
