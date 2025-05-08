@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Тень -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#1A000000" /> <!-- Полупрозрачная тень -->
+            <corners android:radius="32dp" />
+        </shape>
+    </item>
+
+    <!-- Основной белый фон -->
+    <item android:left="0dp" android:top="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#A7A5FA" />
+            <corners android:radius="32dp" />
+        </shape>
+    </item>
+</layer-list>
