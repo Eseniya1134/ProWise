@@ -2,4 +2,6 @@
     <string name="app_name">ProWise</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="underlined_text"><u>Посмотреть полностью</u></string>
+
 </resources>
