@@ -57,7 +57,7 @@
                 android:gravity="center"
                 android:text="Мой баланс"
                 android:textColor="@color/our_blue"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
