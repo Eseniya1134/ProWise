@@ -38,8 +38,8 @@
                 android:centerX="0.9"
                 android:centerY="0.1"
                 android:endColor="#008BF692"
-                android:centerColor="#801E2C94"
-                android:startColor="#56F26A"/>
+                android:centerColor="#80162280"
+                android:startColor="#7376DC"/>
             <corners
                 android:bottomLeftRadius="40dp"
                 android:bottomRightRadius="40dp"/>

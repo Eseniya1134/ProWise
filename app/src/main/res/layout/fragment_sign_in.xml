@@ -124,6 +124,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/log" />
 
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="300dp"
+            android:layout_height="230dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/person_teaching_people"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/to_signup"/>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
