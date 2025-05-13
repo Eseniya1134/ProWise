@@ -8,7 +8,7 @@
     </item>
 
     <!-- Основной белый фон -->
-    <item android:left="0dp" android:top="4dp">
+    <item android:left="0dp" android:top="0dp">
         <shape android:shape="rectangle">
             <solid android:color="#A8A6FC" />
             <corners android:radius="40dp" />
