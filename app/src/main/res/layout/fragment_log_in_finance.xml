@@ -345,7 +345,7 @@
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="@android:color/transparent"
                 app:strokeColor="@color/our_blue"
-                app:strokeWidth="2dp"
+                app:strokeWidth="4dp"
                 android:text="ПРОВЕРИТЬ"
                 android:textColor="@color/our_blue"
                 android:padding="10dp" />
@@ -494,7 +494,7 @@
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="@android:color/transparent"
                 app:strokeColor="@color/our_blue"
-                app:strokeWidth="2dp"
+                app:strokeWidth="4dp"
                 android:text="ВОЙТИ"
                 android:textColor="@color/our_blue"
                 android:padding="10dp" />

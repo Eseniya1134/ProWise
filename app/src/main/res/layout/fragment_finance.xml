@@ -1,199 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".bottomnav.catalog.CatalogFragment">
 
-    <!-- Верхняя часть — фон + заголовок + поиск -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <!-- Основной ScrollView, содержащий все элементы -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="270dp"
-        android:background="@drawable/back_catalog"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/text_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/pt_sans_bold"
-            android:text="Финансы"
-            android:textColor="@color/our_blue"
-            android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="29dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="29dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_card_purple"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_main">
+            android:paddingBottom="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/pt_sans_bold"
-                android:gravity="center"
-                android:text="Мой баланс"
-                android:textColor="@color/our_blue"
-                android:textSize="34sp" />
+            <!-- Верхний блок с фоном -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="310dp"
+                android:background="@drawable/back_catalog1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_sans_bold"
-                android:gravity="center"
-                android:text="Мой баланс"
-                android:textColor="@color/our_blue"
-                android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/text_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/pt_sans_bold"
+                    android:text="Финансы"
+                    android:textColor="@color/our_blue"
+                    android:textSize="32sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/bg_card_purple"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_main">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pt_sans_bold"
+                        android:gravity="center"
+                        android:text="Мой баланс"
+                        android:textColor="@color/our_blue"
+                        android:textSize="34sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_sans_bold"
+                        android:gravity="center"
+                        android:text="Мой баланс"
+                        android:textColor="@color/our_blue"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:weightSum="2">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/replenishBtn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@android:color/white"
+                            android:fontFamily="@font/pt_sans_regular"
+                            android:text="Пополнить"
+                            android:textColor="@color/our_blue"
+                            android:textSize="16sp"
+                            app:cornerRadius="32dp"
+                            app:icon="@drawable/ic_arrow_down"
+                            app:iconGravity="start"
+                            app:iconPadding="2dp"
+                            app:iconSize="20dp"
+                            app:iconTint="@null" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/withdrawBtn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@android:color/white"
+                            android:fontFamily="@font/pt_sans_regular"
+                            android:text="Вывести"
+                            android:textColor="@color/our_blue"
+                            android:textSize="16sp"
+                            app:cornerRadius="32dp"
+                            app:icon="@drawable/ic_arrow_up"
+                            app:iconGravity="start"
+                            app:iconPadding="2dp"
+                            app:iconSize="20dp"
+                            app:iconTint="@null" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Блок истории операций -->
             <LinearLayout
+                android:id="@+id/rootLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_card_white"
                 android:gravity="center"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="16dp"
-                android:weightSum="2">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/replenishBtn"
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@android:color/white"
-                    android:text="Пополнить"
+                    android:layout_gravity="left"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/pt_sans_bold"
+                    android:text="История операций"
                     android:textColor="@color/our_blue"
-                    android:textSize="12sp"
-                    app:cornerRadius="32dp"
-                    app:icon="@drawable/ic_arrow_down"
-                    app:iconGravity="textStart"
-                    app:iconPadding="1dp"
-                    app:iconSize="16dp"
-                    app:iconTint="@null" />
+                    android:textSize="20sp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/withdrawBtn"
-                    android:layout_width="0dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/historyRecyclerView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@android:color/white"
-                    android:text="Вывести"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:id="@+id/toggleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/underlined_text"
                     android:textColor="@color/our_blue"
-                    android:textSize="12sp"
-                    app:cornerRadius="32dp"
-                    app:icon="@drawable/ic_arrow_up"
-                    app:iconGravity="textStart"
-                    app:iconPadding="1dp"
-                    app:iconSize="16dp"
-                    app:iconTint="@null" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
-        </LinearLayout>
+            <!-- Нижний информационный блок -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_card_purple"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rootLayout">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_arrow_up_white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Список результатов — ниже заголовка, но визуально "над ним" -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:fontFamily="@font/pt_sans_bold"
+                    android:lineHeight="24dp"
+                    android:text="Читайте подробнее \nпро вывод средств"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/our_blue"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/rootLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_card_white"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/pt_sans_bold"
-            android:gravity="center"
-            android:text="История операций"
-            android:textColor="@color/our_blue"
-            android:textSize="20sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/historyRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false" />
-
-        <TextView
-            android:id="@+id/toggleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="2dp"
-            android:text="@string/underlined_text"
-            android:textColor="@color/our_blue"
-            android:textSize="15sp" />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="29dp"
-        android:background="@drawable/bg_card_purple"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rootLayout">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_arrow_up_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:fontFamily="@font/pt_sans_bold"
-            android:gravity="center"
-            android:text="Читайте подробнее \n про вывод средств"
-            android:textColor="@color/our_blue"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
