@@ -53,6 +53,7 @@ public class ProfileFragment extends Fragment {
         loadUserName();
         loadUserImageToProfile();
         setupViewPager();
+
         binding.settingText.setOnClickListener(v -> {
             navigateToAccountSettings();
         });
@@ -269,8 +270,6 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-
-
     /// ТАБЫ
     private void setupViewPager() {
         binding.viewPager2.setAdapter(new FragmentStateAdapter(this) {
@@ -296,7 +295,6 @@ public class ProfileFragment extends Fragment {
                 }
         ).attach();
     }
-
 
     @Override
     public void onDestroyView() {
