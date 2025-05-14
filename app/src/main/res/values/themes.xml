@@ -7,5 +7,10 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <style name="TabTextStyle" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/pt_sans_bold</item>
+    </style>
+
     <style name="Theme.OurPro" parent="Base.Theme.OurPro" />
 </resources>

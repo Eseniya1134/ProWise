@@ -14,12 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.ourpro.R;
 import com.example.ourpro.SignActivity;
+import com.example.ourpro.bottomnav.catalog.ConsultationsFragment;
+import com.example.ourpro.bottomnav.catalog.ListOfUsersFragment;
+import com.example.ourpro.bottomnav.catalog.TagsFragment;
 import com.example.ourpro.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +52,7 @@ public class ProfileFragment extends Fragment {
         loadGenderANDdob();
         loadUserName();
         loadUserImageToProfile();
+        setupViewPager();
         binding.settingText.setOnClickListener(v -> {
             navigateToAccountSettings();
         });
@@ -113,7 +119,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    //метод выгрузки фио и "О себе"
+    //метод выгрузки информации о себе
 
     private <MutableLiveData> void loadFullName() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -174,7 +180,6 @@ public class ProfileFragment extends Fragment {
 
     }
 
-
     private <MutableLiveData> void loadGenderANDdob() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
@@ -205,7 +210,6 @@ public class ProfileFragment extends Fragment {
                 .addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки: " + e.getMessage()));
 
     }
-
 
     private <MutableLiveData> void loadUserName() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -264,6 +268,35 @@ public class ProfileFragment extends Fragment {
             Log.d(TAG, "Пользователь не авторизован.");
         }
     }
+
+
+
+    /// ТАБЫ
+    private void setupViewPager() {
+        binding.viewPager2.setAdapter(new FragmentStateAdapter(this) {
+            @NonNull
+            @Override
+            public Fragment createFragment(int position) {
+                if (position == 0) {
+                    return new UserExpertFragment();
+                } else {
+                    return new UserClientFragment();
+                }
+            }
+
+            @Override
+            public int getItemCount() {
+                return 2;
+            }
+        });
+
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager2,
+                (tab, position) -> {
+                    tab.setText(position == 0 ? "Я эксперт" : "Я клиент");
+                }
+        ).attach();
+    }
+
 
     @Override
     public void onDestroyView() {

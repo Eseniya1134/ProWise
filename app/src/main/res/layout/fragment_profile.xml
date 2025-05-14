@@ -17,7 +17,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="465dp"
             app:contentScrim="@color/our_blue"
             app:expandedTitleMarginBottom="16dp"
             app:expandedTitleMarginStart="16dp"
@@ -28,18 +28,18 @@
             <!-- Большая аватарка (фон) -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="match_parent"
                 android:background="@drawable/top_background">
 
                 <ImageView
                     android:id="@+id/setting_text"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginEnd="28dp"
                     android:layout_marginTop="28dp"
+                    android:layout_marginEnd="28dp"
                     android:src="@drawable/ic_settings"
-                    app:layout_constraintHorizontal_bias="0.13"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.13"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -47,10 +47,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
+                    android:fontFamily="@font/pt_sans_bold"
                     android:text="username"
                     android:textColor="@color/white"
                     android:textSize="22sp"
-                    android:fontFamily="@font/pt_sans_bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -59,19 +59,18 @@
                     android:id="@+id/circle"
                     android:layout_width="180dp"
                     android:layout_height="180dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/circle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
 
-                    app:layout_constraintTop_toBottomOf="@+id/username">
-                </FrameLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/username"></FrameLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileImage"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="40dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/profile_icon"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -82,13 +81,13 @@
                     android:id="@+id/full_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:text="Фамилия Имя\nОтчество"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/pt_sans_bold"
                     android:gravity="center"
                     android:lineHeight="36sp"
+                    android:text="Фамилия Имя\nОтчество"
                     android:textColor="@color/white"
-                    android:textSize="36sp"
-                    android:fontFamily="@font/pt_sans_bold"
+                    android:textSize="33sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/profileImage" />
@@ -97,11 +96,11 @@
                     android:id="@+id/specialist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pt_sans_regular"
                     android:text="Специалист"
                     android:textColor="@color/white"
-                    android:textSize="26sp"
-                    android:fontFamily="@font/pt_sans_regular"
+                    android:textSize="23sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/full_name" />
@@ -111,9 +110,9 @@
                     android:id="@+id/more_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_sans_regular"
                     android:text="пол, XX лет"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/pt_sans_regular"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +126,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="227dp"
+                android:layout_height="218dp"
                 android:background="@android:color/transparent"
                 android:visibility="visible"
 
@@ -150,8 +149,8 @@
                         android:layout_marginEnd="28dp"
                         android:src="@drawable/ic_settings"
                         android:visibility="visible"
-                        app:layout_constraintHorizontal_bias="0.03"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.03"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -159,10 +158,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
+                        android:fontFamily="@font/pt_sans_bold"
                         android:text="username"
                         android:textColor="@color/white"
                         android:textSize="22sp"
-                        android:fontFamily="@font/pt_sans_bold"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.470"
@@ -175,12 +174,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="70dp"
                         android:layout_marginEnd="60dp"
+                        android:fontFamily="@font/pt_sans_bold"
+                        android:gravity="right"
+                        android:lineHeight="32dp"
                         android:text="Фамилия\nИмя"
                         android:textColor="@color/white"
-                        android:lineHeight="32dp"
-                        android:gravity="right"
                         android:textSize="32sp"
-                        android:fontFamily="@font/pt_sans_bold"
                         android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -191,9 +190,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="60dp"
+                        android:fontFamily="@font/pt_sans_regular"
                         android:text="Специалист"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/pt_sans_regular"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:visibility="invisible"
@@ -205,14 +204,12 @@
                         android:id="@+id/circle_small"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_marginTop="70dp"
                         android:layout_marginStart="24dp"
-                        android:layout_marginBottom="40dp"
+                        android:layout_marginBottom="35dp"
                         android:background="@drawable/circle"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent">
-                    </FrameLayout>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"></FrameLayout>
 
 
                     <de.hdodenhof.circleimageview.CircleImageView
@@ -220,7 +217,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginStart="29dp"
-                        android:layout_marginBottom="45dp"
+                        android:layout_marginBottom="40dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/profile_icon"
                         android:visibility="invisible"
@@ -233,21 +230,81 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/listLayaut"
         android:layout_width="match_parent"
-        android:layout_height="565dp"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!-- Таблицы (TabLayout) -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="29dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabBackground="@drawable/tab_background"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/primary"
+            app:tabIndicatorHeight="4dp"
+            app:tabMode="fixed"
+            app:tabRippleColor="@color/primary_light"
+            app:tabSelectedTextColor="@color/primary"
+            app:tabTextAppearance="@style/TabTextStyle"
+            app:tabTextColor="@color/secondary" />
+
+
+        <!-- ViewPager2 для отображения фрагментов внутри вкладок -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+
+        <!-- Прогресс-бар, показывающий загрузку данных -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/consultationWndw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Сообщение о том, что данных нет -->
+        <TextView
+            android:id="@+id/emptyMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ничего не найдено"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- RecyclerView для отображения данных -->
-    </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/addBtn"
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:layout_gravity="bottom"
+        android:text="ДОБАВИТЬ" />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

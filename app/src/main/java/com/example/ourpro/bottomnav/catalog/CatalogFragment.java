@@ -44,19 +44,6 @@ public class CatalogFragment extends Fragment {
 
         setupAutoComplete();
 
-       /* binding..setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                String query = binding.search.getText().toString().trim();
-                if (!query.isEmpty()) {
-                    toSearchFragment(query);
-                    // searchUsers(query); // <-- временно отключено
-                }
-                return true;
-            }
-            return false;
-        });*/
-
-
 
         binding.search.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -111,34 +98,6 @@ public class CatalogFragment extends Fragment {
         });
     }
 
-
-    public void setListOfUsers(ListOfUsersFragment fragment) {
-        this.search_string = fragment;
-    }
-
-
-    private void searchUsers(String query) {
-        usersRef.orderByChild("username")
-                .startAt(query)
-                .endAt(query + "\uf8ff")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        users.clear();
-                        for (DataSnapshot child : snapshot.getChildren()) {
-                            User user = child.getValue(User.class);
-                            if (user != null) {
-                                users.add(user);
-                            }
-                        }
-                        userAdapterForSearch.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-    }
 
     @Override
     public void onDestroyView() {

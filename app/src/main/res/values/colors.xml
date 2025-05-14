@@ -7,5 +7,7 @@
     <color name="grey_text">#767676</color>
     <color name="black_text">#212121</color>
     <color name="your_purple_color">#252375</color> <!-- или любой другой -->
-
+    <color name="primary">#6200EE</color>
+    <color name="primary_light">#BB86FC</color>
+    <color name="secondary">#000000</color>
 </resources>
