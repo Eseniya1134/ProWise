@@ -52,6 +52,7 @@ public class ProfileFragment extends Fragment {
         loadGenderANDdob();
         loadUserName();
         loadUserImageToProfile();
+        loadUserInfo();
         setupViewPager();
 
         binding.settingText.setOnClickListener(v -> {
@@ -237,6 +238,29 @@ public class ProfileFragment extends Fragment {
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки: " + e.getMessage()));
 
+    }
+
+    private <MutableLiveData> void loadUserInfo() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e(TAG, "Ошибка: пользователь не найден");
+            return;
+        }
+
+        String userId = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+        Task<DataSnapshot> unTask = database.getReference("Users").child(userId).child("aboutMyself").get();
+
+        Tasks.whenAllSuccess(unTask)
+                .addOnSuccessListener(results -> {
+                    String info = ((DataSnapshot) results.get(0)).getValue(String.class);
+
+                    binding.moreInfo.setText(info);
+
+                    Log.d(TAG, "Информация о пользователе: " + info);
+
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки: " + e.getMessage()));
     }
 
     private void loadUserImageToProfile() {
