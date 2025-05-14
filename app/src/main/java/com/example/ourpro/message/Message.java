@@ -32,4 +32,5 @@ public class Message {
     public Timestamp getDate() {
         return date;
     }
+
 }

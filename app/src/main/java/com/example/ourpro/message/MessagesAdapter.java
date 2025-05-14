@@ -111,4 +111,24 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             binding.messageDateTv.setText(formatTimestamp(message.getDate())); // Устанавливаем отформатированное время
         }
     }
+
+    //Возвращает количество непрочитанных сообщений
+    public int getUnreadCount(Timestamp lastSeenTime) {
+        if (lastSeenTime == null) return 0;
+
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser() != null
+                ? FirebaseAuth.getInstance().getCurrentUser().getUid()
+                : "";
+
+        int unreadCount = 0;
+        for (Message message : messages) {
+            if (!message.getSenderId().equals(currentUserId)
+                    && message.getDate() != null
+                    && message.getDate().compareTo(lastSeenTime) > 0) {
+                unreadCount++;
+            }
+        }
+        return unreadCount;
+    }
+
 }

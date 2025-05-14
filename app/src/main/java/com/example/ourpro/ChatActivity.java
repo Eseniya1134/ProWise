@@ -199,6 +199,7 @@ public class ChatActivity extends AppCompatActivity {
                 String name = snapshot.child("name").getValue(String.class);
                 String surname = snapshot.child("surname").getValue(String.class);
                 String fullName = (name != null ? name : "") + " " + (surname != null ? surname : "");
+
                 binding.usernameTv.setText(fullName.trim());
             } else {
                 binding.usernameTv.setText("Неизвестный пользователь");
