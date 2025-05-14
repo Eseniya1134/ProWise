@@ -255,7 +255,7 @@ public class ProfileFragment extends Fragment {
                 .addOnSuccessListener(results -> {
                     String info = ((DataSnapshot) results.get(0)).getValue(String.class);
 
-                    binding.moreInfo.setText(info);
+                    binding.specialist.setText(info);
 
                     Log.d(TAG, "Информация о пользователе: " + info);
 
