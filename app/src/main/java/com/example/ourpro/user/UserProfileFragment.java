@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 public class UserProfileFragment extends Fragment {
 
@@ -53,7 +54,7 @@ public class UserProfileFragment extends Fragment {
         loadFullName();
         loadGenderANDdob();
         loadUserName();
-
+        loadUserImageToProfile();
         // Инициализация анимаций
         scaleAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale);
         fadeInAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in);
@@ -269,6 +270,40 @@ public class UserProfileFragment extends Fragment {
                 .addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки: " + e.getMessage()));
 
     }
+
+    private void loadUserImageToProfile() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+            DatabaseReference databaseReference = database.getReference("Users");
+
+            // Получаем userId из аргументов
+            userId = getArguments() != null ? getArguments().getString("userId") : null;
+
+            databaseReference.child(userId).child("profileImageURL").get()
+                    .addOnSuccessListener(dataSnapshot -> {
+                        if (dataSnapshot.exists()) {
+                            // Получаем ссылку на изображение
+                            String imageUrl = dataSnapshot.getValue(String.class);
+                            if (imageUrl != null && !imageUrl.isEmpty()) {
+                                Log.d(TAG, "Загружается изображение из Firebase: " + imageUrl);
+                                // Загружаем изображение в ImageView с помощью Picasso
+                                Picasso.get().load(imageUrl).into(binding.profileImage);
+                                Picasso.get().load(imageUrl).into(binding.profileImageSmall);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        // Логируем ошибку в случае неудачной попытки загрузки данных
+                        Log.e(TAG, "Ошибка загрузки изображения из Firebase: " + e.getMessage());
+                    });
+        } else {
+            // Если пользователь не авторизован
+            Log.d(TAG, "Пользователь не авторизован.");
+        }
+    }
+
 
     @Override
     public void onDestroyView() {
