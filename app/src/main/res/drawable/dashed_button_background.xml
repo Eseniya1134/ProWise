@@ -1,0 +1,14 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ripple_button_effect" />
+    <item>
+        <shape>
+            <solid android:color="@color/logo_icon_background" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/our_blue"
+                android:dashWidth="8dp"
+                android:dashGap="4dp" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+</layer-list>

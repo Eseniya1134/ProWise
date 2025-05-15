@@ -78,6 +78,7 @@ public class ProfileFragment extends Fragment {
         binding.settingText2.setOnClickListener(v -> {
             navigateToAccountSettings();
         });
+
         //binding.exit.setOnClickListener(v -> logout());
         //binding.exit2.setOnClickListener(v -> logout());
 
@@ -90,10 +91,6 @@ public class ProfileFragment extends Fragment {
 
         // Анимация при открытии
         animateViewsOnCreate();
-
-        // Находим кнопку "Добавить" и настраиваем обработчик
-        addBtn = view.findViewById(R.id.addBtn);
-        addBtn.setOnClickListener(v -> openClientRequestForm());
 
     }
 
@@ -338,7 +335,7 @@ public class ProfileFragment extends Fragment {
             Log.d(TAG, "Пользователь не авторизован.");
         }
     }
-
+    
     /// ТАБЫ
     private void setupViewPager() {
         binding.viewPager2.setAdapter(new FragmentStateAdapter(this) {
@@ -364,9 +361,26 @@ public class ProfileFragment extends Fragment {
                 }
         ).attach();
 
-
-
+        // Настройка нажатия на общую кнопку
+        binding.addBtn.setOnClickListener(v -> {
+            int currentTab = binding.viewPager2.getCurrentItem();
+            if (currentTab == 0) {
+                handleExpertTab();
+            } else {
+                openClientRequestForm();
+            }
+        });
     }
+
+    // Метод для обработки нажатия на вкладке "Я эксперт"
+    private void handleExpertTab() {
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.menu_fr, new ExpertFormFragment()) // Заменяем текущий фрагмент
+                .addToBackStack(null) // Добавляем в back stack для возможности возврата
+                .commit();
+    }
+    
 
     private List<HistoryItem> getAbout() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
