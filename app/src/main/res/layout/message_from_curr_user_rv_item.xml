@@ -8,12 +8,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="60dp"
-        android:padding="16dp"
+        android:padding="12dp"
         android:background="@drawable/message_from_curr_user">
 
         <TextView
