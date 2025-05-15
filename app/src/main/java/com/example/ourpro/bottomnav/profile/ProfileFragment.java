@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,8 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private Animation scaleAnimation, fadeInAnimation;
 
+    private Button addBtn;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -74,7 +77,12 @@ public class ProfileFragment extends Fragment {
         // Анимация при открытии
         animateViewsOnCreate();
 
+        // Находим кнопку "Добавить" и настраиваем обработчик
+        addBtn = view.findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(v -> openClientRequestForm());
+
     }
+
 
     private void setupAppBar() {
         binding.appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
@@ -318,6 +326,23 @@ public class ProfileFragment extends Fragment {
                     tab.setText(position == 0 ? "Я эксперт" : "Я клиент");
                 }
         ).attach();
+    }
+
+    private void openClientRequestForm() {
+        // Создаем новый экземпляр фрагмента с формой запроса
+        ClientRequestFragment requestFragment = new ClientRequestFragment();
+
+        // Заменяем текущий фрагмент и добавляем в back stack
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.menu_fr, requestFragment) // Используем тот же контейнер, что и для настроек
+                .addToBackStack("client_request") // Уникальное имя для back stack
+                .commit();
+
+        // Анимация перехода (опционально)
+        if (fadeInAnimation != null) {
+            addBtn.startAnimation(fadeInAnimation);
+        }
     }
 
     @Override
