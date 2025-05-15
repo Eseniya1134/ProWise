@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <!-- Левый радиальный градиент -->
+            <item android:left="0dp">
+                <shape android:shape="rectangle">
+                    <corners
+                        android:topLeftRadius="44dp"
+                        android:bottomLeftRadius="44dp"/>
+                    <gradient
+                        android:type="radial"
+                        android:gradientRadius="250dp"
+                        android:centerX="0"
+                        android:centerY="0.5"
+                        android:startColor="#7376DC"
+                        android:endColor="#00262476"
+                        android:centerColor="@color/our_blue"/>
+                </shape>
+            </item>
+
+            <!-- Правый радиальный градиент -->
+            <item>
+                <shape android:shape="rectangle">
+                    <corners
+                        android:topRightRadius="44dp"
+                        android:bottomRightRadius="44dp"/>
+                    <gradient
+                        android:type="radial"
+                        android:gradientRadius="250dp"
+                        android:centerX="1"
+                        android:centerY="0.5"
+                        android:startColor="#7376DC"
+                        android:endColor="#00FF0000"
+                        android:centerColor="@color/our_blue"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

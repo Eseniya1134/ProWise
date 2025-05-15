@@ -3,9 +3,12 @@ package com.example.ourpro.bottomnav.profile;
 import static java.lang.String.join;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -15,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.ourpro.R;
@@ -22,9 +27,11 @@ import com.example.ourpro.SignActivity;
 import com.example.ourpro.bottomnav.catalog.ConsultationsFragment;
 import com.example.ourpro.bottomnav.catalog.ListOfUsersFragment;
 import com.example.ourpro.bottomnav.catalog.TagsFragment;
+import com.example.ourpro.bottomnav.finance.HistoryItem;
 import com.example.ourpro.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +40,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ProfileFragment extends Fragment {
@@ -45,7 +54,12 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private Animation scaleAnimation, fadeInAnimation;
 
+
     private Button addBtn;
+
+    private List<HistoryItem> fullList;
+    private List<HistoryItem> shortList;
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -263,10 +277,33 @@ public class ProfileFragment extends Fragment {
                 .addOnSuccessListener(results -> {
                     String info = ((DataSnapshot) results.get(0)).getValue(String.class);
 
-                    binding.specialist.setText(info);
+                    binding.shortText.setText(info);
+                    binding.fullText.setText(info);
+
+                    binding.toggleButton.setOnClickListener(v -> {
+                        AutoTransition fastTransition = new AutoTransition();
+                        fastTransition.setDuration(200);
+                        TransitionManager.beginDelayedTransition(
+                                (ViewGroup) binding.getRoot(),
+                                fastTransition
+                        );
+                        if (binding.fullText.getVisibility() == View.GONE) {
+                            binding.fullText.setVisibility(View.VISIBLE);
+                            binding.shortText.setVisibility(View.GONE);
+                            binding.toggleButton.setText("Скрыть");
+                        } else {
+                            binding.fullText.setVisibility(View.GONE);
+                            binding.shortText.setVisibility(View.VISIBLE);
+                            binding.toggleButton.setText("Показать еще");
+                        }
+                    });
+
+                    // Скрываем кнопку, если текст короткий
+                    if (info.length() <=120) {
+                        binding.toggleButton.setVisibility(View.GONE);
+                    }
 
                     Log.d(TAG, "Информация о пользователе: " + info);
-
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки: " + e.getMessage()));
     }
@@ -326,6 +363,38 @@ public class ProfileFragment extends Fragment {
                     tab.setText(position == 0 ? "Я эксперт" : "Я клиент");
                 }
         ).attach();
+
+
+
+    }
+
+    private List<HistoryItem> getAbout() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        List<HistoryItem> fullList = new ArrayList<>(); // Инициализируем список
+
+        if (user == null) {
+            Log.e(TAG, "Пользователь не авторизован");
+            return fullList;
+        }
+
+        String userId = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+        database.getReference("Users").child(userId).child("aboutMyself").get()
+                .addOnSuccessListener(dataSnapshot -> {
+                    if (dataSnapshot.exists()) {
+                        String info = dataSnapshot.getValue(String.class);
+                        fullList.add(new HistoryItem(info, " "));
+                        Log.d(TAG, "Информация о пользователе: " + info);
+                    } else {
+                        Log.d(TAG, "Данные 'aboutMyself' не найдены");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Ошибка загрузки: " + e.getMessage());
+                });
+
+        return fullList;
     }
 
     private void openClientRequestForm() {
@@ -352,5 +421,6 @@ public class ProfileFragment extends Fragment {
         if (fadeInAnimation != null) fadeInAnimation.cancel();
         binding = null;
     }
+
 
 }
