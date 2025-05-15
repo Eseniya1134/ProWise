@@ -222,15 +222,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_write"
-                android:layout_width="180dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Написать"
                 android:textSize="16sp"
-                android:textColor="@color/our_blue"
-                android:backgroundTint="@color/green_light"
+                app:backgroundTint="@null"
+                android:textColor="@color/white"
+                android:background="@drawable/btn"
                 android:fontFamily="@font/pt_sans_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -146,7 +146,7 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_marginTop="28dp"
-                        android:layout_marginEnd="28dp"
+                        android:layout_marginEnd="32dp"
                         android:src="@drawable/ic_settings"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -173,7 +173,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="70dp"
-                        android:layout_marginEnd="60dp"
+                        android:layout_marginEnd="32dp"
                         android:fontFamily="@font/pt_sans_bold"
                         android:gravity="right"
                         android:lineHeight="32dp"
@@ -189,7 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_marginEnd="60dp"
+                        android:layout_marginEnd="32dp"
                         android:fontFamily="@font/pt_sans_regular"
                         android:text="Специалист"
                         android:textColor="@color/white"
@@ -236,24 +236,81 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <LinearLayout
+            android:id="@+id/recycleview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/Ab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="О себе"
+                android:fontFamily="@font/pt_sans_bold"
+                android:textColor="@color/our_blue"
+                android:textSize="20sp"/>
+            <!-- Краткий текст (2 строки) -->
+            <TextView
+                android:id="@+id/shortText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:maxLines="1"
+                android:fontFamily="@font/pt_sans_regular"
+                android:ellipsize="end"
+                android:textColor="@color/black_text"
+                android:textSize="16sp"/>
+
+            <!-- Полный текст (изначально скрыт) -->
+            <TextView
+                android:id="@+id/fullText"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textColor="@color/black_text"
+                android:fontFamily="@font/pt_sans_regular"
+                android:textSize="16sp"/>
+
+            <!-- Кнопка "Показать еще/Скрыть" -->
+            <TextView
+                android:id="@+id/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="center"
+                android:paddingTop="2dp"
+                android:text="@string/underlined_text"
+                android:textColor="@color/our_blue"
+                android:textSize="12sp" />
+        </LinearLayout>
         <!-- Таблицы (TabLayout) -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycleview"
             app:tabBackground="@drawable/tab_background"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@color/primary"
+            app:tabIndicatorColor="@color/our_blue"
             app:tabIndicatorHeight="4dp"
             app:tabMode="fixed"
             app:tabRippleColor="@color/primary_light"
-            app:tabSelectedTextColor="@color/primary"
+            app:tabSelectedTextColor="@color/black_text"
             app:tabTextAppearance="@style/TabTextStyle"
-            app:tabTextColor="@color/secondary" />
+            app:tabTextColor="@color/grey_text" />
 
 
         <!-- ViewPager2 для отображения фрагментов внутри вкладок -->
@@ -299,12 +356,28 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <View
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@drawable/white_grad"
+        app:layout_anchor="@+id/addBtn"
+        app:layout_anchorGravity="center" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/addBtn"
         android:layout_width="match_parent"
-        android:layout_height="71dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="ДОБАВИТЬ" />
+        app:cornerRadius="32dp"
+        app:backgroundTint="@null"
+        android:background="@drawable/btn"
+        android:fontFamily="@font/pt_sans_bold"
+        android:textSize="16dp"
+        android:text="Добавить новый запрос" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
