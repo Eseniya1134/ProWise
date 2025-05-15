@@ -88,7 +88,7 @@ public class ExpertFormFragment extends Fragment {
 
         binding.profileButton.setOnClickListener(v -> {
             navigateToProfile();
-            deleteFormID();
+
         });
         saveFormExpert();
         return view;
@@ -346,6 +346,8 @@ public class ExpertFormFragment extends Fragment {
                             Toast.makeText(requireContext(), "Ошибка сохранения файла", Toast.LENGTH_SHORT).show();
                         });
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

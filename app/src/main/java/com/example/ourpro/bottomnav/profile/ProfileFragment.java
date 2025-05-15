@@ -380,7 +380,23 @@ public class ProfileFragment extends Fragment {
                 .addToBackStack(null) // Добавляем в back stack для возможности возврата
                 .commit();
     }
-    
+
+    private void openClientRequestForm() {
+        // Создаем новый экземпляр фрагмента с формой запроса
+        ClientRequestFragment requestFragment = new ClientRequestFragment();
+
+        // Заменяем текущий фрагмент и добавляем в back stack
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.menu_fr, requestFragment) // Используем тот же контейнер, что и для настроек
+                .addToBackStack(null) // Уникальное имя для back stack
+                .commit();
+
+        // Анимация перехода (опционально)
+        /*if (fadeInAnimation != null) {
+            addBtn.startAnimation(fadeInAnimation);
+        }*/
+    }
 
     private List<HistoryItem> getAbout() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -411,22 +427,7 @@ public class ProfileFragment extends Fragment {
         return fullList;
     }
 
-    private void openClientRequestForm() {
-        // Создаем новый экземпляр фрагмента с формой запроса
-        ClientRequestFragment requestFragment = new ClientRequestFragment();
 
-        // Заменяем текущий фрагмент и добавляем в back stack
-        requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.menu_fr, requestFragment) // Используем тот же контейнер, что и для настроек
-                .addToBackStack("client_request") // Уникальное имя для back stack
-                .commit();
-
-        // Анимация перехода (опционально)
-        if (fadeInAnimation != null) {
-            addBtn.startAnimation(fadeInAnimation);
-        }
-    }
 
     @Override
     public void onDestroyView() {
