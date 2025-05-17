@@ -262,7 +262,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/about_myself"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="400dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
                     android:layout_marginTop="16dp"
@@ -288,9 +288,8 @@
                         android:layout_height="match_parent"
                         android:gravity="top"
                         android:hint="О себе"
-                        android:inputType="textMultiLine"
-                        android:scrollHorizontally="false"
-                        android:imeOptions="actionNext" />
+                        android:imeOptions="actionNext"
+                        android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
