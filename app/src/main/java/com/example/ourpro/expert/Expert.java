@@ -1,4 +1,4 @@
-package com.example.ourpro.bottomnav.profile;
+package com.example.ourpro.expert;
 
 public class Expert {
     private String expert;

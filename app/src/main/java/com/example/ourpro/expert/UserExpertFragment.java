@@ -1,4 +1,4 @@
-package com.example.ourpro.bottomnav.profile;
+package com.example.ourpro.expert;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,12 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ourpro.R;
-import com.example.ourpro.chats.Chat;
-
-import com.example.ourpro.databinding.FragmentChatsBinding;
 import com.example.ourpro.databinding.FragmentUserExpertBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,8 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class UserExpertFragment extends Fragment {
 

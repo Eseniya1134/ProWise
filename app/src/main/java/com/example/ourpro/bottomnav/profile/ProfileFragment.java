@@ -2,9 +2,6 @@ package com.example.ourpro.bottomnav.profile;
 
 import static java.lang.String.join;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,27 +9,20 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.ourpro.R;
-import com.example.ourpro.SignActivity;
-import com.example.ourpro.bottomnav.catalog.ConsultationsFragment;
-import com.example.ourpro.bottomnav.catalog.ListOfUsersFragment;
-import com.example.ourpro.bottomnav.catalog.TagsFragment;
 import com.example.ourpro.bottomnav.finance.HistoryItem;
 import com.example.ourpro.databinding.FragmentProfileBinding;
+import com.example.ourpro.expert.UserExpertFragment;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,7 +33,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ProfileFragment extends Fragment {
 
