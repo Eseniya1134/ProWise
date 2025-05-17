@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -71,6 +72,9 @@ public class ProfileFragment extends Fragment {
         loadUserImageToProfile();
         loadUserInfo();
         setupViewPager();
+
+
+
 
         binding.settingText.setOnClickListener(v -> {
             navigateToAccountSettings();

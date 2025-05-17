@@ -318,41 +318,15 @@
             android:id="@+id/viewPager2"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginBottom="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
-        <!-- Прогресс-бар, показывающий загрузку данных -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/consultationWndw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Сообщение о том, что данных нет -->
-        <TextView
-            android:id="@+id/emptyMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ничего не найдено"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -140,7 +140,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/experience"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="12dp"
@@ -165,7 +165,8 @@
                     android:fontFamily="@font/pt_sans_regular"
                     android:hint="Опыт работы"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
+                    android:scrollHorizontally="false"
                     android:textColor="@color/grey_text" />
             </com.google.android.material.textfield.TextInputLayout>
 

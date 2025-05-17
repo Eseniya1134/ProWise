@@ -3,6 +3,7 @@ buildscript {
     repositories {
         google() // Добавляем репозиторий Google
         mavenCentral() // Добавляем репозиторий Maven Central
+        maven { url = uri("https://jitpack.io") }
     }
     dependencies {
         // Добавляем Google Services plugin

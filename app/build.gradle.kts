@@ -75,5 +75,6 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0") //библиотека для округления картинок
     implementation ("org.mindrot:jbcrypt:0.4") //бд supabase
 
+
     implementation ("com.github.bumptech.glide:glide:4.15.1") //библиотека для загрузки гифок, роликов, картинок
 }

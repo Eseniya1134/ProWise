@@ -83,6 +83,7 @@ public class ExpertFormFragment extends Fragment {
 
         binding.save.setOnClickListener(v -> {
             saveFormExpert();
+            addIDUrl(formId);
             navigateToProfile();
         });
 
@@ -115,6 +116,57 @@ public class ExpertFormFragment extends Fragment {
 
     }
 
+
+
+    //Учет ID анкет
+    private void addIDUrl(String newId) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            Toast.makeText(requireContext(), "Пользователь не авторизован", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String userId = user.getUid();
+
+        DatabaseReference ref = FirebaseDatabase
+                .getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference("Users")
+                .child(userId)
+                .child("idURL"); // <- сюда сохраняем список ID
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String existingIds = snapshot.getValue(String.class);
+                String updatedIds;
+
+                if (existingIds != null && !existingIds.isEmpty()) {
+                    // Проверка на дубликаты (по желанию)
+                    if (!existingIds.contains(newId)) {
+                        updatedIds = existingIds + "," + newId;
+                    } else {
+                        updatedIds = existingIds; // уже есть
+                    }
+                } else {
+                    updatedIds = newId;
+                }
+
+                ref.setValue(updatedIds)
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(requireContext(), "ID успешно добавлен", Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(requireContext(), "Ошибка при сохранении ID", Toast.LENGTH_SHORT).show();
+                        });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(requireContext(), "Ошибка чтения из Firebase", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
 
