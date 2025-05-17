@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.ourpro.databinding.FragmentUserExpertBinding;
 import com.example.ourpro.expert.Expert;
 import com.example.ourpro.expert.ExpertAdapter;
+import com.example.ourpro.expert.ExpertAdapterForCatalog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
