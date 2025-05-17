@@ -1,4 +1,4 @@
-package com.example.ourpro.expert;
+package com.example.ourpro.bottomnav.profile;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ourpro.databinding.FragmentUserExpertBinding;
+import com.example.ourpro.expert.Expert;
+import com.example.ourpro.expert.ExpertAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,7 +46,7 @@ public class UserExpertFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Получаем строку чатов текущего пользователя
-                String expertsStr = snapshot.child("Users").child(uid).child("idURL").getValue(String.class);
+                String expertsStr = snapshot.child("Users").child(uid).child("idURLExpert").getValue(String.class);
                 if (expertsStr == null || expertsStr.isEmpty()) return;
 
                 String[] expertIds = expertsStr.split(",");
@@ -56,7 +58,10 @@ public class UserExpertFragment extends Fragment {
                     String status = chatSnapshot.child("status").getValue(String.class);
                     if (expert == null || status == null) continue;
 
-                    experts.add(new Expert(expert, status));
+                    Expert expert1 = new Expert(expert, status);
+                    expert1.setExpertId(expertId);
+                    experts.add(expert1);
+
                 }
 
                 if (experts.isEmpty()) {

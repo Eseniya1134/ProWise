@@ -20,7 +20,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.ourpro.R;
 import com.example.ourpro.bottomnav.finance.HistoryItem;
 import com.example.ourpro.databinding.FragmentProfileBinding;
-import com.example.ourpro.expert.UserExpertFragment;
+import com.example.ourpro.expert.ExpertFormFragment;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.tabs.TabLayoutMediator;

@@ -5,8 +5,8 @@
     android:layout_height="80dp"
     android:layout_margin="8dp"
     android:background="@drawable/chat_back"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
     <ImageView
         android:id="@+id/imageView9"

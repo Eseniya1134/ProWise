@@ -1,9 +1,12 @@
 package com.example.ourpro.expert;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,10 +16,17 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.ourpro.R;
 import com.example.ourpro.bottomnav.profile.ProfileFragment;
 import com.example.ourpro.databinding.FragmentItemFullFormExpertBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ItemFullFormFragment extends Fragment {
 
     private FragmentItemFullFormExpertBinding binding;
+    private String userId;
+
+    private String expertId;
 
     @Nullable
     @Override
@@ -24,6 +34,14 @@ public class ItemFullFormFragment extends Fragment {
         binding = FragmentItemFullFormExpertBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        userId = user.getUid();
+        if (getArguments() != null) {
+            expertId = getArguments().getString("expertId", "");
+        }
+
+        load();
 
         binding.profileButton.setOnClickListener(v -> {
             navigateToProfile();
@@ -39,9 +57,37 @@ public class ItemFullFormFragment extends Fragment {
     }
 
 
-    private void loadEducation(){
+    private void load() {
+        DatabaseReference ref = FirebaseDatabase
+                .getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference()
+                .child("ExpertQuestionnaire")
+                .child(userId)
+                .child(expertId);
 
+        ref.get().addOnSuccessListener(snapshot -> {
+            if (snapshot.exists()) {
+                // Загружаем и устанавливаем имя
+                String education = snapshot.child("education").getValue(String.class);
+                if (education != null) {
+                    binding.educationSet.setText(education);
+                }
+                String experience = snapshot.child("experience").getValue(String.class);
+                if (education != null) {
+                    binding.aboutExperience.setText(experience);
+                }
+                String services = snapshot.child("services").getValue(String.class);
+                if (education != null) {
+                    binding.aboutServices.setText(services);
+                }
+                String expert = snapshot.child("expert").getValue(String.class);
+                if (education != null) {
+                    binding.expertTxt.setText(expert);
+                }
+            }
+        });
     }
+
 
 
 

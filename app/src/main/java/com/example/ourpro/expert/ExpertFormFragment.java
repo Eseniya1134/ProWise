@@ -1,4 +1,4 @@
-package com.example.ourpro.bottomnav.profile;
+package com.example.ourpro.expert;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -19,8 +19,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,9 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.android.callback.UploadCallback;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.ourpro.R;
+import com.example.ourpro.bottomnav.profile.ProfileFragment;
 import com.example.ourpro.databinding.FragmentExpertFormBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,8 +39,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -133,7 +129,7 @@ public class ExpertFormFragment extends Fragment {
                 .getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("Users")
                 .child(userId)
-                .child("idURL"); // <- сюда сохраняем список ID
+                .child("idURLExpert"); // <- сюда сохраняем список ID
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -289,6 +285,7 @@ public class ExpertFormFragment extends Fragment {
         formData.put("education", education);
         formData.put("experience", experience);
         formData.put("services", services);
+        formData.put("status", "");
         formData.put("timestamp", ServerValue.TIMESTAMP); // удобно для сортировки в будущем
 
         ref.updateChildren(formData)
