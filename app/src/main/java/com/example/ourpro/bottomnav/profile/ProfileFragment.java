@@ -214,7 +214,7 @@ public class ProfileFragment extends Fragment {
                     String gender = ((DataSnapshot) results.get(0)).getValue(String.class);
                     String dateOfBirth = ((DataSnapshot) results.get(1)).getValue(String.class);
 
-                    String GenderANDdob = gender + ", " + dateOfBirth;
+                    String GenderANDdob = "Пол " + gender + ", " + dateOfBirth;
 
                     binding.moreInfo.setText(GenderANDdob);
 
@@ -289,7 +289,7 @@ public class ProfileFragment extends Fragment {
                     });
 
                     // Скрываем кнопку, если текст короткий
-                    if (info.length() <=120) {
+                    if (info.length() <= 40) {
                         binding.toggleButton.setVisibility(View.GONE);
                     }
 

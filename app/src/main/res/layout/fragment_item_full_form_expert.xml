@@ -28,7 +28,7 @@
                 <ImageView
                     android:id="@+id/imageView8"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="176dp"
                     android:background="@drawable/back_profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -50,7 +50,7 @@
                     android:id="@+id/expert_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="55dp"
+                    android:layout_marginTop="80dp"
                     android:fontFamily="@font/pt_sans_bold"
                     android:gravity="center"
                     android:text="Специалист"
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:fontFamily="@font/pt_sans_bold"
+                    android:fontFamily="@font/pt_sans_regular"
                     android:gravity="center"
                     android:text="Подтверждено"
                     android:textColor="@color/white"
@@ -100,11 +100,12 @@
                         android:id="@+id/education_set"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="8dp"
                         android:inputType="textMultiLine"
                         android:scrollHorizontally="false"
                         android:text="TextView"
-                        android:textSize="15sp" />
+                        android:textColor="@color/black_text"
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
@@ -113,7 +114,7 @@
                     android:id="@+id/experience_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/pt_sans_bold"
                     android:gravity="center"
@@ -133,7 +134,8 @@
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
                     android:text="TextView"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/experience_txt" />
 
@@ -163,7 +165,8 @@
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
                     android:text="TextView"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/services_txt" />
 
