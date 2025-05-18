@@ -57,10 +57,12 @@ public class UserExpertFragment extends Fragment {
 
                     String expert = chatSnapshot.child("expert").getValue(String.class);
                     String status = chatSnapshot.child("status").getValue(String.class);
+                    String category = chatSnapshot.child("category").getValue(String.class);
                     if (expert == null || status == null) continue;
 
                     Expert expert1 = new Expert(expert, status);
                     expert1.setExpertId(expertId);
+                    expert1.setCategory(category);
                     experts.add(expert1);
 
                 }

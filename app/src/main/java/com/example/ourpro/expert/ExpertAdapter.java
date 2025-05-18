@@ -1,6 +1,8 @@
 package com.example.ourpro.expert;
 
+import android.content.ContentValues;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,11 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ourpro.R;
+import com.example.ourpro.chats.Chat;
+import com.example.ourpro.chats.ChatViewHolder;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -37,7 +43,10 @@ public class ExpertAdapter extends RecyclerView.Adapter<ExpertViewHolder> {
     public void onBindViewHolder(@NonNull ExpertViewHolder holder, int position) {
         Expert expert = experts.get(position);
         holder.expert_txt.setText(expert.getExpert());
-        holder.confirmation_txt.setText("Подтверждено");
+        holder.confirmation_txt.setText("Не подтверждено");
+        Log.d("ExpertAdapter", "Категория: " + expert.getCategory());
+
+        bindImage(holder, expert.getCategory());
 
         holder.itemView.setOnClickListener(v -> {
             Fragment fragment = new ItemFullFormFragment();
@@ -57,6 +66,50 @@ public class ExpertAdapter extends RecyclerView.Adapter<ExpertViewHolder> {
         });
 
     }
+
+    private void bindImage(@NonNull ExpertViewHolder holder, String category) {
+        if (category == null) return;
+
+        switch (category) {
+            case "Искусство и творчество":
+                holder.imageView.setImageResource(R.drawable.art);
+                break;
+            case "Бизнес и управление":
+                holder.imageView.setImageResource(R.drawable.business);
+                break;
+            case "Строительство и инженерия":
+                holder.imageView.setImageResource(R.drawable.construction);
+                break;
+            case "Образование":
+                holder.imageView.setImageResource(R.drawable.education);
+                break;
+            case "Финансы и бухгалтерия":
+                holder.imageView.setImageResource(R.drawable.finance);
+                break;
+            case "Питание и гостеприимство":
+                holder.imageView.setImageResource(R.drawable.food);
+                break;
+            case "IT и программирование":
+                holder.imageView.setImageResource(R.drawable.it);
+                break;
+            case "Юриспруденция и правопорядок":
+                holder.imageView.setImageResource(R.drawable.law);
+                break;
+            case "Маркетинг и коммуникации":
+                holder.imageView.setImageResource(R.drawable.marketing);
+                break;
+            case "Медицина и здравоохранение":
+                holder.imageView.setImageResource(R.drawable.medicine);
+                break;
+            case "Наука и исследования":
+                holder.imageView.setImageResource(R.drawable.science);
+                break;
+            case "Транспорт и логистика":
+                holder.imageView.setImageResource(R.drawable.transport);
+                break;
+        }
+    }
+
 
     @Override
     public int getItemCount() {

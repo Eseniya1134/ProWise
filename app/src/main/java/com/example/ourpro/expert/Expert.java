@@ -4,6 +4,7 @@ public class Expert {
     private String expert;
     private String status;
 
+    private String category;
 
 
     private String expertId;
@@ -30,4 +31,11 @@ public class Expert {
     public void setExpertId(String expertId) {
         this.expertId = expertId;
     }
+
+    public String getCategory() {return category;}
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+
 }
