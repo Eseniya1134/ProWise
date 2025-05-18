@@ -10,39 +10,41 @@
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="5dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/profile_gradient_background" />
+        app:srcCompat="@drawable/galochka" />
 
     <TextView
         android:id="@+id/expert_txt"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="32dp"
         android:fontFamily="@font/pt_sans_bold"
-        android:gravity="center"
+        android:gravity="end"
         android:text="Специалист"
         android:textColor="@color/our_blue"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView9"
+        app:layout_constraintStart_toEndOf="@id/imageView9"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/confirmation_txt"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:fontFamily="@font/pt_sans_bold"
-        android:gravity="center"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/pt_sans_regular"
+        android:gravity="end"
+        android:layout_marginEnd="32dp"
         android:text="Подтверждено"
         android:textColor="@color/our_blue"
-        android:textSize="15sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView9"
-        app:layout_constraintTop_toBottomOf="@+id/expert_txt" />
+        app:layout_constraintStart_toEndOf="@id/imageView9"
+        app:layout_constraintTop_toBottomOf="@id/expert_txt" />
 </androidx.constraintlayout.widget.ConstraintLayout>
