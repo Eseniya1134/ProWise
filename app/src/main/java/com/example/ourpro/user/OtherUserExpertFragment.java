@@ -1,4 +1,7 @@
-package com.example.ourpro.bottomnav.profile;
+package com.example.ourpro.user;
+
+import static android.content.ContentValues.TAG;
+import static java.security.AccessController.getContext;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.ourpro.databinding.FragmentUserExpertBinding;
 import com.example.ourpro.expert.Expert;
 import com.example.ourpro.expert.ExpertAdapter;
-import com.example.ourpro.expert.ExpertAdapterForCatalog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,21 +27,32 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class UserExpertFragment extends Fragment {
-
+public class OtherUserExpertFragment extends Fragment {
     private FragmentUserExpertBinding binding;
+    private String userId;
+    private User selectedUser;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentUserExpertBinding.inflate(inflater, container, false);
+        userId = getOtherUserId();
         loadExperts();
         return binding.getRoot();
     }
 
+    private String getOtherUserId() {
+        userId = getArguments() != null ? getArguments().getString("userId") : null;
+        Log.d(TAG, "Полученный userId: " + userId);
+        if (userId == null) {
+            Toast.makeText(getContext(), "Пользователь не найден", Toast.LENGTH_SHORT).show();
+        }
+        return userId;
+    }
+
     private void loadExperts() {
         ArrayList<Expert> experts = new ArrayList<>();
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
         DatabaseReference rootRef = db.getReference();
@@ -48,12 +61,12 @@ public class UserExpertFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Получаем строку чатов текущего пользователя
-                String expertsStr = snapshot.child("Users").child(uid).child("idURLExpert").getValue(String.class);
+                String expertsStr = snapshot.child("Users").child(userId).child("idURLExpert").getValue(String.class);
                 if (expertsStr == null || expertsStr.isEmpty()) return;
 
                 String[] expertIds = expertsStr.split(",");
                 for (String expertId : expertIds) {
-                    DataSnapshot chatSnapshot = snapshot.child("ExpertQuestionnaire").child(uid).child(expertId);
+                    DataSnapshot chatSnapshot = snapshot.child("ExpertQuestionnaire").child(userId).child(expertId);
                     if (!chatSnapshot.exists()) continue;
 
                     String expert = chatSnapshot.child("expert").getValue(String.class);
@@ -75,7 +88,7 @@ public class UserExpertFragment extends Fragment {
                     binding.emptyExpertsTv.setVisibility(View.GONE);
                     binding.consultationWndw.setVisibility(View.VISIBLE);
                     binding.consultationWndw.setLayoutManager(new LinearLayoutManager(getContext()));
-                    binding.consultationWndw.setAdapter(new ExpertAdapter(experts, uid));
+                    binding.consultationWndw.setAdapter(new ExpertAdapter(experts, userId));
                 }
             }
 
@@ -90,7 +103,4 @@ public class UserExpertFragment extends Fragment {
 
     }
 }
-
-
-
 

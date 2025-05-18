@@ -5,6 +5,7 @@ import static com.example.ourpro.utils.ChatUtil.generateChatId;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
@@ -15,22 +16,35 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.ourpro.R;
 import com.example.ourpro.bottomnav.dialogs.ChatsFragment;
 import com.example.ourpro.bottomnav.dialogs.DialogsFragment;
+import com.example.ourpro.bottomnav.finance.HistoryItem;
 import com.example.ourpro.bottomnav.profile.AccountSettingFragment;
+import com.example.ourpro.bottomnav.profile.ClientRequestFragment;
 import com.example.ourpro.bottomnav.profile.ProfileFragment;
+import com.example.ourpro.bottomnav.profile.UserClientFragment;
+import com.example.ourpro.bottomnav.profile.UserExpertFragment;
 import com.example.ourpro.databinding.FragmentUserProfileBinding;
+import com.example.ourpro.expert.ExpertAdapter;
+import com.example.ourpro.expert.ExpertFormFragment;
 import com.example.ourpro.utils.ChatUtil;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserProfileFragment extends Fragment {
 
@@ -44,7 +58,7 @@ public class UserProfileFragment extends Fragment {
     private FragmentUserProfileBinding binding;
     private Animation scaleAnimation, fadeInAnimation;
 
-    String userId;
+    private String userId;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -54,7 +68,9 @@ public class UserProfileFragment extends Fragment {
         loadFullName();
         loadGenderANDdob();
         loadUserName();
+        loadUserInfo();
         loadUserImageToProfile();
+        setupViewPager();
         // Инициализация анимаций
         scaleAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale);
         fadeInAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in);
@@ -271,6 +287,46 @@ public class UserProfileFragment extends Fragment {
 
     }
 
+    private <MutableLiveData> void loadUserInfo() {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+        Task<DataSnapshot> unTask = database.getReference("Users").child(userId).child("aboutMyself").get();
+
+        Tasks.whenAllSuccess(unTask)
+                .addOnSuccessListener(results -> {
+                    String info = ((DataSnapshot) results.get(0)).getValue(String.class);
+
+                    binding.shortText.setText(info);
+                    binding.fullText.setText(info);
+
+                    binding.toggleButton.setOnClickListener(v -> {
+                        AutoTransition fastTransition = new AutoTransition();
+                        fastTransition.setDuration(200);
+                        TransitionManager.beginDelayedTransition(
+                                (ViewGroup) binding.getRoot(),
+                                fastTransition
+                        );
+                        if (binding.fullText.getVisibility() == View.GONE) {
+                            binding.fullText.setVisibility(View.VISIBLE);
+                            binding.shortText.setVisibility(View.GONE);
+                            binding.toggleButton.setText("Скрыть");
+                        } else {
+                            binding.fullText.setVisibility(View.GONE);
+                            binding.shortText.setVisibility(View.VISIBLE);
+                            binding.toggleButton.setText("Показать еще");
+                        }
+                    });
+
+                    // Скрываем кнопку, если текст короткий
+                    if (info.length() <=120) {
+                        binding.toggleButton.setVisibility(View.GONE);
+                    }
+
+                    Log.d(TAG, "Информация о пользователе: " + info);
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки: " + e.getMessage()));
+    }
+
     private void loadUserImageToProfile() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -302,6 +358,62 @@ public class UserProfileFragment extends Fragment {
             // Если пользователь не авторизован
             Log.d(TAG, "Пользователь не авторизован.");
         }
+    }
+
+    /// ТАБЫ
+    private void setupViewPager() {
+        binding.viewPager2.setAdapter(new FragmentStateAdapter(this) {
+            @Override
+            public Fragment createFragment(int position) {
+                if (position == 0) {
+                    OtherUserExpertFragment fragment = new OtherUserExpertFragment();
+                    Bundle args = new Bundle();
+                    args.putString("userId", userId); // Передаём ID
+                    fragment.setArguments(args);
+                    return fragment;
+                } else {
+                    UserClientFragment fragment = new UserClientFragment();
+                    Bundle args = new Bundle();
+                    args.putString("userId", userId); // Также если нужно
+                    fragment.setArguments(args);
+                    return fragment;
+                }
+            }
+            @Override
+            public int getItemCount() {
+                return 2;
+            }
+        });
+
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager2,
+                (tab, position) -> {
+                    tab.setText(position == 0 ? "Я эксперт" : "Я клиент");
+                }
+        ).attach();
+
+    }
+
+    private List<HistoryItem> getAbout() {
+
+        List<HistoryItem> fullList = new ArrayList<>(); // Инициализируем список
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+
+        database.getReference("Users").child(userId).child("aboutMyself").get()
+                .addOnSuccessListener(dataSnapshot -> {
+                    if (dataSnapshot.exists()) {
+                        String info = dataSnapshot.getValue(String.class);
+                        fullList.add(new HistoryItem(info, " "));
+                        Log.d(TAG, "Информация о пользователе: " + info);
+                    } else {
+                        Log.d(TAG, "Данные 'aboutMyself' не найдены");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Ошибка загрузки: " + e.getMessage());
+                });
+
+        return fullList;
     }
 
 
