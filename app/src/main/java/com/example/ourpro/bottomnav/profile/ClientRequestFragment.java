@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ourpro.R;
 import com.example.ourpro.databinding.FragmentClientRequestBinding;
@@ -39,6 +40,12 @@ public class ClientRequestFragment extends Fragment {
 
         Log.d(TAG, "Firebase init check: " + FirebaseDatabase.getInstance().getReference());
         setupForm();
+
+        binding.profileButton.setOnClickListener(v -> {
+            FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+            ft.replace(R.id.menu_fr, new ProfileFragment());
+            ft.commit();
+        });
         return view;
     }
 

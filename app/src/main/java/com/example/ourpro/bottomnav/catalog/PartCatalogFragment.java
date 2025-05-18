@@ -55,7 +55,7 @@ public class PartCatalogFragment extends Fragment {
 
         new TabLayoutMediator(binding.tabLayout, binding.viewPager2,
                 (tab, position) -> {
-                    tab.setText(position == 0 ? "Нужен\nэксперт" : "Нужен\nклиент");
+                    tab.setText(position == 0 ? "Нужен эксперт" : "Нужен клиент");
                 }
         ).attach();
 

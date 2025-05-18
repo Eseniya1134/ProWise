@@ -98,7 +98,7 @@ public class ProfileFragment extends Fragment {
             binding.settingText.setAlpha(1 - progress);
             binding.fullName.setAlpha(1 - progress);
             binding.username.setAlpha(1 - progress);
-            binding.specialist.setAlpha(1 - progress);
+            //binding.specialist.setAlpha(1 - progress);
             binding.moreInfo.setAlpha(1 - progress);
             binding.profileImage.setAlpha(1 - progress);
             binding.circle.setAlpha(1 - progress);
