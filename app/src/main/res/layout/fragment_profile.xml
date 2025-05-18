@@ -17,7 +17,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
-            android:layout_height="465dp"
+            android:layout_height="440dp"
             app:contentScrim="@color/our_blue"
             app:expandedTitleMarginBottom="16dp"
             app:expandedTitleMarginStart="16dp"
@@ -92,31 +92,21 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
-                <TextView
-                    android:id="@+id/specialist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/pt_sans_regular"
-                    android:text="Специалист"
-                    android:textColor="@color/white"
-                    android:textSize="23sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/full_name" />
+
 
 
                 <TextView
                     android:id="@+id/more_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/pt_sans_regular"
                     android:text="пол, XX лет"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/specialist" />
+                    app:layout_constraintTop_toBottomOf="@+id/full_name" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

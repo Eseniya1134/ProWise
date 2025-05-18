@@ -75,62 +75,57 @@
                     app:layout_constraintTop_toBottomOf="@+id/expert_txt" />
 
 
-
-                <LinearLayout
-                    android:id="@+id/edu"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginStart="15dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/confirmation_txt">
-
                     <TextView
                         android:id="@+id/education_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginStart="16dp"
                         android:fontFamily="@font/pt_sans_bold"
                         android:gravity="center"
                         android:text="Уровень образования:"
                         android:textColor="@color/our_blue"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        app:layout_constraintTop_toBottomOf="@id/imageView8"
+                        app:layout_constraintStart_toStartOf="parent"/>
 
                     <TextView
                         android:id="@+id/education_set"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+
                         android:inputType="textMultiLine"
                         android:scrollHorizontally="false"
                         android:text="TextView"
                         android:textColor="@color/black_text"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toBottomOf="@id/education_txt"
+                        app:layout_constraintStart_toStartOf="parent"/>
 
-
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/experience_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/pt_sans_bold"
                     android:gravity="center"
                     android:text="Опыт работы:"
                     android:textColor="@color/our_blue"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edu" />
+                    app:layout_constraintTop_toBottomOf="@+id/education_set" />
 
                 <TextView
                     android:id="@+id/about_experience"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
                     android:text="TextView"
@@ -145,8 +140,8 @@
                     android:id="@+id/services_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/pt_sans_bold"
                     android:gravity="center"
                     android:text="Описание услуг:"
@@ -159,9 +154,9 @@
                     android:id="@+id/about_services"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
                     android:text="TextView"
@@ -174,8 +169,8 @@
                     android:id="@+id/portfolio_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/pt_sans_bold"
                     android:gravity="center"
                     android:text="Портфолио:"
@@ -189,9 +184,9 @@
                     android:id="@+id/pdfContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="10dp"
