@@ -9,11 +9,14 @@ import com.example.ourpro.databinding.MessageFromCurrUserRvItemBinding;
 import com.example.ourpro.databinding.MessageRvItemBinding;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -113,8 +116,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     //Возвращает количество непрочитанных сообщений
+
+
+
     public int getUnreadCount(Timestamp lastSeenTime) {
-        if (lastSeenTime == null) return 0;
+        if (lastSeenTime == null) return 0; // если время неизвестно
 
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser() != null
                 ? FirebaseAuth.getInstance().getCurrentUser().getUid()
@@ -122,6 +128,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         int unreadCount = 0;
         for (Message message : messages) {
+            // Если сообщение не от меня и отправлено после lastSeenTime
             if (!message.getSenderId().equals(currentUserId)
                     && message.getDate() != null
                     && message.getDate().compareTo(lastSeenTime) > 0) {
@@ -130,5 +137,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         return unreadCount;
     }
+
 
 }

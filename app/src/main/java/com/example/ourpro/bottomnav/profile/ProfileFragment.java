@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -21,14 +23,18 @@ import com.example.ourpro.R;
 import com.example.ourpro.bottomnav.finance.HistoryItem;
 import com.example.ourpro.databinding.FragmentProfileBinding;
 import com.example.ourpro.expert.ExpertFormFragment;
+import com.example.ourpro.requests.ClientRequest;
+import com.example.ourpro.requests.RequestsAdapter;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -43,12 +49,13 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private Animation scaleAnimation, fadeInAnimation;
-
-
     private Button addBtn;
 
     private List<HistoryItem> fullList;
     private List<HistoryItem> shortList;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private RequestsAdapter adapter;
 
 
     @Override
@@ -61,8 +68,11 @@ public class ProfileFragment extends Fragment {
         loadUserImageToProfile();
         loadUserInfo();
         setupViewPager();
+        setupRecyclerView();
+        loadUserRequests();
 
-
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
         binding.settingText.setOnClickListener(v -> {
@@ -84,7 +94,6 @@ public class ProfileFragment extends Fragment {
 
         // Анимация при открытии
         animateViewsOnCreate();
-
     }
 
 
@@ -144,33 +153,6 @@ public class ProfileFragment extends Fragment {
 
         String userId = user.getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
-
-        //старый код
-        /*// Получаем имя
-        DatabaseReference databaseName = database.getReference("Users").child(userId).child("name");
-        databaseName.get().addOnSuccessListener(nameBase -> {
-            if (nameBase.exists() && nameBase.getValue() != null) {
-                String name = nameBase.getValue(String.class);
-            }
-        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки имени: " + e.getMessage()));
-
-
-        // Получаем фамилию
-        DatabaseReference databaseSurname = database.getReference("Users").child(userId).child("surname");
-        databaseSurname.get().addOnSuccessListener(surnameBase -> {
-            if (surnameBase.exists() && surnameBase.getValue() != null) {
-                String surname = surnameBase.getValue(String.class);
-            }
-        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки фамилии: " + e.getMessage()));
-
-        // Получаем отчество
-        DatabaseReference databaseDadsName = database.getReference("Users").child(userId).child("fathersName");
-        databaseDadsName.get().addOnSuccessListener(dadsNameBase -> {
-            if (dadsNameBase.exists() && dadsNameBase.getValue() != null) {
-                String dadsName = dadsNameBase.getValue(String.class);
-            }
-        }).addOnFailureListener(e -> Log.e(TAG, "Ошибка загрузки отчества: " + e.getMessage()));
-        */
 
         Task<DataSnapshot> nameTask = database.getReference("Users").child(userId).child("name").get();
         Task<DataSnapshot> surnameTask = database.getReference("Users").child(userId).child("surname").get();
@@ -374,6 +356,7 @@ public class ProfileFragment extends Fragment {
                 .commit();
     }
 
+
     private void openClientRequestForm() {
         // Создаем новый экземпляр фрагмента с формой запроса
         ClientRequestFragment requestFragment = new ClientRequestFragment();
@@ -421,6 +404,53 @@ public class ProfileFragment extends Fragment {
     }
 
 
+    private void setupRecyclerView() {
+        adapter = new RequestsAdapter(new ArrayList<>(), request -> {
+            // Обработка клика на запрос
+            ClientRequestFragment fragment = ClientRequestFragment.newInstance(request);
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.menu_fr, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+    }
+    private void loadUserRequests() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) return;
+
+        DatabaseReference requestsRef = FirebaseDatabase.getInstance()
+                .getReference("ClientRequests")
+                .child(user.getUid());
+
+        requestsRef.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<ClientRequest> requests = new ArrayList<>();
+                for (DataSnapshot requestSnapshot : snapshot.getChildren()) {
+                    ClientRequest request = requestSnapshot.getValue(ClientRequest.class);
+                    if (request != null) {
+                        request.setId(requestSnapshot.getKey());
+                        requests.add(0, request); // Новые запросы будут вверху
+                    }
+                }
+                adapter.updateRequests(requests);
+
+
+                // Логирование для отладки
+                Log.d(TAG, "Загружено запросов: " + requests.size());
+                for (ClientRequest req : requests) {
+                    Log.d(TAG, "Запрос: " + req.getShortDescription());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Ошибка загрузки запросов", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Ошибка загрузки запросов: " + error.getMessage());
+            }
+        });
+    }
 
     @Override
     public void onDestroyView() {

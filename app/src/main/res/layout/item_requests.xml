@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Заголовок заявки -->
+        <TextView
+            android:id="@+id/requestText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Заявка №1 от 12.05.2023"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText"/>
+
+        <!-- Краткое описание -->
+        <TextView
+            android:id="@+id/descriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Краткое описание проблемы"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:ignore="HardcodedText"/>
+
+        <!-- Строка с датой и статусом -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Дедлайн -->
+            <TextView
+                android:id="@+id/deadlineText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="До: 20.05.2023"
+                android:textSize="12sp"
+                android:textColor="?android:attr/textColorSecondary"
+                tools:ignore="HardcodedText"/>
+
+            <!-- Разделитель -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="?android:attr/textColorSecondary"/>
+
+            <!-- Статус -->
+            <TextView
+                android:id="@+id/statusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Новая"
+                android:textColor="@color/green_light"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
