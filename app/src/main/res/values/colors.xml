@@ -10,5 +10,12 @@
     <color name="primary">#6200EE</color>
     <color name="primary_light">#BB86FC</color>
     <color name="secondary">#000000</color>
+    <color name="status_pending">#FFA500</color>
+    <color name="status_completed">#008000</color>
+    <color name="status_failed">#FF0000</color>
+    <color name="gray">#9E9E9E</color>
+    <color name="green">#4CAF50</color>
+    <color name="orange">#FF9800</color>
+
 </resources>
 

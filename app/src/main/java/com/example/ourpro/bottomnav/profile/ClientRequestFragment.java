@@ -1,7 +1,11 @@
 package com.example.ourpro.bottomnav.profile;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +19,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ourpro.R;
 import com.example.ourpro.databinding.FragmentClientRequestBinding;
+import com.example.ourpro.requests.ClientRequest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,22 +34,39 @@ import java.util.Map;
 
 public class ClientRequestFragment extends Fragment {
     private FragmentClientRequestBinding binding;
+    private ClientRequest currentRequest;
+    private boolean isEditMode = false;
     private Calendar selectedDate = Calendar.getInstance();
     private static final String TAG = "ClientRequestFragment";
+
+    public static ClientRequestFragment newInstance(ClientRequest request) {
+        ClientRequestFragment fragment = new ClientRequestFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("request", (Parcelable) request);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentClientRequestBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
+        Log.d(TAG, "Database URL: " + database.getReference().toString());
 
         Log.d(TAG, "Firebase init check: " + FirebaseDatabase.getInstance().getReference());
+        if (getArguments() != null) {
+            currentRequest = getArguments().getParcelable("request");
+            isEditMode = true;
+            fillFormWithData();
+        }
         setupForm();
-        return view;
+        return binding.getRoot();
     }
 
     private void setupForm() {
-        String[] domains = {"Технологии", "Здоровье", "Образование", "Финансы", "Другое"};
+        String[] domains = {"Медицина и здравоохранение", "Юриспруденция и правопорядок", " IT и программирование", " Маркетинг и коммуникации", " Искусство и творчество", " Наука и исследования", "Образование", "Бизнес и управление", "Транспорт и логистика", "Питание и гостеприимство", "Финансы и бухгалтерия", "Строительство и инженерия"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 requireContext(),
                 android.R.layout.simple_dropdown_item_1line,
@@ -51,8 +74,29 @@ public class ClientRequestFragment extends Fragment {
         );
         binding.problemDomain.setAdapter(adapter);
         binding.deadline.setOnClickListener(v -> showDatePicker());
-        // Отправка данных
-        binding.submitButton.setOnClickListener(v -> saveProblemToFirebase());
+
+        binding.submitButton.setOnClickListener(v -> {
+            // Добавляем проверку перед сохранением
+            if (validateForm()) {
+                saveProblemToFirebase();
+            }
+        });
+    }
+
+    private boolean validateForm() {
+        boolean isValid = true;
+
+        if (binding.problemDomain.getText().toString().trim().isEmpty()) {
+            binding.problemDomain.setError("Обязательное поле");
+            isValid = false;
+        }
+
+        if (binding.deadline.getText().toString().trim().isEmpty()) {
+            binding.deadline.setError("Укажите срок выполнения");
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     private void showDatePicker() {
@@ -60,7 +104,10 @@ public class ClientRequestFragment extends Fragment {
                 requireContext(),
                 (view, year, month, day) -> {
                     selectedDate.set(year, month, day);
-                    binding.deadline.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(selectedDate.getTime()));
+                    String formattedDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                            .format(selectedDate.getTime());
+                    binding.deadline.setText(formattedDate);
+                    binding.deadline.setError(null); // Очищаем ошибку, если была
                 },
                 selectedDate.get(Calendar.YEAR),
                 selectedDate.get(Calendar.MONTH),
@@ -68,72 +115,86 @@ public class ClientRequestFragment extends Fragment {
         ).show();
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) requireContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
+
     private void saveProblemToFirebase() {
-        //Проверка заполнения обязательных полей
-        if (binding.problemDomain.getText().toString().trim().isEmpty()) {
-            Toast.makeText(requireContext(), "Укажите сферу проблемы", Toast.LENGTH_SHORT).show();
-            binding.problemDomain.requestFocus();
-            return;
-        }
-
-        if (binding.shortDescription.getText().toString().trim().isEmpty()) {
-            Toast.makeText(requireContext(), "Введите краткое описание", Toast.LENGTH_SHORT).show();
-            binding.shortDescription.requestFocus();
-            return;
-        }
-
-        //Получаем текущего пользователя
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Toast.makeText(requireContext(), "Ошибка: пользователь не авторизован", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "Пользователь не авторизован при попытке сохранения");
-            return;
-        }
-
-        String userId = user.getUid();
-
-        //Блокируем кнопку для предотвращения повторных нажатий
-        binding.submitButton.setEnabled(false);
-        binding.submitButton.setText("Сохранение...");
-
-        //Подготовка данных
-        Map<String, Object> requestData = new HashMap<>();
-        requestData.put("domain", binding.problemDomain.getText().toString().trim());
-        requestData.put("shortDescription", binding.shortDescription.getText().toString().trim());
-        requestData.put("fullDescription", binding.fullDescription.getText().toString().trim());
-        requestData.put("deadline", binding.deadline.getText().toString().trim());
-        //requestData.put("timestamp", System.currentTimeMillis()); // Добавляем timestamp для сортировки
-
-        //Получаем ссылку на базу данных
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app");
-        DatabaseReference userRequestsRef = database.getReference("ClientRequests").child(userId);
-
-        //Сохраняем данные под узлом пользователя
-        String requestId = userRequestsRef.push().getKey();
-        if (requestId == null) {
-            Toast.makeText(requireContext(), "Ошибка создания запроса", Toast.LENGTH_SHORT).show();
+        if (!isNetworkAvailable()) {
+            Toast.makeText(getContext(), "Нет интернет-соединения", Toast.LENGTH_LONG).show();
             binding.submitButton.setEnabled(true);
             binding.submitButton.setText("Сохранить");
             return;
         }
 
-        userRequestsRef.child(requestId).setValue(requestData)
+        // Проверка заполнения полей
+        if (binding.problemDomain.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getContext(), "Заполните обязательные поля", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Toast.makeText(getContext(), "Необходимо авторизоваться", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        binding.submitButton.setEnabled(false);
+        binding.submitButton.setText("Сохранение...");
+
+        // Подготовка данных
+        Map<String, Object> requestData = new HashMap<>();
+        requestData.put("domain", binding.problemDomain.getText().toString().trim());
+        requestData.put("shortDescription", binding.shortDescription.getText().toString().trim());
+        requestData.put("fullDescription", binding.fullDescription.getText().toString().trim());
+        requestData.put("deadline", binding.deadline.getText().toString().trim());
+        requestData.put("timestamp", ServerValue.TIMESTAMP);
+        requestData.put("status", "new");
+
+        // Сохранение в Firebase
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference("ClientRequests")
+                .child(user.getUid())
+                .push();
+
+        ref.setValue(requestData)
                 .addOnCompleteListener(task -> {
                     binding.submitButton.setEnabled(true);
                     binding.submitButton.setText("Сохранить");
 
                     if (task.isSuccessful()) {
-                        Toast.makeText(requireContext(), "Запрос успешно сохранен", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Документ запроса сохранен с ID: " + requestId + " для пользователя " + userId);
+                        Log.d(TAG, "Данные успешно сохранены в Firebase");
                         clearForm();
-
-                        // Возвращаемся назад после успешного сохранения
-                        requireActivity().getSupportFragmentManager().popBackStack();
+                        requireActivity().onBackPressed();
                     } else {
-                        Toast.makeText(requireContext(), "Ошибка сохранения", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Ошибка сохранения запроса", task.getException());
+                        Log.e(TAG, "Ошибка сохранения", task.getException());
+                        Toast.makeText(getContext(),
+                                "Ошибка сохранения: " + task.getException().getMessage(),
+                                Toast.LENGTH_LONG).show();
                     }
                 });
+        Log.d(TAG, "Пытаемся сохранить: " + requestData.toString());
+    }
+
+    private void fillFormWithData() {
+        if (currentRequest != null) {
+            binding.problemDomain.setText(currentRequest.getDomain());
+            binding.shortDescription.setText(currentRequest.getShortDescription());
+            binding.fullDescription.setText(currentRequest.getFullDescription());
+            binding.deadline.setText(currentRequest.getDeadline());
+
+            // Если это режим просмотра, делаем поля недоступными для редактирования
+            if (!isEditMode) {
+                binding.problemDomain.setEnabled(false);
+                binding.shortDescription.setEnabled(false);
+                binding.fullDescription.setEnabled(false);
+                binding.deadline.setEnabled(false);
+                binding.submitButton.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void clearForm() {
