@@ -25,7 +25,7 @@
             android:text="Заявка №1 от 12.05.2023"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:textStyle="bold"
+            android:fontFamily="@font/pt_sans_bold"
             tools:ignore="HardcodedText"/>
 
         <!-- Краткое описание -->
@@ -38,6 +38,7 @@
             android:textColor="@color/gray"
             android:textSize="14sp"
             android:maxLines="2"
+            android:fontFamily="@font/pt_sans_regular"
             android:ellipsize="end"
             tools:ignore="HardcodedText"/>
 
@@ -56,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="До: 20.05.2023"
                 android:textSize="12sp"
+                android:fontFamily="@font/pt_sans_regular"
                 android:textColor="?android:attr/textColorSecondary"
                 tools:ignore="HardcodedText"/>
 
@@ -73,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:text="Новая"
                 android:textColor="@color/green_light"
+                android:fontFamily="@font/pt_sans_regular"
                 android:textSize="12sp"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
