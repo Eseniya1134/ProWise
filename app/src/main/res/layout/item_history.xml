@@ -25,8 +25,9 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_weight="1"
-        android:text="Консультация 29.03.25 \n от username"
+        android:text="Консультация 29.03.25 \nот username"
         android:textSize="16sp"
+        android:fontFamily="@font/pt_sans_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/amountTextView"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
@@ -39,6 +40,7 @@
         android:layout_marginEnd="5dp"
         android:text="+1450,00 руб."
         android:textSize="16sp"
+        android:fontFamily="@font/pt_sans_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

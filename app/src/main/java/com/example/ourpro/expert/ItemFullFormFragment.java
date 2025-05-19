@@ -1,5 +1,9 @@
 package com.example.ourpro.expert;
 
+import static android.content.ContentValues.TAG;
+
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.ourpro.PdfViewerFragment;
 import com.example.ourpro.R;
 import com.example.ourpro.bottomnav.profile.ProfileFragment;
 import com.example.ourpro.databinding.FragmentItemFullFormExpertBinding;
@@ -42,6 +47,7 @@ public class ItemFullFormFragment extends Fragment {
         }
 
         load();
+        displayPdfList();
 
         binding.profileButton.setOnClickListener(v -> {
             navigateToProfile();
@@ -88,6 +94,48 @@ public class ItemFullFormFragment extends Fragment {
         });
     }
 
+    private void displayPdfList() {
+        DatabaseReference ref = FirebaseDatabase
+                .getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference()
+                .child("ExpertQuestionnaire")
+                .child(userId)
+                .child(expertId)
+                .child("fileUrl");
+
+        ref.get().addOnSuccessListener(snapshot -> {
+            if (snapshot.exists()) {
+                String fileUrls = snapshot.getValue(String.class);
+                if (fileUrls != null) {
+                    String[] urlArray = fileUrls.split(",");
+                    binding.pdfContainer.removeAllViews(); // очищаем перед отображением
+
+                    for (String url : urlArray) {
+                        TextView pdfLink = new TextView(requireContext());
+                        pdfLink.setText(url);
+                        pdfLink.setTextColor(Color.BLUE);
+                        pdfLink.setTextSize(16);
+                        pdfLink.setPadding(0, 10, 0, 0);
+                        pdfLink.setPaintFlags(pdfLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                        pdfLink.setOnClickListener(v -> openPdfInWebView(url));
+                        binding.pdfContainer.addView(pdfLink);
+                    }
+                }
+            }
+        }).addOnFailureListener(e -> {
+            Log.e("TAG", "Ошибка загрузки списка файлов: " + e.getMessage());
+            Toast.makeText(requireContext(), "Ошибка загрузки списка файлов", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    // Исправленный метод для открытия PDF
+    private void openPdfInWebView(String pdfUrl) {
+        PdfViewerFragment pdfViewerFragment = PdfViewerFragment.newInstance(pdfUrl);
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.menu_fr, pdfViewerFragment) // Замените на ваш контейнер
+                .addToBackStack(null)
+                .commit();
+    }
 
 
 

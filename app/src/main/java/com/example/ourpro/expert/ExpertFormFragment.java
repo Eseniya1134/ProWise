@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.example.ourpro.PdfViewerFragment;
 import com.example.ourpro.R;
 import com.example.ourpro.bottomnav.profile.ProfileFragment;
 import com.example.ourpro.databinding.FragmentExpertFormBinding;
@@ -337,7 +338,7 @@ public class ExpertFormFragment extends Fragment {
             try {
                 Map uploadResult = cloudinary.uploader().upload(
                         requireContext().getContentResolver().openInputStream(fileUri),
-                        ObjectUtils.asMap("resource_type", "auto")
+                        ObjectUtils.asMap("resource_type", "raw")
                 );
                 String fileUrl = (String) uploadResult.get("url");
 
