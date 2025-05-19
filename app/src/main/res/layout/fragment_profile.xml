@@ -17,7 +17,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
-            android:layout_height="465dp"
+            android:layout_height="440dp"
             app:contentScrim="@color/our_blue"
             app:expandedTitleMarginBottom="16dp"
             app:expandedTitleMarginStart="16dp"
@@ -79,7 +79,7 @@
 
                 <TextView
                     android:id="@+id/full_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:fontFamily="@font/pt_sans_bold"
@@ -92,31 +92,21 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
-                <TextView
-                    android:id="@+id/specialist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/pt_sans_regular"
-                    android:text="Специалист"
-                    android:textColor="@color/white"
-                    android:textSize="23sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/full_name" />
+
 
 
                 <TextView
                     android:id="@+id/more_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/pt_sans_regular"
                     android:text="пол, XX лет"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/specialist" />
+                    app:layout_constraintTop_toBottomOf="@+id/full_name" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -241,6 +231,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/bottom_line"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -287,7 +278,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="20dp"
                 android:layout_gravity="center"
                 android:paddingTop="2dp"
                 android:text="@string/underlined_text"
@@ -319,14 +310,12 @@
             android:id="@+id/viewPager2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="52dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tabLayout" />
-
-
-
         <!-- Сообщение о том, что данных нет -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -352,7 +341,7 @@
         android:background="@drawable/btn"
         android:fontFamily="@font/pt_sans_bold"
         android:textSize="16dp"
-        android:text="Добавить новый запрос" />
+        android:text="Добавить" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

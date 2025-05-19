@@ -107,7 +107,7 @@ public class ProfileFragment extends Fragment {
             binding.settingText.setAlpha(1 - progress);
             binding.fullName.setAlpha(1 - progress);
             binding.username.setAlpha(1 - progress);
-            binding.specialist.setAlpha(1 - progress);
+            //binding.specialist.setAlpha(1 - progress);
             binding.moreInfo.setAlpha(1 - progress);
             binding.profileImage.setAlpha(1 - progress);
             binding.circle.setAlpha(1 - progress);
@@ -196,7 +196,7 @@ public class ProfileFragment extends Fragment {
                     String gender = ((DataSnapshot) results.get(0)).getValue(String.class);
                     String dateOfBirth = ((DataSnapshot) results.get(1)).getValue(String.class);
 
-                    String GenderANDdob = gender + ", " + dateOfBirth;
+                    String GenderANDdob = "Пол " + gender + ", " + dateOfBirth;
 
                     binding.moreInfo.setText(GenderANDdob);
 
@@ -271,7 +271,7 @@ public class ProfileFragment extends Fragment {
                     });
 
                     // Скрываем кнопку, если текст короткий
-                    if (info.length() <=120) {
+                    if (info.length() <= 40) {
                         binding.toggleButton.setVisibility(View.GONE);
                     }
 
