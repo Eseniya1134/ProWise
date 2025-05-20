@@ -86,6 +86,7 @@ public class ClientRequestFragment extends Fragment {
 
         binding.submitButton.setOnClickListener(v -> {
             // Добавляем проверку перед сохранением
+
             if (validateForm()) {
                 saveProblemToFirebase();
             }
@@ -164,7 +165,7 @@ public class ClientRequestFragment extends Fragment {
         requestData.put("status", "new");
 
         // Сохранение в Firebase
-        DatabaseReference ref = FirebaseDatabase.getInstance()
+        DatabaseReference ref = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("ClientRequests")
                 .child(user.getUid())
                 .push();
