@@ -59,6 +59,7 @@ public class LogInFinanceFragment extends Fragment {
             Log.d(TAG, "Флаг из базы: " + flag);
 
             if ("1".equals(flag)) {
+
                 binding.viewFlipper.setDisplayedChild(5);
                 signInCash();
             } else {

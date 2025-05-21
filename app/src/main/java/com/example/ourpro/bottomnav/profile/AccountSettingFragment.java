@@ -47,6 +47,7 @@ public class AccountSettingFragment extends Fragment {
     private FragmentAccountSettingBinding binding;
     private Uri imagePath;
     private SharedPreferences sharedPreferences;
+    private String name1 ="";
 
     private String selectedDate;
 
@@ -151,11 +152,14 @@ public class AccountSettingFragment extends Fragment {
             Toast.makeText(requireContext(), "Сохранено", Toast.LENGTH_SHORT).show();
         });
 
-        binding.profileButton.setOnClickListener(v -> {
-            FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-            ft.replace(R.id.menu_fr, new ProfileFragment());
-            ft.commit();
-        });
+        if (name1 == null || name1.isEmpty() || name1.equals("")){
+            binding.profileButton.setOnClickListener(v -> {
+                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+                ft.replace(R.id.menu_fr, new ProfileFragment());
+                ft.commit();
+            });
+        }
+
 
 
 
@@ -232,6 +236,7 @@ public class AccountSettingFragment extends Fragment {
             DatabaseReference databaseReference = database.getReference("Users");
 
             String name = binding.nameGet.getText().toString();
+            name1 = name;
             String surname = binding.surnameGet.getText().toString();
             String dadsName = binding.dadsNameGet.getText().toString();
             String aboutMyself = binding.aboutMyselfGet.getText().toString();

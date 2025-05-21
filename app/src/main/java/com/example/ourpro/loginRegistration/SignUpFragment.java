@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.ourpro.MainActivity;
 import com.example.ourpro.R;
+import com.example.ourpro.bottomnav.profile.AccountSettingFragment;
 import com.example.ourpro.databinding.FragmentSignUpBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -99,7 +100,10 @@ public class SignUpFragment extends Fragment {
 
                                     usersRef.child(userId).setValue(userInfo);
 
-                                    startActivity(new Intent(requireActivity(), MainActivity.class));
+                                    //startActivity(new Intent(requireActivity(), MainActivity.class));
+                                    FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+                                    ft.replace(R.id.sign_fr, new AccountSettingFragment());
+                                    ft.commit();
                                 }
                             } else {
                                 Toast.makeText(requireContext(), "Ошибка регистрации: " + authTask.getException().getMessage(), Toast.LENGTH_SHORT).show();

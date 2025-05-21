@@ -61,35 +61,38 @@ public class ListOfUsersFragment extends Fragment {
     }
 
     private void searchUsers(String query) {
+        // Показываем индикатор загрузки (ProgressBar), пока идет поиск
         binding.progressBar.setVisibility(View.VISIBLE);
-
+        // Объект DatabaseReference указывает на узел "Users" в Firebase Realtime Database
         DatabaseReference usersRef = FirebaseDatabase.getInstance("https://prowise-de1d0-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("Users");
-
+        // Выполняем поиск пользователей, чьи имена начинаются с введённого запроса
         usersRef.orderByChild("username")
                 .startAt(query)
-                .endAt(query + "\uf8ff")
+                .endAt(query + "\uf8ff") // Специальный символ для диапазона поиска
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        userList.clear();
+                        // Очищаем текущий список пользователей перед новым поиском
+                        userList.clear(); // ← глобальная переменная: список найденных пользователей
 
                         for (DataSnapshot userSnap : snapshot.getChildren()) {
                             User user = userSnap.getValue(User.class);
                             if (user != null) {
-                                userList.add(user);
+                                userList.add(user); // ← добавляем пользователей в глобальный список
                             }
                         }
 
+                        // Скрываем индикатор загрузки
                         binding.progressBar.setVisibility(View.GONE);
-
+                        // Показываем сообщение, если пользователей не найдено
                         if (userList.isEmpty()) {
                             binding.emptyMessage.setVisibility(View.VISIBLE);
                         } else {
                             binding.emptyMessage.setVisibility(View.GONE);
                         }
-
-                        userAdapterForSearch.notifyDataSetChanged();
+                        // Обновляем адаптер списка пользователей
+                        userAdapterForSearch.notifyDataSetChanged(); // ← глобальная переменная: адаптер RecyclerView
                     }
 
                     @Override
@@ -99,6 +102,7 @@ public class ListOfUsersFragment extends Fragment {
                     }
                 });
     }
+
 
     @Override
     public void onDestroyView() {
