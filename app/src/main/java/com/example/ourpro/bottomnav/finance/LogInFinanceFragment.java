@@ -254,6 +254,9 @@ public class LogInFinanceFragment extends Fragment {
                     if (pinCode.length() == 4) {
                         if (pinCode.equals(pinUser)) {
                             if (binding.viewFlipper.getDisplayedChild() == 5) {
+                                if (binding.pinEditText3 != null) {
+                                    binding.pinEditText3.setText(""); // Очистка поля
+                                }
                                 FragmentTransaction ft = getParentFragmentManager().beginTransaction();
                                 ft.replace(R.id.menu_fr, new FinanceFragment());
                                 ft.addToBackStack(null);
