@@ -48,7 +48,7 @@ public class AccountSettingFragment extends Fragment {
     private Uri imagePath;
     private SharedPreferences sharedPreferences;
     private String name1 ="";
-
+    private int flafForToast = 0;
     private String selectedDate;
 
     public AccountSettingFragment() {
@@ -141,7 +141,10 @@ public class AccountSettingFragment extends Fragment {
         binding.birthdayText.setOnClickListener(v -> selectBirthday());
 
         // Обработка нажатия на аватар для выбора изображения
-        binding.avatar.setOnClickListener(v -> selectImage());
+        binding.avatar.setOnClickListener(v -> {
+            flafForToast = 1;
+            selectImage();
+        });
 
         // Обработка нажатия на кнопку загрузки
         binding.save.setOnClickListener(v -> {
@@ -149,7 +152,10 @@ public class AccountSettingFragment extends Fragment {
             saveFullName();
             saveGender();
             saveBirthday();
-            Toast.makeText(requireContext(), "Сохранено", Toast.LENGTH_SHORT).show();
+            if (flafForToast == 0){
+                Toast.makeText(requireContext(), "Сохранено", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
         if (name1 == null || name1.isEmpty() || name1.equals("")){
@@ -535,6 +541,7 @@ public class AccountSettingFragment extends Fragment {
 
                     // Показать сообщение об успешной загрузке
                     Toast.makeText(requireContext(), "Загрузка завершена", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Сохранено", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

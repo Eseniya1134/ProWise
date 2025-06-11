@@ -117,7 +117,6 @@ public class ProfileFragment extends Fragment {
             binding.profileImageSmall.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.username1.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.namesUser.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
-            binding.specialist1.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
             binding.circleSmall.setVisibility(progress > 0.7f ? View.VISIBLE : View.INVISIBLE);
         });
     }
